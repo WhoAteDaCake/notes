@@ -1,0 +1,17 @@
+\BOOKMARK [1][-]{section.1}{Priority Queues}{}% 1
+\BOOKMARK [1][-]{section.2}{Multi-level feedback queues}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Windows7}{section.2}% 3
+\BOOKMARK [1][-]{section.3}{Scheduling in Linux}{}% 4
+\BOOKMARK [2][-]{subsection.3.1}{The completely fair scheduler}{section.3}% 5
+\BOOKMARK [2][-]{subsection.3.2}{Real-Time tasks}{section.3}% 6
+\BOOKMARK [2][-]{subsection.3.3}{Time Sharing Tasks \(equal priority\)}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.4}{Time sharing tasks \(different priority\)}{section.3}% 8
+\BOOKMARK [1][-]{section.4}{Multi-rpocessor scheduling}{}% 9
+\BOOKMARK [2][-]{subsection.4.1}{Scheduling decisions}{section.4}% 10
+\BOOKMARK [2][-]{subsection.4.2}{Shared queues}{section.4}% 11
+\BOOKMARK [2][-]{subsection.4.3}{Private queues}{section.4}% 12
+\BOOKMARK [1][-]{section.5}{Related vs unrelated threads}{}% 13
+\BOOKMARK [1][-]{section.6}{Scheduling Related Threads}{}% 14
+\BOOKMARK [2][-]{subsection.6.1}{Working together}{section.6}% 15
+\BOOKMARK [2][-]{subsection.6.2}{Space Scheduling}{section.6}% 16
+\BOOKMARK [2][-]{subsection.6.3}{Gang Scheduling}{section.6}% 17
