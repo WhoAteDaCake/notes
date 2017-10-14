@@ -1,0 +1,11 @@
+\contentsline {chapter}{\numberline {1}}{3}
+\contentsline {section}{\numberline {1.1}Process scheduling}{3}
+\contentsline {subsection}{\numberline {1.1.1}Context}{3}
+\contentsline {subsection}{\numberline {1.1.2}Classification by Time Horizon}{3}
+\contentsline {subsection}{\numberline {1.1.3}Classification by Approach}{4}
+\contentsline {section}{\numberline {1.2}Performance Assesment}{4}
+\contentsline {subsection}{\numberline {1.2.1}Criteria}{4}
+\contentsline {section}{\numberline {1.3}Scheduling algorithms}{4}
+\contentsline {subsection}{\numberline {1.3.1}Overview}{4}
+\contentsline {subsection}{\numberline {1.3.2}First come first served FCFS}{4}
+\contentsline {subsection}{\numberline {1.3.3}Shortest job first}{5}

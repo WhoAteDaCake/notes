@@ -1,0 +1,38 @@
+\documentclass{article}
+\usepackage{mathtools}
+\begin{document}
+
+\title{Introduction to big-Oh}
+\maketitle
+
+\begin{flushleft}
+\textbf{Definition:} A theoretical measure of the execution of an algorithm, usually the time or memory needed, given the problem size n, which is usually the number of items. Informally, saying some equation f(n) = O(g(n)) means it is less than some constant multiple of g(n). The notation is read, "f of n is big oh of g of n".
+\end{flushleft}
+
+\begin{flushleft}
+\section{Aim: Classification of Functions}
+\begin{itemize}
+	\item In computer science, we often need a way to group together functions by their scaling behavious, and the classification should
+	\begin{itemize}
+		\item Remove unnecessary details
+		\item Be (rekatively) quick and easy
+		\item Be able to deal with `weir` functions that can happen for runtimes
+		\item Still be mathematically well-defined
+	\end{itemize}
+	\item Experience of CS is that this is best done by the `big-Oh notation and family`
+\end{itemize}
+\end{flushleft}
+
+\begin{flushleft}
+\section{Experimental Studies}
+General patern:
+\begin{itemize}
+	\item Write a program implementing the algorithm
+	\item Run the program with inputs of "varying size and composition"
+	\item Use a system method to get an (in)accurate measure of the actual running time
+	\item Plot the results
+	\item Intterpret \& analyse
+\end{itemize}
+\end{flushleft}
+
+\end{document}
