@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>OpenSourceModule.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+	font-size: 14px;
+	padding: 0 12px;
+	line-height: 22px;
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family:  "Meiryo", "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+</head>
+<body>
+<h1 id="augustinas-jokubauskas-psyaj1">Augustinas Jokubauskas (psyaj1)</h1>
+<h2 id="notes">Notes</h2>
+<p>When looking at github commits, some might say username of Knightls or Augustinas, that happened because I had github configured incorrectly.</p>
+<p>All the charts are taken from https://npm-stat.com</p>
+<h2 id="dlister">dlister</h2>
+<p>Created: 05/02/2017</p>
+<p>Downloads between 05/02/2017 and 26/09/2018: <strong>2297</strong></p>
+<p>Github: https://github.com/WhoAteDaCake/dlister</p>
+<p>npm: https://www.npmjs.com/package/dlister</p>
+<h3 id="stats">Stats</h3>
+<p><img src="file:///home/august/notes/Development/dlister.png" alt=""></p>
+<h3 id="example">Example</h3>
+<pre class="hljs"><code><div>[august@augustPc][components] $ dlister
+├──antd
+│  ├──Badge
+│  │  └──index.js
+│  ├──Collapse
+│  │  ├──index.js
+│  │  └──style.js
+│  ├──DatePicker
+│  │  └──index.js
+│  ├──JobState
+│  │  ├──index.js
+│  │  └──style.js
+│  ├──MenuItem
+│  │  └──index.js
+│  ├──Popconfirm
+│  │  └──index.js
+│  ├──Table
+│  │  └──index.js
+│  ├──Timeline
+│  │  └──index.js
+│  └──main.js
+├──form
+│  ├──Checkbox
+│  │  └──index.js
+│  ├──DragDrop
+│  │  ├──Card.js
+│  │  ├──Container.js
+│  │  └──index.js
+│  ├──Dropdown
+│  │  └──index.js
+│  ├──ScrollList
+│  │  ├──index.js
+│  │  └──style.js
+│  ├──Switch
+│  │  └──index.js
+│  ├──TextArea
+│  │  └──index.js
+│  ├──TextField
+│  │  └──index.js
+│  └──main.js
+├──hoc.js
+├──main.js
+├──manager
+│  ├──ChartManager
+│  │  ├──index.js
+│  │  └──utils.js
+│  ├──Responsive
+│  │  ├──ResponsiveConsumer.js
+│  │  ├──ResponsiveProvider.js
+│  │  ├──breakpoints.js
+│  │  ├──context.js
+│  │  ├──getQueries.js
+│  │  └──index.js
+│  ├──TableManager
+│  │  ├──TableFilter.js
+│  │  ├──TableProvider.js
+│  │  ├──TableSubscriber.js
+│  │  ├──context.js
+│  │  ├──core.js
+│  │  └──index.js
+│  └──main.js
+└──ui
+   ├──Loading.js
+   ├──ProgressBar.js
+   ├──SidebarToggle
+   │  ├──index.js
+   │  └──style.js
+   └──main.js
+[august@augustPc][components] $ dlister --help
+--a : Adds a given expression to ignore list
+--ci : Overlooks ignore list and only ignores given expressions
+--cj : Joins given argument list with the ignore list
+--i : Overlooks ignore list
+--r : Removes given expressions from ignore list
+--l : Lists current ignore list
+--help : Lists available commands
+--so : Adds left padding of 4 spaces
+</div></code></pre>
+<h3 id="about">About</h3>
+<p>This was my first published npm package, it was made because I found that there were no directory tree lister that suited my needs. The main issue was that when posting to stackoverflow, you would need to manually indent every line by 4 spaces, so I wrote a package that does that for me.</p>
+<h2 id="react-routes-map">react-routes-map</h2>
+<p>Created: 27/09/2017</p>
+<p>Downloads between 27/09/2017 and 26/09/2018: <strong>1283</strong></p>
+<p>Github: https://github.com/WhoAteDaCake/dlister</p>
+<p>npm: https://www.npmjs.com/package/react-router-map</p>
+<h3 id="stats">Stats</h3>
+<p><img src="file:///home/august/notes/Development/react-routes-map.png" alt=""></p>
+<h3 id="examples">Examples</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> mapRoutes <span class="hljs-keyword">from</span> <span class="hljs-string">'react-routes-map'</span>;
+
+<span class="hljs-keyword">import</span> { Loading } <span class="hljs-keyword">from</span> <span class="hljs-string">'@spotlightdata/nanowire-extensions'</span>;
+<span class="hljs-keyword">import</span> { paths } <span class="hljs-keyword">from</span> <span class="hljs-string">'./paths'</span>;
+
+<span class="hljs-comment">/**
+ * @class
+ * Route configuration:
+ *
+ * @param {string | bool} path
+ * Absolute path to component
+ * Is false if the component is the 404 path
+ *
+ * @param {string} component
+ * Filename of the component
+ * File should be placed inside /routes, however, it can be elsewhere
+ * Keep in mind that the path will be relative to /routes
+ *
+ * @param {string} name
+ * Default name that will be displayed in the Header
+ *
+ * @param {?Array&lt;Route&gt;} children
+ * Components of which path will be relative to parent path
+ *
+ * @example
+ *{
+ *  path: '/home',
+ *  component: 'Home',
+ *  name: 'Home page',
+ *}
+ */</span>
+
+<span class="hljs-keyword">const</span> specification = [
+  {
+    <span class="hljs-attr">path</span>: <span class="hljs-string">`/<span class="hljs-subst">${paths.login.all}</span>`</span>,
+    <span class="hljs-attr">component</span>: <span class="hljs-string">'Login'</span>,
+  },
+  {
+    <span class="hljs-attr">path</span>: <span class="hljs-string">`/<span class="hljs-subst">${paths.home.all}</span>`</span>,
+    <span class="hljs-attr">component</span>: <span class="hljs-string">'Home'</span>,
+  },
+  {
+    <span class="hljs-attr">path</span>: <span class="hljs-string">`/<span class="hljs-subst">${paths.support.all}</span>`</span>,
+    <span class="hljs-attr">component</span>: <span class="hljs-string">'Support'</span>,
+  },
+  {
+    <span class="hljs-attr">path</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">component</span>: <span class="hljs-string">'NotFound'</span>,
+  },
+];
+
+<span class="hljs-keyword">const</span> options = {
+  <span class="hljs-attr">loader</span>: <span class="hljs-function"><span class="hljs-params">component</span> =&gt;</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">`./<span class="hljs-subst">${component}</span>`</span>)
+      .catch(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">`./<span class="hljs-subst">${component}</span>/index.js`</span>))
+      .catch(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-keyword">import</span>(<span class="hljs-string">`./NotFound.js`</span>));
+  },
+  Loading,
+};
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> routes = mapRoutes(specification, options);
+</div></code></pre>
+<h3 id="about">About</h3>
+<p>I created this package when while working on multiple react projects. While working with react I realised that without routing, generated JavaScript bundles used to run pages would be way too large and dynamic route loading was way harder than it needed to be.</p>
+<h2 id="color-re">color-re</h2>
+<p>Created: 19/06/2018</p>
+<p>Downloads between 19/06/2018 and 26/09/2018: <strong>227</strong></p>
+<p>Github: https://github.com/WhoAteDaCake/color-re</p>
+<p>npm: https://www.npmjs.com/package/color-re</p>
+<h3 id="stats">Stats</h3>
+<p><img src="file:///home/august/notes/Development/color-re.png" alt=""></p>
+<h3 id="example">Example</h3>
+<pre class="hljs"><code><div>/* <span class="hljs-type">Change</span> the opacity */
+<span class="hljs-type">Color</span>.(fromRgb((<span class="hljs-number">200</span>, <span class="hljs-number">200</span>, <span class="hljs-number">200</span>)) |&gt; opacity(<span class="hljs-number">1.5</span>) |&gt; toString) |&gt; <span class="hljs-type">Js</span>.log
+<span class="hljs-type">Color</span>.(fromRgb((<span class="hljs-number">200</span>, <span class="hljs-number">200</span>, <span class="hljs-number">200</span>)) |&gt; toHsl |&gt; fade(<span class="hljs-number">0.5</span>) |&gt; toString) |&gt; <span class="hljs-type">Js</span>.log
+<span class="hljs-type">Color</span>.(fromRgb((<span class="hljs-number">200</span>, <span class="hljs-number">200</span>, <span class="hljs-number">200</span>)) |&gt; toHsl |&gt; opaquer(<span class="hljs-number">0.4</span>) |&gt; toString) |&gt; <span class="hljs-type">Js</span>.log
+
+/* <span class="hljs-type">Color</span> convertions */
+<span class="hljs-type">Color</span>.(fromRgb((<span class="hljs-number">200</span>, <span class="hljs-number">200</span>, <span class="hljs-number">200</span>)) |&gt; toHex |&gt; toHsl |&gt; toHsv |&gt; toString) |&gt; <span class="hljs-type">Js</span>.log
+
+/* <span class="hljs-type">Color</span> properties */
+<span class="hljs-type">Color</span>.(fromRgb((<span class="hljs-number">200</span>, <span class="hljs-number">200</span>, <span class="hljs-number">200</span>)) |&gt; luminosity) |&gt; <span class="hljs-type">Belt</span>.<span class="hljs-type">Option</span>.getExn |&gt; <span class="hljs-type">Js</span>.log
+<span class="hljs-type">Color</span>.(fromRgb((<span class="hljs-number">200</span>, <span class="hljs-number">200</span>, <span class="hljs-number">200</span>)) |&gt; contrast(fromHex(<span class="hljs-string">"#aaafff"</span>))) |&gt; <span class="hljs-type">Belt</span>.<span class="hljs-type">Option</span>.getExn |&gt; <span class="hljs-type">Js</span>.log
+</div></code></pre>
+<h3 id="about">About</h3>
+<p>This package was created as part of learning experience for reasonml, new language written by facebook. I've been part of reasonml community for few months now and I have noticed that it was missing a lot crucial packages for web development. So I took upon myself to help the community and ported this package from JavaScript one.</p>
+<h2 id="atecakebuilder">@atecake/builder</h2>
+<p>Created 11/09/2018</p>
+<p>Downloads between 11/09/2018 and 26/09/2018: 259</p>
+<p>Github: https://github.com/WhoAteDaCake/builder</p>
+<p>npm: https://www.npmjs.com/package/@atecake/builder</p>
+<h3 id="stats">Stats</h3>
+<p><img src="file:///home/august/notes/Development/builder.png" alt=""></p>
+<h3 id="example">Example</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> {
+  start,
+  devServer,
+  when,
+  bundle,
+  library,
+  configure,
+  customise,
+  tag,
+  tap,
+} = <span class="hljs-built_in">require</span>(<span class="hljs-string">'@atecake/builder'</span>);
+
+<span class="hljs-keyword">const</span> pkg = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./package.json'</span>);
+
+start([
+  configure(),
+  when(<span class="hljs-string">'build'</span>, [
+    bundle({ <span class="hljs-attr">files</span>: { <span class="hljs-attr">input</span>: <span class="hljs-string">'src/index.js'</span>, <span class="hljs-attr">output</span>: pkg.main } }),
+    bundle({
+      <span class="hljs-attr">files</span>: { <span class="hljs-attr">input</span>: <span class="hljs-string">'src/index.js'</span>, <span class="hljs-attr">output</span>: pkg.module },
+      <span class="hljs-attr">build</span>: { <span class="hljs-attr">rollup</span>: { <span class="hljs-attr">format</span>: <span class="hljs-string">'esm'</span> } },
+      <span class="hljs-attr">action</span>: <span class="hljs-built_in">Promise</span>.resolve(),
+    }),
+    library({
+      <span class="hljs-attr">files</span>: { <span class="hljs-attr">input</span>: <span class="hljs-string">'src'</span>, <span class="hljs-attr">output</span>: <span class="hljs-string">'lib'</span> },
+      <span class="hljs-attr">build</span>: { <span class="hljs-attr">rollup</span>: { <span class="hljs-attr">format</span>: <span class="hljs-string">'cjs'</span> } },
+      <span class="hljs-attr">action</span>: <span class="hljs-built_in">Promise</span>.resolve(),
+    }),
+  ]),
+  when(<span class="hljs-string">'start'</span>, [devServer()]),
+  when(<span class="hljs-string">'tag'</span>, [tag()]),
+]);
+</div></code></pre>
+<h3 id="about">About</h3>
+<p>I wrote this utility package to siplify releases of my other libraries. It has been made to allow easier library packaging as well as supporting development modes for libraries. <strong>Documentation is still work in progress</strong></p>
+<h2 id="spotlightdatananowire-extensions">@spotlightdata/nanowire-extensions</h2>
+<p>Created: 19/06/2018</p>
+<p>Downloads between 19/06/2018 and 26/09/2018: <strong>3430</strong></p>
+<p>Github: https://github.com/SpotlightData/nanowire-extensions</p>
+<p>npm: https://www.npmjs.com/package/@spotlightdata/nanowire-extensions</p>
+<h3 id="stats">Stats</h3>
+<p><img src="file:///home/august/notes/Development/extensions.png" alt=""></p>
+<h3 id="example">Example</h3>
+<p><img src="file:///home/august/notes/Development/Screenshot_2018-09-28_11-44-09.png" alt=""></p>
+<h3 id="about">About</h3>
+<p>I wrote this package as part of my initiative to give back to open-source community. I discussed it with my boss and began open sourcing the code that I've been working on. It was a very good experience because this made me think about architecture of open-source projects. I learned how to write documentation, setup continuous integration as well as how to release packages based on semantic versioning system</p>
+<h2 id="spotlightdataes-search">@spotlightdata/es-search</h2>
+<p>Created 06/09/2018</p>
+<p>Downloads between 06/09/2018 and 26/09/2018: <strong>972</strong></p>
+<p>Github: https://github.com/SpotlightData/es-search</p>
+<p>npm: https://www.npmjs.com/package/@spotlightdata/es-search</p>
+<h3 id="stats">Stats</h3>
+<p><img src="file:///home/august/notes/Development/es-search.png" alt=""></p>
+<h3 id="example">Example</h3>
+<p><img src="file:///home/august/notes/Development/Screenshot_2018-09-28_11-43-45.png" alt=""></p>
+<h3 id="about">About</h3>
+<p>This package is a wrapper for comonly used searchkit components, it simplifies the usage as well as fixes some common searchkit library issues. <strong>Documentation is still work in progress</strong></p>
+<h2 id="spotlightdatadocument-viewer">@spotlightdata/document-viewer</h2>
+<p>Created 22/08/2018</p>
+<p>Downloads between 22/08/2018 and 26/09/2018: <strong>754</strong></p>
+<p>Github: https://github.com/SpotlightData/react-lazylog</p>
+<p>npm: https://www.npmjs.com/package/@spotlightdata/document-viewer</p>
+<h3 id="stats">Stats</h3>
+<p><img src="file:///home/august/notes/Development/viewer.png" alt=""></p>
+<h3 id="example">Example</h3>
+<p><img src="file:///home/august/notes/Development/Screenshot_2018-09-28_11-42-57.png" alt=""></p>
+<h3 id="about">About</h3>
+<p>This package is a fork of <a href="https://github.com/mozilla-frontend-infra/react-lazylog">react-lazylog</a>. It uses fundamentals of the forked project, however it's purpose is vastly different. It has been made to allow large files (&lt; 30mb in size) to be readable and dynamically loaded in the browser. It also features a fully functional text and positional entity search. <strong>Documentation is still work in progress</strong></p>
+
+</body>
+</html>
