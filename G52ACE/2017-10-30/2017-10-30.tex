@@ -1,0 +1,87 @@
+\documentclass{article}
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\section{Algorithms}
+\begin{flushleft}
+Algorithm is a solution to a \textit{computational problem} that specifies (in general terms) a desired \textit{input-output} relationship. It describes a specific step-by-step procedure for solving the problem in a \textbf{finite} amount of time. The input is an \textit{instance} of the computational problem, and the output is the corresponding solution.
+\end{flushleft}
+
+\section{Partial vs total correctness}
+\begin{flushleft}
+It is conventional to distinguish between \textit{partial} and \textit{total} correctness.\\
+An algorithm that produces the desired output for all inputs \textbf{when the algorithm terminates} is said to be \textit{partially correct}.\\
+An algorithm that produces the desired output for all inputs \textbf{and is guaranteed to terminate} is said to be \textit{totally correct}.\\
+Our definition of an algorithm, implicitly assumes total correctness.
+\end{flushleft}
+
+\subsection{example}
+\begin{flushleft}
+An algorithm that "sorts a sequence of n numbers":
+\begin{itemize}
+	\item \textbf{input}: a sequence of n numbers ($a_{1},a_{2}...a_{n}$)
+	\item \textbf{output} a permutation of the input sequence ($a_{1}^`,a_{2}^`...a_{n}^`$), such that ($a_{1}^` \leqslant a_{2}^` \leqslant ... \leqslant a_{n}^`$)
+\end{itemize}
+\end{flushleft}
+
+\section{Correctness}
+\begin{flushleft}
+An algorithm for a computational problem is \textit{correct} if, for every legal input instance, the equired output is produced.
+\end{flushleft}
+
+\subsection{Correctness vs testing}
+\begin{flushleft}
+Correctness is not the same as testing. Testing is applied to an \textit{implementation of an algorithm}- we need something runnable in order to perform the tests. Each test shows the implementation is correct for a \textbf{particular} input and output. Many algorithms have an \textbf{infinite} number of possible inputs, but we can only run a finite number of tests. Testing can increase conidence, but we \textbf{cannot} show an algorithm is correct by testing.\\
+Correctness is (usually) a \textbf{property} of an algorithm rather than an implementation of an algorithm
+\end{flushleft}
+
+\subsection{Approaches to correctness}
+\begin{itemize}
+	\item Static analysis
+	\item proof-based
+	\item model-based (model checking)
+	\item program synthesis (program is guaranteed correct by construction)
+\end{itemize}
+
+\section{Assertions}
+\begin{flushleft}
+An \textit{assertion} is a statement about what holds at a particular state in a computation. Since we reason with them, they must be \textbf{precise}.\\
+Can also be though as a \textbf{partial} description of a computational state.
+\end{flushleft}
+
+\subsection{Why use assert statements}
+\begin{itemize}
+	\item Can provide useful documentation (so long as they are not over-used)
+	\item Can be placed on every code branch (it can be difficult to devise unit tests that force execution down every code branch)
+	\item With well-chosen conditions you can get a useful increase in assurance at low computational cost
+\end{itemize}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\ placeholder
+\end{description}
+\end{document}

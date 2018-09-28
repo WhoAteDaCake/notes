@@ -1,0 +1,110 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\section{Concurrency}
+\begin{flushleft}
+Threads and processes \textbf{execute concurrently} or in \textbf{parallel} and can share resources. \worddef{Multi-programming} \textbf{improves} system utilisation.\\
+A process/threads can be \textbf{interupted} at any point in time (timer, I/O). The process state (including registers) is \textbf{saved} in the \worddef{process control block}\\
+The outcome of programs may become \textbf{unpredictable}
+\begin{itemize}
+	\item Sharing data can lead to \textbf{inconsistencies} (e.g when interupted whilst manipulating data)
+	\item The outcome of execution may depend on the \textbf{order} in which instructions are carried out.
+\end{itemize}
+\end{flushleft}
+
+\section{Race conditions}
+\begin{flushleft}
+A \textit{race condition} occurs when multiple threads/processes access \textbf{shared} data and the result is dependent on the \textbf{order} in which the instructions are interleaved.
+\end{flushleft}
+
+\section{Concurrency within the OS}
+
+\subsection{Data structures}
+\begin{flushleft}
+\textbf{Kernels are preemptive} these days.
+\begin{itemize}
+	\item \textbf{Multiple} processes/thrads are running in the kernel
+	\item Kernel processes can be \textbf{interupted} at any point
+\end{itemize}
+The kernel maintains \textbf{data structures}, e.g. process tables, memory structures, open file lists, etc.
+\begin{itemize}
+	\item These data structures are accessed \textbf{concurrently/in parallel}
+	\item These can be subject to \textbf{concurrency} issues
+\end{itemize}
+The OS must make sure that interactions within the OS \textbf{do not} result in \textit{race conditions}
+\end{flushleft}
+
+\subsection{Resources}
+\begin{flushleft}
+Processes \textbf{share} resources, including memory, files, processor time, printers, I/O devices, etc. The OS must
+\begin{itemize}
+	\item The operating system must provide a \textit{locking mechanisms} to implement support \worddef{mutual exclusion} and prevent \textit{starvation} and \textit{deadlocks}
+	\item Allocate and deallocate these resources safely (i.e. avoid interference deadlocks and starvation)
+\end{itemize}
+\end{flushleft}
+
+\subsection{Critical Sections, Mutual Exclusion}
+\begin{flushleft}
+Any solution to the \worddef{critical section} problem must satisfy the following \textbf{requirements}:
+\begin{itemize}
+	\item \worddef{Mutual exclusion} only one process can be in its critical section at any one point in time
+	\item \textbf{Progress} any process must be able to enter its critical section at some point in time. Processes/Threads in the \textbf{remaining code} do not influence access to critical sections.
+	\item \textbf{Fairness/bounded waiting} processes cannot be made to wait indefinitely
+\end{itemize}
+These requirements have to be satisfied, \textbf{independent of the order} in which sequences are executed.
+\smallskip
+Approaches for mutual exclusion can be:
+\begin{itemize}
+	\item Software based: \worddef{Peterson's solution}
+	\item Hardware based \inlinecode{Java}{test_and_set(), swap_and_compare()}
+	\item Based on: Mutexes, Semaphores, Monitors
+\end{itemize}
+In addition to mutex, \worddef{deadlocks} have to be prevented.
+\end{flushleft}
+
+\subsection{Deadlocks}
+\begin{flushleft}
+Four conditions must hold for deadlocks to occur:
+\begin{itemize}
+	\item Mutual exclusion
+	\item Hold and wait condition: a resource can be held whilst requesting new resources
+	\item No preemption: resources cannot be forcefully taken away from a process
+	\item Circular wait there is a circular chain of two or more processes waiting for a resource held by the other processes.	
+\end{itemize}
+\end{flushleft}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[Multi-programming] \hfill \\ a rudimentary form of parallel processing in which several programs are run at the same time on a uniprocessor. Since there is only one processor, there can be no true simultaneous execution of different programs. Instead, the operating system executes part of one program, then part of another, and so on.
+	\item[Process control block(PCB)] \hfill \\ The role of the PCBs is central in process management: they are accessed and/or modified by most OS utilities, including those involved with scheduling, memory and I/O resource access and performance monitoring. 
+	\item [Critical section] a set of instructions in which \textbf{shared} resources between processes/threads (e.g. variables) are \textbf{changed}
+	\item [Mutual exclution(Mutex)] \hfill \\ a program object that prevents simultaneous access to a shared resource. This concept is used in concurrent programming with a critical section. Processes have to get \textbf{permission} before entering their critical section. (request a lock, hold the lock, release the lock)
+	\item [Peterson's solution] \hfill \\ a concurrent programming algorithm for \textit{mutual exclusion} that allows two or more processes to share a single-use resource without conflict, using only shared memory for communication.
+	\item [Deadlock] \hfill \\ a situation in which two computer programs sharing the same resource are effectively preventing each other from accessing the resource, resulting in both programs ceasing to function.
+\end{description}
+\end{document}

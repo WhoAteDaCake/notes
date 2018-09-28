@@ -1,0 +1,80 @@
+\documentclass{article}
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{hyperref}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+
+\graphicspath{ {./} }
+
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\section{Semaphores}
+\begin{flushleft}
+Semaphores are an approach for \textit{mutual exclusion} (and process synchronisation) provided by the operating system 
+\begin{itemize}
+	\item They contain an integer variable 
+	\item We distinguish between binary (0-1) and counting semaphores (0-N)
+\end{itemize}
+Two \textit{atomic} functions are used to manipulate semaphores: \texttt{wait()} is called when a resource is \textbf{acquired}, the counter is \textbf{decremented} \texttt{signal()/post()} is called when a resource is \textbf{released}, the counter is \textbf{incremented}
+\end{flushleft}
+
+\subsection{Approach}
+\begin{flushleft}
+Calling \texttt{wait()} will block process when the internal counter is negative (\worddef{no busy waiting})
+\begin{itemize}
+	\item The process joins the “blocked” queue 
+	\item The process state is changed from running to blocked
+	\item Control is transferred to the process scheduler
+\end{itemize}
+Calling \texttt{post()} removes a process from the blocked queue if the counter is less or equal to 0
+\begin{itemize}
+	\item The process state is changed from blocked to ready
+	\item Different queueing strategies can be employed to remove processes (e.g. FIFO, etc.)
+\end{itemize}
+\end{flushleft}
+
+\subsection{Specification}
+\begin{flushleft}
+The negative value of a semaphore is the \textbf{number of processes} waiting for the resource.\\
+\texttt{block()} and \texttt{wakeup()} are system calls provided by the operating system.\\
+\texttt{post()} and \texttt{wait()} must be \textit{atomic}.
+\begin{itemize}
+	\item Can be achieved through the use of \textit{mutexes} (or disabling interrupts in single CPU systems, hardware instructions)
+	\item \textit{Busy waiting} is moved form the \textit{critical section} to \texttt{wait()} and \texttt{post()} (which are short anyway – critical sections themselves are usually much longer)
+\end{itemize}
+\end{flushleft}
+
+\subsection{Efficiency}
+\begin{flushleft}
+Synchronising code does result in a \textbf{performance penalty}.\\
+Synchronise only when necessary and as \textbf{few instructions} as possible (synchronising unnecessary instructions will delay others from entering their critical section)
+\end{flushleft}
+
+\section{Potential difficulties}
+\begin{flushleft}
+\begin{itemize}
+	\item \textbf{Starvation}: poorly designed queueing approaches (e.g. LIFO) may result in fairness violations 	 
+	\item \textbf{Deadlocks}: two or more processes are waiting indefinitely for an event that can be caused only by one of the waiting processes.
+	\item \textbf{Priority inversion} when a high priority process (H) has to wait for a resource currently held by a low priority process (L) – and has to wait for the lower priority process to finish.\\
+	\setlength\parindent{24pt} \textit{Priority inversion} can happen in chains, e.g., a H waits for L to release a resource, and L is interrupted by a medium high priority process (M) H waits for L which is interrupted by M \textit{Priority inversion} can be prevented by implementing priority inheritance to boost L’s to the H’s priority.\\
+\end{itemize}
+\end{flushleft}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[busy waiting] \hfill \\ In software engineering, busy-waiting, busy-looping or spinning is a technique in which a process repeatedly checks to see if a condition is true, such as whether keyboard input or a lock is available.
+\end{description}
+\end{document}

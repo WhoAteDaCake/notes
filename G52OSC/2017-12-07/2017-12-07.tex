@@ -1,0 +1,102 @@
+\documentclass{article}
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{hyperref}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\section{Cloud computing}
+\subsection{What is cloud computing}
+\begin{flushleft}
+A new computational \textbf{paradigm}. \textbf{Out-source} your computation and storage needs to a well-managed data center. No worries about the physical machines: power, cooling, maintenance. Virtualisation provides the necessary \textbf{isolation} to share multiple clients on a single physical machine
+\end{flushleft}
+
+\subsection{Characteristics}
+\begin{flushleft}
+A number of characteristics define cloud data, applications services and infrastructure: 
+\begin{itemize}
+	\item Remotely hosted: services or data are hosted on remote infrastructure
+	\item No-need-to-know in terms of the underlying details of infrastructure, application interface with the infrastructure via the APIs
+	\item Ubiquitous: services or data are available from anywhere (\textbf{always on, anywhere and any place})
+	\item Flexibility and elasticity allow these systems to scale up and down at will
+	\item Utilising resources of all kinds CPU, storage, server capacity, load balancing, and databases
+	\item Commodified: the result is a utility computing model similar to traditional utilities, like gas and electricity - “\textbf{pay as much as used and needed}" !
+\end{itemize}
+\end{flushleft}
+
+\subsection{Rapid elasticity}
+\begin{flushleft}
+\textbf{Rapid elasticity} is currently one of the key challenges in Cloud Computing. Capabilities can be rapidly and elastically provisioned, in some cases \textbf{automatically}, to quickly scale out and rapidly released to scale in. To the consumer, resources often appear to be \textbf{unlimited} and can be purchased in any quantity at any time. Optimisation of the current usage will save energy! (e.g. putting unused machines to sleep). \textbf{Prediction techniques} may help alleviate the problem based on \textbf{historical data} (e.g. machine learning applied to cloud computing).
+\end{flushleft}
+
+\subsection{Migration}
+\begin{flushleft}
+Non-live Migration:
+\begin{itemize}
+	\item  Instead of shutting down the computer, we could pause the VM (\textbf{checkpointing})
+	\item Then, copy over the memory pages used by the VM to the new hardware as quickly as possible meaning less downtime, but still noticeable 
+\end{itemize}
+Live Migration:
+\begin{itemize}
+	\item the idea is to start moving the virtual machine while it is still \textbf{operational} (pre-copy memory migration)
+\end{itemize}
+\end{flushleft}
+
+\subsection{Cloud service models}
+\begin{flushleft}
+Three main service models:
+\begin{itemize}
+	\item Infrastructure as a service (Iaas)
+	\item Platform as a service (Paas)
+	\item Software as a service (Saas)
+\end{itemize}
+More recently, new services are being defined. For example, Desktop as a Service (\textbf{Daas})
+\end{flushleft}
+
+\subsubsection{Iaas}
+\begin{itemize}
+	\item Iaas provides resources of the \textbf{underlying} cloud infrastructure to customers
+	\item Virtual machines (with different OSs) and other virtualised hardware, processing, storage, networks, etc 
+	\item Example of Iaas: Amazon EC2 (Xen hypervisor - paravirtualisation)
+	\item End-user: typically a system administrator
+\end{itemize}
+
+\subsubsection{Paas}
+\begin{itemize}
+	\item Paas provides service in the form of a platform on which the customer’s applications can run
+	\item Tools to create your own applications (e.g. development environment, programming language tools)
+	\item Examples: AppEngine, Microsoft Azure, Force.com, Heroku
+	\item End-user: developers
+\end{itemize}
+
+\subsubsection{Saas}
+\begin{itemize}
+	\item Saas provides service to customer in the form of software
+	\item Applications that run on the Cloud
+	\item Examples: G-mail, Microsoft 365, Dropbox
+	\item End-user: regular users
+\end{itemize}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}

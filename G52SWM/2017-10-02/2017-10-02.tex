@@ -1,0 +1,75 @@
+\documentclass{article}
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{hyperref}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+
+\graphicspath{ {./} }
+
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\section{What is software maintenance}
+\begin{flushleft}
+	Traditionally, it means changing software \textbf{after} it has been delivered and is in use.\\
+It includes:
+\begin{itemize}
+	\item Fixing code errors
+	\item Fixing design problems
+	\item Adding additional requirements
+\end{itemize}
+Up to \textbf{80\%} of software development can be considered maintenance.
+\end{flushleft}
+
+\section{Types of maintenance}
+\begin{flushleft}
+\begin{itemize}
+	\item Corrective Maintenance
+	\begin{itemize}
+		\item Fixing errors in the system
+		\item E.g. bugs
+	\end{itemize}
+	\item Adaptive Maintenance
+	\begin{itemize}
+		\item Modifying due to changes in the environment of the software
+		\item E.g. new laws, change of business needs
+	\end{itemize}
+	\item Perfective/performance Maintenance
+	\begin{itemize}
+		\item Improving system without changing it's functionality
+		\item E.g. improving performance, ease of maintenance
+	\end{itemize}
+\end{itemize}
+\end{flushleft}
+
+\section{Requirements for maintenance}
+\begin{itemize}
+	\item Understanting the client
+	\item Understanding the code
+	\item refactoring code
+	\item Extending the code
+	\item Working as a team
+	\item Managing client expectations
+	\item Managing maintenance process
+\end{itemize}
+
+\section{Maintenance}
+
+\subsection{Class diagram}
+\begin{flushleft}
+	Show a set of classes, interfaces and collaborations, and their relationships. Addresses static design view of the system.\\
+	\textbf{Classes:} blueprints for objects. Contain data/information and perform operations.
+\end{flushleft}
+
+\end{document}

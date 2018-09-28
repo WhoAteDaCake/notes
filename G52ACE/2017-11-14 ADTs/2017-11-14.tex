@@ -1,0 +1,52 @@
+\documentclass{article}
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{hyperref}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+\section{Abstract Data Types (ADTs)}
+\begin{flushleft}
+An abstract data type (ADT) is an abstraction of a data structure
+An ADT specifies:
+\begin{itemize}
+	\item Data stored
+	\item Operations on the data
+	\item Error conditions associated with operations
+\end{itemize}
+An ADT does not \textbf{specify} the implementation \textbf{itself} - hence “abstract”
+\end{flushleft}
+
+\section{Concrete Data Types (CDTs)}
+\begin{flushleft}
+The actual date structure that we use:
+\begin{itemize}
+	\item Possibly consists of Arrays or similar data
+	\item An ADT might be implemented using different choices for the CDT
+	\item The choice of CDT will not be apparent from the interface: “data hiding” “encapsulation” – e.g. see ‘Object Oriented Methods’
+	\item The choice of CDT will affect the runtime and space usage – and so is a major topic of this module
+\end{itemize}
+\end{flushleft}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}

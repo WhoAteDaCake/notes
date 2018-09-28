@@ -1,0 +1,92 @@
+\documentclass{article}
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{hyperref}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+\section{Vector ADT}
+\begin{flushleft}
+The “Vector” is an Abstract Data Type corresponding to generalising the notion of the \textbf{Array} (concrete data type). The \textbf{key idea}: The \textit{index} of an entry in an array can be thought of as the “number of elements preceding it.\\
+For examples: \verb!http://www.cse.unsw.edu.au/~cs2011/lect/05_Stacks4b.pdf!
+\end{flushleft}
+
+\subsection{Performance}
+\begin{itemize}
+	\item In the array based implementation of a Vector 
+	\begin{itemize}
+		\item The space used by the data structure is \textbf{O(n)}
+		\item \texttt{size, isEmpty, elemAtRank} and \texttt{replaceAtRank} run in \textbf{O(1)} time
+		\item insertAtRank and removeAtRank run in \textbf{O(n)} time (Need to shift back the rest of the list)
+	\end{itemize}
+	\item If we use the array in a circular fashion (see lectures on queues)
+	\begin{itemize}
+		\item \texttt{insertAtRank(0)} and \texttt{removeAtRank(0)} run in \textbf{O(1)} time
+		\item In an \texttt{insertAtRank} operation, when the array is full, instead of throwing an exception, we can replace the array with a \textbf{larger one}
+	\end{itemize}
+\end{itemize}
+
+\subsection{Growable Array-based Vector}
+\begin{flushleft}
+In a push (\texttt{insertAtRank(t)}) operation, when the array is full, instead of throwing an exception, we can replace the array with a larger one. Strategies:
+\begin{itemize}
+	\item \textit{incremental strategy}: increase size by a constant c
+	\item \textit{doubling strategy}: double the size
+\end{itemize}
+\end{flushleft}
+
+\subsubsection{Amortised vs average case analysis}
+\begin{flushleft}
+\begin{itemize}
+	\item \textit{Amortised}: \textbf{real sequence} of \textbf{dependent} operations
+	\item \textit{Average}: Set of (possibly \textbf{independent}) operations
+\end{itemize}
+Suppose some individual operation (such as \textit{push}) takes time $T$ in the \textbf{worst-case}. Suppose do a \textbf{sequence} of operations, and there are $s$ such operations taking time $T_{s}$. Then $s * T_{s}$ is an \textit{upper-bound} (small-oh) for the total time however, such an \textit{upper-bound} might not ever occur.
+The time $T_{s}$ might well be \texttt{o($s * T_{s}$)} even in the worst-case.The \textbf{average time} per operation,
+$T_{s}/s$ is sometimes the most \textbf{relevant quantity} in practice
+\end{flushleft}
+
+\subsection{Incremental vector capacity}
+\begin{flushleft}
+If we increase array using incremental method:
+\begin{itemize}
+	\item We replace array $k = n / c$ times
+	\item The total time \texttt{T(n)} would be proportional to $n + c* k(k + 1)/2$
+	\item Because c is a constanct, runtime would be $O(n^2)$, which means that amortised time for 1 push would be $O(n^2)/n$ which is $O(n)$ 
+\end{itemize}
+\end{flushleft}
+
+\subsection{Doubling vector capacity}
+\begin{flushleft}
+For every push of cost $O(n)$ we will be able to do another $O(n)$ pushes of cost $O(1)$ before having to resize again. So the cost on resizing can be \worddef{amortised} over $n$ other $O(1)$ operations and give an average of $O(1)$ per operation.
+\begin{itemize}
+	\item We replace the array $k = log_2 n$ times (as we double it's 2x every thime, thus log2)
+	\item $n + 1 + 2 + 4 + 8 + \textrm{...} + 2^k - 1 = n + 2^k -1 = 2n -1$
+	\item $T(n)$ is $O(n)$
+	\item The amortized time of a push operation is $O(1)$
+	\item That is, no worse than if all the needed memory was \textbf{pre-assigned}!
+\end{itemize}
+\end{flushleft}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[amortized analysis] \hfill \\ Amortized time is often used when stating algorithm complexity. Instead of giving values for worst-case performance it provides an average performance. Amortized time looks at an algorithm from the viewpoint of total running time rather than individual operations.
+\end{description}
+\end{document}

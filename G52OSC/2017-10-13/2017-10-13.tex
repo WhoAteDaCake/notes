@@ -1,0 +1,190 @@
+\documentclass{article}
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{hyperref}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+
+\graphicspath{ {./} }
+
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\section{Priority Queues}
+\begin{flushleft}
+Jobs can have \textbf{different priority levels} that are \textbf{fixed}.\\
+Jobs of the \textbf{same priority} are run in \textbf{round robin} fashion\\
+Priority queues are usually implemented by using \textbf{multiple queues}, on for each priority level
+\end{flushleft}
+
+\section{Multi-level feedback queues}
+\begin{flushleft}
+Different \textbf{scheduling algorithms} can be used on \textbf{individual queues}\\
+\textbf{Feedback queues} allow \textbf{priorities to change dinamically}, i.e., jobs can \textbf{move between queues}
+\begin{itemize}
+	\item Move to \textbf{lower priority queue} if too much CPU time is used (prioritise I/O and interactive processes)
+	\item Move to \textbf{higher proprity queue} to prevent \textbf{starvation} and avoid \textbf{inversion of control}
+\end{itemize}
+\smallskip
+
+Feedback queues are highly \textbf{configurable} and offer significant flexibility. Defining characteristics of feedback queues include:
+\begin{itemize}
+	\item The \textbf{number of queues}
+	\item The \textbf{scheduling algorithms} used for individual queues
+	\item \textbf{Migration policy} between queues
+	\item Initial \textbf{access} to the queues
+\end{itemize}
+\end{flushleft}
+
+\subsection{Windows7}
+\begin{flushleft}
+An interactive system using a \worddef{preemptive scheduler} with \textbf{dynamic} priority levels. \textbf{Two} priority classes with \textbf{16} different priority levels exist
+\begin{itemize}
+	\item \textbf{Real time} processes/threads hava a \textbf{fixed} priority level
+	\item \textbf{Variable} processes/threads can have their priorities \textbf{boosted} temporarily
+\end{itemize}
+A \textbf{round robin} algorithm is used within the queues.
+\smallskip
+
+Priorities arebased on the \textbf{process} (0-15) and \textbf{thread} (+-2) base priorities.\\
+A thread's priority \textbf{dinamically} changes during execution between its base priority and the \textbf{maximum} priority whithin its class
+\begin{itemize}
+	\item Interactive \textbf{I/O} bound processes (e.g. keyboard) receive a \textbf{larger boost}
+	\item Boosting priorities prevents \worddef{priority inversion}
+\end{itemize}
+\end{flushleft}
+
+\section{Scheduling in Linux}
+
+\subsection{The completely fair scheduler}
+\begin{flushleft}
+Process scheduling has evolved over different versions of Linux to account for \textbf{multiple processors/cores}, processor \textbf{affinity}, and load balancing between cores.\\
+Linux distinguishes between two types of tasks for scheduling:
+\begin{itemize}
+	\item \textbf{Real time tasks} (to be POSIX compliant), divided into
+	\begin{itemize}
+		\item Real time FIFO tasks
+		\item Real time Round Robin tasks
+	\end{itemize}
+	\item \textbf{Time sharing tasks} using a \textit{preemptive} approach (simillar to variable in windows)
+\end{itemize}
+The most recent scheduling algorithm in Linux for \textbf{time sharing tasks} is \textit{completely fair scheduler} (CFS, before the 2.6 kernel, this was O(1) scheduler)
+\end{flushleft}
+
+\subsection{Real-Time tasks}
+\begin{flushleft}
+Real time FIFO taks have the \textbf{highest priority} and are scheduled using \textit{FCFS} approach, using \textbf{preemption if a higher priority} job shows up.\\
+Real time Round Robin tasks are preemptable by \textbf{clock interupts} and have a \textbf{time sclice} associated with them.\\
+Both approaches \textbf{cannot} guarantee hard deadlines.
+\end{flushleft}
+
+\subsection{Time Sharing Tasks (equal priority)}
+\begin{flushleft}
+The CFS \textbf{divides} the CPU time between all processes. The lenght of the \textbf{time slice} and the available CPU time are based on the \worddef{targeted latency}
+If number of tasks is very large, the context switch time will be dominant, hence a lower bound on the “time slice” is imposed by the \worddef{minimum granularity}
+\end{flushleft}
+
+\subsection{Time sharing tasks (different priority)}
+\begin{flushleft}
+A \textit{weighting scheme} is used to take different priorities into account. If processes have \textbf{different} priorities
+\begin{itemize}
+	\item Each process \textit{i} is allocated a weight \textit{w\textsubscript{i}} that reflects its priority
+	\item The "time slice" allocated to process \textit{i} is the \textbf{proportional to} (math equation here)\\
+\end{itemize}
+The tasks with the \textbf{lowest} proportional amount of “used CPU time” are selected first
+\end{flushleft}
+
+\section{Multi-processor scheduling}
+
+\subsection{Scheduling decisions}
+\begin{flushleft}
+Single processor machine: \textbf{which process (thread)} to run next (one dimensional).\\
+Multiprocessor/Core machine:
+\begin{itemize}
+	\item Which process (thread) to run \textbf{where}, which CPU ?
+	\item Which process (thread) to run \textbf{when}
+\end{itemize}
+\end{flushleft}
+
+\subsection{Shared queues}
+\begin{flushleft}
+A single or multi-level queue \textbf{shared} between all CPUs.\\
+Advantage: automatic \textit{load balancing}\\
+Disadvantage:
+\begin{itemize}
+	\item \worddef{Contention} for the queues (locking is needed)
+	\item Processor affinity:
+	\begin{itemize}
+		\item Cache becomes \textbf{invalid} when moving to different CPU
+		\item Translation look aside buffers (TLBs - part of MMU) become invalid
+	\end{itemize}
+\end{itemize}
+Windows will allocate \textbf{highest priority} threads to the individual CPUs/cores
+\end{flushleft}
+
+\subsection{Private queues}
+\begin{flushleft}
+Each CPU has a \textbf{private} set of queues\\
+Advantages:
+\begin{itemize}
+	\item CPU affinity is automatically satisfied
+	\item Contention fro shared queue is minimised
+\end{itemize}
+Disadvantages: less \textit{load balancing}\\
+\textbf{Push} and \textbf{pull} migration between CPUs is possible
+\end{flushleft}
+
+\section{Related vs unrelated threads}
+\begin{flushleft}
+\textit{Related}: multiple threads that \textbf{communicate} with one another and \textbf{ideally run} together\\
+\textit{Unrelated}: e.g. processes/threads that are \textbf{independent}, possibly started by different users, running different programs
+\end{flushleft}
+
+\section{Scheduling Related Threads}
+
+\subsection{Working together}
+\begin{flushleft}
+The aim is to get threads \textbf{running}, as much as possible, at the \textbf{same time} across \textbf{multiple CPUs}\\
+Approches include
+\begin{itemize}
+	\item Space scheduling
+	\item Gang scheduling
+\end{itemize}
+\end{flushleft}
+
+\subsection{Space Scheduling}
+\begin{flushleft}
+Approach:
+\begin{itemize}
+	\item \textit{N} threads are allocated to \textit{N} \textbf{dedicated} CPUs.
+	\item \textit{N} threads are kept waiting until \textit{N} CPUs are available.
+	\item \textbf{Non-preemptive}, i.e. blocking calls result in \textbf{idle} \textbf{CPUs} (less context switching overhead but results in CPU idle time)
+\end{itemize}
+The number \textit{N} can be \textbf{dynamically} adjusted to match processor capacity
+\end{flushleft}
+
+\subsection{Gang Scheduling}
+\begin{flushleft}
+Time slices are \textbf{synchronised} and the scheduler \textbf{groups} threads together to run simultaneosly (as much as possible). A \textit{preemptive} algorithm. \textbf{Blocking} threads result in idle CPUs. A scheduling algorithm for parallel systems that schedules related threads or processes to run \textbf{simultaneously} on different processors. Usually these will be threads all belonging to the same process, but they may also be from different processes. For example, when the processes have a producer-consumer relationship, or when they all come from the same MPI(Message Passing Interface) program.
+\end{flushleft}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[priority inversion] \hfill \\ problematic scenario in scheduling in which a high priority task is indirectly preempted by a lower priority task effectively "inverting" the relative priorities of the two tasks.
+	\item[preemptive scheduler] \hfill \\ Tasks are usually assigned with priorities. At times it is necessary to run a certain task that has a higher priority before another task although it is running. Therefore, the running task is interrupted for some time and resumed later when the priority task has finished its execution.
+	\item[targeted latency] \hfill \\ CFS sets a target for its approximation of the “infinitely small” scheduling duration in perfect multitasking. This target is called the targeted latency. every process should run \textbf{atleast once} during this interval
+	\item[minimum granularity] \hfill \\ CFS imposed a floor on the timeslice assigned to each process.This floor is called the minimum granularity. Minimum time a task will be be allowed to run on CPU before being pre-empted out.
+	\item[contention] \hfill \\ describes conflicts between different virtual machines in a virtualized hardware system where they are competing for the same resources. The term 'CPU contention’ might describe an event or series of events, or it might generically refer to situations where these kinds of conflicts occur.
+\end{description}
+\end{document}

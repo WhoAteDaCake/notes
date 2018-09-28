@@ -1,0 +1,85 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\section{Dijkstra’s Algorithm}
+\begin{itemize}
+	\item To find the shortest paths (distances) from the start vertex s:
+	\item keep a priority queue PQ of vertices to be processed
+	\item for each u in the PQ maintain dist(s,u) as the shortest current known path length from s to u
+	\item e.g. keep an array with current known shortest distances from s to every vertex (initially set to be infinity for all but s, and 0 for s)
+	\item always order the queue so that the vertex with the shortest distance is at the front.
+\end{itemize}
+
+\subsection{Pseudo code}
+\begin{lstlisting}
+1:	function Dijkstra(Graph, source, target):
+2:	for each vertex v in Graph:	// Initialization
+3:	dist[v] := infinity	// initial distance from source to vertex v is set to infinite
+4:	previous[v] := undefined	// Previous node in optimal path from source
+5:	dist[source] := 0	// Distance from source to source
+6:	Q := the set of all nodes in Graph	// all nodes in the graph are unoptimized - thus are in Q
+7:	while Q is not empty:	// main loop
+8:	u := node in Q with smallest dist[ ]
+9:	remove u from Q
+10: if u === target return u;
+10:	for each neighbor v of u:	// where v has not yet been removed from Q.
+11:	alt := dist[u] + dist_between(u, v)
+12:	if alt < dist[v]	// Relax (u,v)
+13:	dist[v] := alt
+14:	previous[v] := u
+15:	return previous[ ]
+
+\end{lstlisting}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}

@@ -1,0 +1,163 @@
+\documentclass{article}
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{hyperref}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+\section{Virtualisation}
+\begin{flushleft}
+Consider a company that has an e-mail server, a web server, an FTP server, etc. All these servers usually run on \textbf{separate machines} because of the load and/or primarily separate machines. Sysadmins simply do not trust the OS to run forever with \textbf{no failure}. In separate machines, if one of these servers fail, at least the other ones are \textbf{not affected}. Is this a good policy?
+\end{flushleft}
+
+\subsection{Virtual machines}
+\begin{itemize}
+	\item \textbf{Abstract hardware} of a single computer into several \textbf{different execution environments}. An old idea, actually, from 60s and 70s.
+	\item Similar to layered approach, but layer creates \textbf{virtual system} (virtual machine, or VM) on which operation systems or applications can run several components.
+\end{itemize}
+
+\subsection{Motivation}
+\begin{flushleft}
+A failure in a particular VM does not result in \textbf{bringing down} any others. Of course, a failure at the server level would result in an even more \textbf{catastrophic} situation. Nevertheless, most service outages do not come from faulty hardware, but due to \textbf{unreliable software} (especially OSs).
+\bigskip
+We have already seen that an OS virtualises : 
+\begin{itemize}
+	\item Virtual memory
+	\item Virtual file systems 
+\end{itemize}
+However, a VM virtualises an \textbf{entire physical machine}: Providing the illusion that software has full control over the hardware. As implication, you can run \textbf{multiple instances} of an OS (or different OS) on the \textbf{same physical machine}.
+\end{flushleft}
+
+\subsection{Components}
+\begin{itemize}
+	\item Host - underlying \textbf{hardware system}
+	\item \textbf{Virtual machine manager} (VMM) or hypervisor - \textbf{creates and runs} virtual machines by providing an \textit{interface} that is identical to the host (Except in the case of paravirtualization)
+	\item Guest - process provided with \textbf{virtual copy} of the host (Usually an operating system)
+\end{itemize}
+
+\subsection{Main properties}
+\begin{itemize}
+	\item Isolation: each VM is \textbf{independent}, so failures do not affect the host.
+	\item Encapsulation: state can be \textbf{captured} into a file. Check pointing, migration. It is easier than migrating processes. We merely have to move the memory image that contains OS tables.
+	\item Interposition: All guest actions go through the monitor (\textbf{VMM}), which can inspect, modify, deny operations.
+	\item Fewer physical machines saves money on hardware and electricity.
+	\item Run legacy applications.
+\end{itemize}
+
+\subsection{Requirements}
+\begin{itemize}
+	\item Safety: the hypervisor should have \textbf{full control} of the virtualised resources (Resources sharing).
+	\item Fidelity: the behaviour of a program on a VM should be \textbf{identical} to that of the same program running on bare hardware. What if we run privileged instructions? (Virtualisation Technology (VT) - Hardware support). 
+	\item Efficiency: much of the code in the VM should run \textbf{without intervention} by the hypervisor (Overheads). For instance, with VMware:
+	\begin{itemize}
+		\item CPU-intensive apps: \verb!2-10%! overhead
+		\item I/O intensive apps: \verb!25-60%! overhead
+	\end{itemize}
+\end{itemize}
+
+\subsection{Approaches}
+\begin{itemize}
+	\item Full virtualisation: It tries to trick the guest into believing that it \textbf{has the entire system}. 
+	\item Paravirtualisation: VM does not simulate hardware. It offers a set of \textit{hypercalls} which allows the guest to send explicit requests to the hypervisor (as a system call offers kernel services to applications).
+	\item Process-level virtualisation: The aim is to simply allow a process that was \textbf{written for a different OS} to run. For instance, Wine in Linux to run Windows applications, Cygwin to run Linux shell on Windows.
+\end{itemize}
+
+\section{Virtual Machines}
+\subsection{Types of hypervisors}
+\begin{itemize}
+	\item \textbf{Natives} (Type 1): Technically, it is like an OS, since it is the only program running in the most privileged mode. Its job is to \textbf{support multiple copies} of the actual hardware.
+	\item \textbf{Hosted} (Type 2): It relies on a OS to \textbf{allocate} and \textbf{schedule} resources, very much like a \textbf{regular process}.
+\end{itemize}
+
+\subsection{Naive virtual machines}
+\begin{flushleft}
+Hypervisor installs \textbf{directly on hardware}. The hypervisor is the \textbf{real kernel}. (Unmodified) \textbf{OS runs in user mode}.
+\begin{itemize}
+	\item It seems to be in kernel model: virtual kernel mode.
+	\item Privileged instructions need to be processed by the \textbf{Hypervisor}.
+	\item Hardware VT technology will be \textbf{necessary}.
+\end{itemize}
+Acknowledged as \textbf{preferred architecture} for high-end servers. Paravirtualisation-based VMs are typically based on type 1 hypervisors.\\
+Examples: VMware ESX Server, Xen, Microsoft Viridian (2008)
+\end{flushleft}
+
+\subsection{Hosted virtual machines}
+\begin{flushleft}
+\begin{itemize}
+	\item Installs and runs VMs as an \textbf{application} on an existing OS.
+	\item Relies on \textbf{host scheduling}. Therefore, it may not be suitable for \textbf{intensive} VM workloads.
+	\item I/O path is \textbf{slow} because it requires world switch.
+	\item Process-level virtualisation will rely on \textbf{type 2} hypervisors.
+	\item It needs an OS.
+\end{itemize}
+Examples: VMware Player/Workstation/Server, Microsoft Virtual PC/Server, Parallels Desktop
+\end{flushleft}
+
+\section{Requirements for virtualisation}
+\begin{flushleft}
+A hypervisor must \textbf{virtualise}:
+\begin{itemize}
+	\item Privileged instructions (Exceptions and interruptions)
+	\item CPU
+	\item Memory
+	\item I/O devices
+\end{itemize}
+Approaches will be similar to what we did with OSs. A bit \textbf{simpler} in functionality and implementing a different abstraction: Hardware interface vs. OS interface.
+\end{flushleft}
+
+\subsection{Virtualise priveledged instructions}
+\begin{flushleft}
+It is not safe to let \textbf{guest kernel} run in \textbf{kernel mode}. So a VM needs two modes: \textit{virtual user mode} and \textit{virtual kernel mode}. Both of which run in \textbf{real user} mode! What happens when the guest OS executes an instruction that is allowed only when the \textbf{CPU really is in kernel mode}? (e.g. map virtual pages to physical pages)
+\begin{itemize}
+	\item Type-1 hypervisors: In CPUs without Virtual Technology (VT), the instruction fails, and the OS crashes.
+	\item Type-2 hypervisors could work without VT - privileged instructions are emulated (\textbf{binary translation})
+\end{itemize}
+\bigskip
+How does switch from virtual \textbf{user mode} to virtual \textbf{kernel mode} occur?
+\begin{itemize}
+	\item Attempting a privileged instruction in user mode causes an \textbf{error} it is trapped
+	\item VMM gains control, analyses error, executes operation as \textbf{attempted by guest}
+	\item Returns control to guest in user mode
+	\item Known as \textit{trap-and-emulate}
+\end{itemize}
+\end{flushleft}
+
+\subsection{CPU}
+\begin{itemize}
+	\item VMMs need to \textit{multiplex} VMs on CPU. But, how can we do that?
+	\item \textbf{Time-slice the VMs}
+	\item Each VM will \textbf{timeslice} its OS/Applications during its quantum.
+	\item For type-1: we will need a relatively simple scheduler (E.g. round robin, work-conserving (give unused quantum to other VMs))
+\end{itemize}
+
+\subsection{Memory}
+\begin{flushleft}
+The hypervisor \textbf{partitions} memory among VMs. It assigns \textbf{hardware pages} to VMs. It needs to \textbf{control} mappings for isolation. In each VM, the OS creates and manages page tables. But these tables \textbf{are not used} by the MMU. For each VM, the hypervisor creates a \textbf{shadow page table} that maps virtual pages used by the VM onto the actual pages the hypervisor gave it.
+\end{flushleft}
+
+\subsection{Events and IO}
+\begin{flushleft}
+Guest OSs \textbf{cannot} interact directly with I/O devices - but the guest OS \textbf{thinks} it “owns” the device (e.g. disk). VMM \textbf{receives interrupts} and exceptions.
+\begin{itemize}
+	\item Type I hypervisors \textbf{run the drivers}.
+	\item Type II hypervisors: Driver knows about VMM and \textbf{cooperates} to pass the buck to a \textbf{real device driver} on the underlying host OS
+\end{itemize}
+\end{flushleft}
+
+\end{document}

@@ -1,0 +1,52 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\section{Application and requirements}
+	\begin{itemize}
+		\item Spell Checkers
+		\item Spam Filters
+		\item Intrusion Detection Systems
+		\item Search Engines
+		\item Plagiarism Detection
+		\item Bioinformatics
+		\item Digital Forensics
+		\item Information Retrieval Systems
+	\end{itemize}
+	\begin{flushleft}
+		given a text $T$, pattern $P$, $T$ and $P$ are finite sequences of characters determine if $P$ occurs in $T$
+	\end{flushleft}
+
+	\begin{flushleft}
+		Parts of this is on blue notebook
+	\end{flushleft}
+
+\pagebreak
+
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}

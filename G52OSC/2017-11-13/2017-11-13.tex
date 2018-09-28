@@ -1,0 +1,133 @@
+\documentclass{article}
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{hyperref}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\section{Resident sets}
+\subsection{Size}
+\begin{flushleft}
+How many pages should be allocated to individual processes:
+\begin{itemize}
+	\item Small \worddef{resident sets} enable to store more processes in memory means \textbf{improved} CPU utilisation
+	\item Small resident sets may result in \textbf{more} page faults
+	\item Large resident sets may \textbf{no longer reduce} the page fault rate (diminishing returns) 
+\end{itemize}
+A trade-off exists between the sizes of the resident sets and system utilisation.Resident set sizes may be \textbf{fixed} or \textbf{variable} (i.e. adjusted at runtime). For \textbf{variable sized} resident sets, replacement policies can be:
+\begin{itemize}
+	\item \textbf{Local}: a page of the same process is replaced
+	\item \textbf{Global}: a page can be taken away from a different process
+\end{itemize}
+ Variable sized sets require careful evaluation of their size when a local scope is used (often based on the \textbf{working set} or the \textbf{page fault frequency}).
+\end{flushleft}
+
+\section{Working set}
+\begin{flushleft}
+The \textit{resident set} comprises the set of \textbf{pages of the process} that are in memory. The \worddef{working set} $W(t,k)$ comprises the set of \textbf{referenced} pages in the last \textbf{k} (= working set window) \textit{virtual time units}. For the process k can be defined as “\textbf{memory references}” or as “\textbf{actual process time}”
+\begin{itemize}
+	\item The set of \textbf{most recently} used pages
+	\item The set of pages used within a pre-specified \textbf{time interval}
+\end{itemize}
+The working set size can be used as a \textbf{guide} for the \textbf{number frames} that should be allocated to a process
+\end{flushleft}
+
+\subsection{Defining and monitoring working sets}
+\begin{flushleft}
+The \textit{working set} is a \textbf{function} of time \textbf{t}:
+\begin{itemize}
+	\item Processes \textbf{move between localities}, hence, the pages that are \textbf{included} in the working set change over time 	
+	\item Stable intervals \textbf{alternate} with intervals of \textbf{rapid change} 
+\end{itemize}
+$|W(t,k)|$ is then variable in time. Specifically: \[1 \leq |W(t,k)| \leq min(k,N) \]
+Where $N$ is the total number of pages of the process.
+\bigskip
+
+Choosing the right value for k is \textbf{paramount}:
+\begin{itemize}
+	\item Too small: \textbf{inaccurate}, pages are missing
+	\item Too large: too many \textbf{unused} pages present
+	\item Infinity: \textbf{all pages} of the process are in the working set 
+\end{itemize}
+Working sets can be used to \textbf{guide} the size of the resident sets
+\begin{itemize}
+	\item Monitor the working set
+	\item Remove pages from the resident set that are not in the working set 
+\end{itemize}
+The working set is costly to maintain \verb!->! page fault frequency (\textbf{PFF}) can be used as an approximation.
+\begin{itemize}
+	\item  If the PFF is increased \verb!->! we need to \textbf{increase} k.
+	\item If PFF is very reduced \verb!->! we may try to \textbf{decrease} k
+\end{itemize}
+\end{flushleft}
+
+\section{Replacement Sets}
+\begin{flushleft}
+\textbf{Global} replacement policies can select frames from the \textbf{entire set}, i.e., they can be “taken” from other processes.
+\begin{itemize}
+	\item Frames are allocated \textbf{dynamically} to processes
+	\item Processes \textbf{cannot control} their own page fault frequency, i.e., the PFF of one process is influenced by other processes.
+\end{itemize}
+\textbf{Local} replacement policies can only select frames that are allocated to the \textbf{current} process 
+\begin{itemize}
+	\item Every process has a \textbf{fixed} fraction of memory
+	\item The locally “oldest page” \textbf{is not} necessarily the globally “oldest page” 
+\end{itemize}
+Windows uses a \textbf{variable approach} with local replacement. Page replacements algorithms explained before can use \textbf{both policies}.
+\end{flushleft}
+
+\section{Paging daemon}
+\begin{flushleft}
+It is more efficient to \textbf{proactively keep} a number of \textbf{free pages} for future page faults. If not, we may have to find a page to \textbf{evict} and we write it to the drive (if modified) first when a page fault occurs. Many systems have a background process called a \textit{paging daemon}.
+\begin{itemize}
+	\item This process runs at \textbf{periodic intervals}
+	\item It inspect the \textbf{state of the frames} and, if too few pages are free, it selects pages to \textbf{evict} (using page replacement algorithms)
+\end{itemize}
+Paging daemons can be combined with \textbf{buffering} (free and modified lists) \verb!->! write the modified pages but keep them in \textit{main memory} when possible.
+\end{flushleft}
+
+\section{Trashing}
+\begin{flushleft}
+Assume \textbf{all} available pages are in \textbf{active use} and a new page needs to be loaded: The page that will be evicted will have to be reloaded soon afterwards, i.e., it is still active. \textit{Thrashing} occurs when pieces are swapped out and loaded again immediately.\\
+If CPU utilisation is too low, then scheduler increases degree of multi-programming
+\begin{itemize}
+	\item Frames are allocated to new processes and \textbf{taken away} from existing processes
+	\item I/O requests are \textbf{queued up} as a consequence of page faults
+	\item CPU utilisation \textbf{drops} further \verb!->! scheduler increases degree of multi-programming
+\end{itemize}
+\end{flushleft}
+
+\subsection{Causes/Solutions}
+\begin{flushleft}
+Causes of thrashing include:
+\begin{itemize}
+	\item The degree of multi-programming is too high, i.e., the total \textbf{demand} (i.e., the sum of all working set sizes) \textbf{exceeds} supply (i.e. the \textbf{available frames})
+	\item An individual process is allocated too \textbf{few pages}
+\end{itemize}
+This can be \textbf{prevented} by, e.g., using good page replacement policies, reducing the \textbf{degree of multi-programming} (medium term scheduler), or adding more memory. The page fault frequency can be used to \textbf{detect} that a system is thrashing.
+\end{flushleft}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[resident set] \hfill \\ In computing, resident set size (RSS) is the portion of memory occupied by a process that is held in main memory (RAM).
+	\item [working set] \hfill \\ Working set is a concept in computer science which defines the amount of memory that a process requires in a given time interval.
+\end{description}
+\end{document}

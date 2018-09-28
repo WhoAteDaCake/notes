@@ -1,0 +1,161 @@
+\documentclass{article}
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{hyperref}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\section{Software maintenance}
+\begin{flushleft}
+Software maintenance is the modification of a software product after delivery to correct faults, to improve performance or other attributes. It includes:
+\begin{itemize}
+	\item Fixing coding errors
+	\item Fixing design problems
+	\item Adding additional requirements 
+\end{itemize}
+Up to \verb!80%! of software development can be considered maintenance.
+\end{flushleft}
+
+\subsection{Types}
+\begin{itemize}
+	\item Corrective
+	\item Adaptive
+	\item Perfective/performance Maintenance
+\end{itemize}
+
+\subsection{Challenges}
+\begin{itemize}
+	\item Understanding the client – what do you need to do?
+	\item Understanding the code – where do you need to do it?
+	\item Refactoring the code – changing existing code
+	\item Extending the code – adding to existing code
+	\item Working as a team – how to actually do the work?
+	\item Managing client expectations
+	\item Managing maintenance process
+\end{itemize}
+
+\section{Diagrams}
+\subsection{Class diagram}
+\begin{flushleft}
+Class diagram is the main building block of object-oriented modelling. It is used for \textbf{general conceptual modelling} of the systematic of the application, and for detailed modelling translating the models into programming code.The classes in a class diagram represent both the main elements, interactions in the application, and the classes to be programmed.
+\end{flushleft}
+
+\subsubsection{Why}
+\begin{itemize}
+	\item Can be mapped directly with object-oriented language.
+	\item Helps to define complex systems.
+	\item Is a programmatic view of the system.
+\end{itemize}
+
+\subsection{Use case diagrams}
+\begin{flushleft}
+Usually referred to as \textbf{behavior diagrams} used to describe a set of \textbf{actions} (use cases) that some system or systems (subject) \textbf{should or can} perform in collaboration with one or more external users of the system (actors).
+\end{flushleft}
+
+\subsubsection{Why}
+\begin{itemize}
+	\item Easy for stakeholders to understand
+	\item Show relationships between and among the actors and the use cases.
+	\item Define functional requirements.
+	\item Describe the system functions from the perspective of system users and in a manner they understand.
+\end{itemize}
+
+\subsection{Activity diagram}
+\begin{flushleft}
+The basic usage of activity diagram is similar to other four UML diagrams. The specific usage is to model the control flow from one activity to another. This control flow does not include messages. Activity diagram is suitable for modeling the activity flow of the system.
+\end{flushleft}
+
+\subsubsection{Why}
+\begin{itemize}
+	\item Show activity flow from one object to another.
+	\item Describe the functionality of each object in the system
+	\item Show whether actors can perform cases together or independently from one another.
+	\item Allow you to think functionally.
+\end{itemize}
+
+\subsection{Sequence diagrams}
+\begin{flushleft}
+Sequence diagrams are a \textbf{temporal} representation of objects and their interactions; they shows the objects and actors taking part in a collaboration at the top of dashed lines
+\end{flushleft}
+\subsubsection{Why}
+\begin{itemize}
+	\item These can help to predict how a system will behave
+	\item Discover responsibilities a class may need to have.
+\end{itemize}
+
+\subsection{State machine diagram}
+\begin{flushleft}
+State machine diagram is a \textbf{behavior} diagram which shows discrete behavior of a part of designed system through finite state transitions.
+\end{flushleft}
+
+\section{Build scripts}
+\begin{flushleft}
+A set of instructions for how the project should be ‘compiled’ or built. As projects get bigger or more complex, or rely on more external resources, custom build scripts are needed.
+\begin{itemize}
+    \item They can build in dependencies, package files, run tests, deploy software etc.
+    \item They also help to prevent human error.
+	\item Portable  Configurable
+	\item Can script other external processes – Testing – Metrics – Deployment
+	\item Ensures consistent compiles and less Classpath etc. problems
+\end{itemize}
+\end{flushleft}
+
+\section{Patterns and design}
+\begin{flushleft}
+\textbf{SOLID} principles:
+\begin{itemize}
+	\item Single responsibility principle - changes to only one part of the software's specification should be able to affect the specification of the class
+	\item Open/closed principle	 -  Classes should be extendible, but not modifiable. That means that adding a new field to a class is fine, but changing existing things are not. Other components on the program may depend on said field.
+	\item Liskov substitution principle - objects in a program should be replaceable with instances of their subtypes without altering the correctness of that program. (Basically work with subclasses of a class)
+	\item Interface segregation principle - Keep your interfaces the smallest you can. (Use iV2, iV1 rather than iV1V2)
+	\item Dependency inversion principle - Objects should not instantiate their dependencies, but they should be passed to them.
+\end{itemize}
+\end{flushleft}
+
+\subsection{Object model}
+\begin{itemize}
+	\item \textbf{Abstraction} – Denotes the essential characteristics of an object that distinguish it from all other kinds of objects.
+	\item Encapsulation: – mechanism for restricting direct access to some of the object's components
+	\item Modularity: property of a system that has been decomposed into a set of cohesive and loosely coupled modules (classes).
+	\item Hierarchy: A ranking or ordering of abstractions. Classes at the same level of the hierarchy should be at the same level of abstraction
+\end{itemize}
+
+\subsection{Object oriented concepts}
+\begin{itemize}
+	\item \textbf{Data Abstraction} – hides all but the relevant data about an object in order to reduce complexity and increase efficiency.
+	\item \textbf{Inheritance} – defines implementation of a class in terms of another's
+	\item \textbf{Polymorphism} present the same interface for differing underlying forms (data types).
+	\item \textbf{Interfaces} describes the behavior or capabilities of a class without committing to a particular implementation of that class
+\end{itemize}
+
+\subsection{Design patterns}
+\begin{itemize}
+	\item Adapter Pattern (Structural) This pattern involves a single class which is responsible to join functionalities of independent or incompatible interfaces.
+	\item Factory Method Pattern (Creational). With the Factory Method pattern we create objects without exposing the creation logic to the client and refer to newly created object using a common interface.
+	\item Observer Pattern (Behavioural). Observer pattern is used when there is one-to-many relationship between objects such as if one object is modified, its dependent objects are to be notified automatically
+	\item State Pattern (Behavioural) We create objects which represent various states and a context object whose behavior varies as its state object changes.
+\end{itemize}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}

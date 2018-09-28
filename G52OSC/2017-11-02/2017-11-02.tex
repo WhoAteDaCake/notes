@@ -1,0 +1,138 @@
+\documentclass{article}
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{hyperref}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+\section{Dynamic Partitioning}
+\subsection{Allocating Available Memory: First Fit}
+\begin{flushleft}
+\textit{First fit algorithm} starts scanning from the start of the linked list until a link is found which represents free space of sufficient size.
+\begin{itemize}
+	\item If requested space is the \textbf{exact} same size as the “hole”, \textbf{all the space} is allocated
+	\item Else, the free link is split into two: \textbf{The first} entry is set to the size requested and marked “used”. \textbf{The second} entry is set to remaining size and marked “free”
+\end{itemize}
+\end{flushleft}
+
+\subsection{Allocating Available Memory: Next Fit}
+\begin{flushleft}
+The next fit algorithm maintains a record of where it got to:
+\begin{itemize}
+	\item  It restarts its search from \textbf{where it stopped} last time
+	\item It gives an \textbf{even} chance to all memory to get allocated (first fit concentrates on the start of the list) 
+\end{itemize}
+However, simulations have shown that next fit actually gives \textbf{worse} performance than first fit!
+\end{flushleft}
+
+\subsection{Allocating Available Memory: Best Fit}
+\begin{flushleft}
+\textbf{The best fit algorithm} always searches the \textbf{entire linked list} to find the smallest hole big enough to satisfy the memory request.
+\begin{itemize}
+	\item It is \textbf{slower} than first fit
+	\item It also results in \textbf{more wasted memory} (memory is more likely to fill up with tiny - useless - holes)
+\end{itemize}
+\end{flushleft}
+
+\subsection{Allocating Available Memory: Worst Fit}
+\begin{flushleft}
+\textbf{Tiny holes} are created when best fit split an empty partition.The worst fit algorithm finds the \textbf{largest} available empty partition and splits it.
+\begin{itemize}
+	\item The left over part will still be large (and potentially more useful)
+	\item Simulations have also shown that worst fit is not very good either!
+\end{itemize}
+\end{flushleft}
+
+\subsection{Allocating Available Memory: Quick Fit and Others}
+\begin{flushleft}
+Quick fit maintains lists of commonly used sizes
+\begin{itemize}
+	\item For example a separate list for each of 4K, 8K, 12K, 16K, etc., holes
+	\item Odd sizes can either go into the nearest size or into a special separate list 
+\end{itemize}
+It is much \textbf{faster} to find the required size hole using \textit{quick fit}. Similar to best fit, it has the problem of \textbf{creating many tiny holes}. Finding neighbours for coalescing (combining empty partitions) becomes more \textbf{difficult/time consuming}.
+\end{flushleft}
+
+\subsection{Summary}
+\begin{itemize}
+	\item First fit: allocate first block that is large enough
+	\item Next fit: allocate next block that is large enough, i.e. starting from the current location
+	\item Best fit: choose block that matches required size closest - O(N) complexity
+	\item Worst fit: choose the largest possible block - O(N) complexity
+\end{itemize}
+
+\section{Managing available memory}
+\subsection{Coalescing}
+\begin{flushleft}
+\textit{Coalescing} (joining together) takes place when two adjacent entries in the linked list become free. Both neighbours are examined when a block is freed.
+\begin{itemize}
+	\item If either (or both) are also free
+	\item Then the two (or three) entries are \textbf{combined} into one larger block \textbf{by adding up} the sizes
+	\item The earlier block in the linked list gives the start point
+	\item The separate links are \textbf{deleted} and a \textbf{single link} inserted
+\end{itemize}
+\end{flushleft}
+
+\subsection{Compacting}
+\begin{flushleft}
+Even with \textit{coalescing} happening automatically, free blocks may still distributed across memory.\\
+\textit{Compacting} can be used to \textbf{join} free and used memory (but is time consuming). Compacting is more \textbf{difficult and time consuming} to implement than coalescing (processes have to be moved).Each process is \textbf{swapped} out and free space coalesced. Process \textbf{swapped back} in at lowest available location
+\end{flushleft}
+
+\subsection{Allocation Schemes}
+\begin{flushleft}
+Different contiguous memory allocation schemes have different advantages/disadvantages:
+\begin{itemize}
+	\item Mono-programming is \textbf{easy} but does result in \textbf{low} resource utilisation
+	\item Fixed partitioning facilitates multi-programming but results in \textbf{internal fragmentation}
+	\item Dynamic partitioning facilitates multi-programming, reduces internal fragmentation, but results in \textbf{external fragmentation} (allocation methods, coalescing, and compacting help) 
+\end{itemize}
+\end{flushleft}
+
+\section{Paging}
+\begin{flushleft}
+\textit{Paging} uses the principles of fixed partitioning and code re-location to devise a new non-contiguous management scheme:
+\begin{itemize}
+	\item Memory is \textbf{split into much smaller blocks} and one or multiple blocks are allocated to a process e.g., a 11KB process would take up 3 blocks of 4 KB
+	\item These blocks \textbf{do not} have to be contiguous in main memory, but the process still perceives them to be \textbf{contiguous}
+	\item Benefits compared to contiguous schemes include: \textit{Internal fragmentation} is reduced to the last “block” only. There is \textbf{no external fragmentation}, since physical blocks are stacked directly onto each other in main memory.
+\end{itemize}
+A page is a small block of contiguous memory in the \textbf{logical} address space, i.e. as seen by the process.A frame is a small contiguous block in \textbf{physical} memory
+\end{flushleft}
+
+\subsection{Relocation}
+\begin{flushleft}
+Logical address (page number, offset within page) needs to be \textbf{translated into a physical address} (frame number, offset within frame)\\.
+Multiple “base registers” will be required:
+\begin{itemize}
+	\item Each logical page needs a \textbf{separate “base register”} that specifies the start of the associated frame I.e, a set of base registers has to be maintained for each process
+	\item The base registers are stored in the \textbf{page table}
+\end{itemize}
+\bigskip
+
+The page table can be seen as a function, that \textbf{maps} the page number of the logical address onto the frame number of the physical address frameNumber=f(pageNumber). The \textbf{page number} is used as \textbf{index} to the page table that lists the number of the associated frame, i.e. it contains the location of the frame in memory.\\
+Every process \textbf{has its own page table} containing its own “base registers”. The operating system maintains a list of free frames.
+\end{flushleft}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}

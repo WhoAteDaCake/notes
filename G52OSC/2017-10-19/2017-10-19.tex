@@ -1,0 +1,92 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\section{Mutual exclusion}
+\begin{flushleft}
+Mutual exclusion is a program object that prevents simultaneous access to a shared resource. This concept is used in concurrent programming with a critical section. Processes have to get permission before entering their critical section. (request a lock, hold the lock, release the lock).
+\end{flushleft}
+
+\subsection{Approaches}
+\begin{itemize}
+	\item \textbf{Software based} Peterson's solution 
+	\item \textbf{Hardware based} \inlinecode{C}{test_and_set(), swap_and_compare()}
+	\item \textbf{Os based} mutexes and semaphores
+	\item \textbf{Monitors}: software construct within the programming languages
+\end{itemize}
+
+\subsection{Peterson's solution}
+\begin{flushleft}
+Peterson’s solution is a \textbf{software based} solution which worked well on older machines Two shared variables are used:
+\begin{itemize}
+	\item turn: indicates \textbf{which process is next} to enter its critical section 
+	\item boolean flag[2]: indicates that a process is \textbf{ready} to enter its critical section 
+\end{itemize}
+Two processes execute in \textbf{strict alternation} (can be generalised to multiple processes).
+\end{flushleft}
+
+\subsection{Disabling interupts}
+\begin{flushleft}
+Disable interrupts whilst executing a critical section and prevent interruption (i.e., interrupts from timers, I/O devices, etc.). While disabling interrupts “may” be appropriate on a single CPU machine. This is \textbf{insufficient} on modern multi-core/multi processor machines.\\
+Implement \inlinecode{C}{test_and_set() and swap_and_compare()} instructions as a set of atomic (uninterruptible) instructions 
+\begin{itemize}
+	\item Reading and setting the variable(s) is done as one “complete” set of instructions 
+	\item If \inlinecode{C}{test_and_set() or compare_and_swap()} are called simultaneously, they will be executed sequentially 
+\end{itemize}
+They are used in in combination with global lock variables, assumed to be true if the lock is in use. \textbf{However} they are hardware instructions and (usually) not \textbf{directly accessible} to the user.\\
+Rembember, the OS hides the “bare metal” from the user. Other disadvantages include:
+\begin{itemize}
+	\item Busy waiting is used 
+	\item Deadlock is possible, e.g. when two locks are requested in opposite orders in different threads
+\end{itemize}
+The OS uses the hardware instructions to implement higher level mechanisms/instructions for mutual exclusion, i.e. mutexes and semaphores
+\end{flushleft}
+
+\subsection{Mutexes}
+\begin{flushleft}
+\textit{Mutexes} are an approach for mutual exclusion provided by the operating system containing a boolean lock variable to indicate availability. The lock variable is set to true if the lock is available (process can enter critical section), false if not.\\
+Two atomic functions are used to manipulate the mutex:
+\begin{itemize}
+	\item \texttt{acquire()}: called before entering a critical section, boolean set to false.
+	\item \texttt{release()}: called after exiting the critical section, boolean set to true again
+\end{itemize}
+
+Functions \texttt{acquire()} and \texttt{release()} must be atomic instructions. No interrupts should occur between reading and setting the lock. The process that acquires the lock must release the lock (in contrast to semaphores – see later)
+\bigskip
+
+The key \textbf{disadvantage} of mutex locks is that calls to \texttt{acquire()} result in busy waiting (although this appears to be OS dependent).Detrimental for performance on single CPU systems.\\
+The key advantages of mutex locks include:
+\begin{itemize}
+	\item Context switches can be avoided (short critical sections)
+	\item Efficient on multi-core/multi-processor systems when locks are held for a short time only
+\end{itemize}
+\end{flushleft}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[holder] \hfill \\ holder
+\end{description}
+\end{document}

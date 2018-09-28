@@ -1,0 +1,112 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\section{Graph Traversals}
+\begin{flushleft}
+	Generally have three sets of nodes
+	\begin{itemize}
+		\item Nodes that have not yet been discovered
+		\item Working Set – nodes we are currently processing in some way 
+		\item Nodes that we have finished with
+	\end{itemize}
+\end{flushleft}
+
+\subsection{General view}
+\begin{flushleft}
+“Processing a node” will generally mean looking at its neighbours and (generally) adding them to the working set
+	\begin{itemize}
+		\item The working set is stored in some data structure
+		\item Need a policy to pick which node of the working set is next selected for processing: FIFO? LIFO? something else?
+		\item Once selected, in some algorithms, the node might be moved to a data structure storing “finished nodes”
+		\item Usually continue until the working set is empty
+	\end{itemize}
+\end{flushleft}
+
+\section{DFS vs BFS}
+\subsection{DFS}
+\begin{flushleft}
+The aim of DFS algorithm is to traverse the graph in such a way that it tries to \textbf{go far} from the root node. Stack is used in the implementation of the depth first search.\\
+\textbf{Steps}
+	\begin{itemize}
+		\item Step 1: Push the root node in the Stack
+		\item Step 2: Loop until stack is empty
+		\item Step 3: Peek the node of the stack
+		\item Step 4: If the node has unvisited child nodes, get the unvisited child node, mark it as traversed and push it on stack.
+		\item Step 5: If the node does not have any unvisited child nodes, pop the node from the stack.
+	\end{itemize}
+\end{flushleft}
+
+\subsection{BFS}
+\begin{flushleft}
+This is a very different approach for traversing the graph nodes. The aim of BFS algorithm is to traverse the graph as close as possible to the root node.\\
+\textbf{Steps}
+	\begin{itemize}
+		\item Step 1: Push the root node in the Queue
+		\item Step 2: Loop until the queue is empty
+		\item Step 3: Remove the node from the Queue
+		\item Step 4: If the removed node has unvisited child nodes, mark them as visited and insert the unvisited children in the queue.
+	\end{itemize}
+\end{flushleft}
+
+\subsection{Complexity}
+\begin{itemize}
+	\item Need a queue/stack of size $|V|$ (the number of vertices).
+	\item Space complexity $O(V)$.
+\end{itemize}
+
+\subsection{Space complexity in trees}
+\begin{flushleft}
+If the graph has special properties then these complexities can be reduced. Example: suppose the graph is a tree, and we search from the root. In \textbf{DFS} the stack will be $O(height)$, this can be as good as $O(log \: n)$. In \textbf{BFS} we still need to store \textbf{all nodes} of a level, hence is (generally) still $O(n)$. Hence in trees, DFS can be a lot more \textbf{space efficient} than BFS
+\end{flushleft}
+
+
+\subsection{Time complexity}
+\begin{itemize}
+	\item In terms of the number of vertices V: two nested loops over V, hence at worst $O(V^2)$.
+	\item More useful complexity estimate is in terms of the number of edges.
+\end{itemize}
+
+\subsection{Complexity of breadth-first search}
+\begin{itemize}
+	\item Assume an adjacency list representation, $V$ is the number of vertices, $E$ the number of edges.
+	\item Each vertex is enqueued and dequeued at most \textbf{once}. 
+	\item Scanning for all adjacent vertices takes $O(|E|)$ time, since sum of lengths of adjacency lists is $|E|$.
+	\item Gives a $O(|V|+|E|)$ time complexity.
+\end{itemize}
+
+\subsection{Complexity of depth-first search}
+\begin{itemize}
+	\item Each vertex is pushed on the stack and popped at most once.
+	\item For every vertex we check what the next unvisited neighbour is.
+	\item In our implementation, we traverse the adjacency list only once. This gives $O(|V|+|E|)$ again.
+\end{itemize}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}

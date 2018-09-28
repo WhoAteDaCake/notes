@@ -1,0 +1,84 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\section{General problem solving methods}
+\begin{itemize}
+	\item Brute force – “generate and test”
+	\begin{itemize}
+		\item Generate all potential solutions and test for which ones are actual solutions
+		\item Example: We could do sorting by generating all possible permutations and to see which one is correctly ordered (extremely inefficient)
+	\end{itemize}	
+	\item Divide-and-conquer
+	\begin{itemize}
+		\item Recursively, break the problem into smaller pieces, solve them, and put them back together
+		\item Merge-sort and Quicksort were classic examples of this
+	\end{itemize}
+	\item Heuristics (rule of thumb)
+	\item Dynamic Programming
+\end{itemize}
+
+\subsection{Heuristics}
+\begin{flushleft}
+The objective of a heuristic is to produce a solution in a \textbf{reasonable time frame} that is \textbf{good enough} for solving the problem at hand. This solution \textbf{may not be the best} of all the solutions to this problem, or it may simply \textbf{approximate the exact solution}. But it is still valuable because finding it \textbf{does not require a prohibitively long time}. Heuristics may produce results by themselves, or they may be used in conjunction with optimization algorithms to improve their efficiency
+\end{flushleft}
+		\begin{itemize}
+			\item Generally, meant to mean something that gives better decisions, than the naïve methods, but still not necessarily optimal.
+			\item Two common types (the term is over-loaded)
+			\item Decisions within a procedure that gives optimal answers, but are designed to make it go \textbf{faster}
+			\item Decisions within a procedure that might not give optimal answers, but are designed to give good answers that are impractical to obtain otherwise
+			\item Examples: A star, pivot finding in quicksort
+			\item Used on problems when the exact methods are too slow, e.g.
+			\item Timetabling and scheduling, genetic algorithms, metaheuristics (simulated annealing, tabu search, etc, etc), approximate greedy methods.		
+		\end{itemize}
+
+\subsubsection{Greedy algorithms}
+\begin{flushleft}
+A common “heuristic” is to be \textbf{greedy}. Take the decision that looks best in the short term, Prim’s algorithm for constructing a Minimal Spanning Tree is a \textbf{greedy algorithm}: it just adds the shortest edge without worrying about the overall structure, without looking ahead. It makes a \textbf{locally optimal} choice at each step.
+\end{flushleft}
+
+\subsubsection{Greedy algorithm: optimal}
+\begin{flushleft}
+Sometimes greedy algorithms can still give optimal answers. E.g. Prim’s algorithm for constructing a Minimal Spanning Tree is a greedy algorithm: It just adds the shortest edge without worrying about the \textbf{overall structure}, \textbf{without looking ahead}. It makes a locally optimal choice at each step. But it turns out that this is sufficient for the final answer to be optimal
+\end{flushleft}
+
+\subsection{Dynamic programming (DP)}
+\begin{flushleft}
+DP is a general method that can be suitable when the optimal solutions satisfy a \textit{decomposition property}, The general idea is roughly:
+\begin{itemize}
+	\item \textbf{Splitting} an optimal solution into sub-solutions corresponds to splitting the problem into sub-problems and the sub-solutions are optimal for the sub-problems
+	\item So optimal solutions can be built out of optimal solutions of (smaller) sub-problems
+	\item So solve small sub-problems first and build up towards the full solution
+	\item Generally split up a problem to it's smallest parts, and keep solving from bottom down.
+\end{itemize}
+\end{flushleft}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}
