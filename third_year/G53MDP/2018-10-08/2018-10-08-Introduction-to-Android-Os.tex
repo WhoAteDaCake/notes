@@ -58,17 +58,31 @@
 
 \begin{multicols}{2}
 
-\subsubsection{Modifiactions}
+\subsubsection{Modifications}
 
 \begin{flushleft}
   Modifications made by android to linux OS
 \end{flushleft}
 \begin{itemize}
-  \item wakelocks – keep the phone awake
-  \item binder – interprocess communication
-  \item ashmem – shared memory
+  \item wakelocks
+  \begin{itemize}
+  	\item Keep the phone awake
+  \end{itemize}
+  \item binder
+  	\begin{itemize}
+  		\item Interprocess communication mechanism, and remote method invocation system.
+  		\item One Android process can call a routine in another Android process
+  	\end{itemize}
+  \item ashmem
+  \begin{itemize}
+  	\item Android Shared Memory
+  	\item A component of the Android operating system that facilitates memory sharing and conservation
+  \end{itemize}
   \item oom – kills processes when memory is low
-  \item alarm manager – wakes up the phone when necessary
+  \item alarm manager
+  \begin{itemize}
+  	\item Wakes up the phone when necessary
+  \end{itemize}
 \end{itemize}
 
 \vfill\null
@@ -99,6 +113,46 @@ Applications are sandboxed
  \item On Android, each app runs as its own \textbf{user}, which guarantees that different users are unable to interfere with each other, access each other’s files and so on. Root can access the entire system
  \item Own process, own VM, own UID/AID for different app
 \end{itemize}
+
+\newpage
+
+\section{System boot process}
+
+\begin{multicols}{2}
+  \begin{itemize}
+		\item \textbf{Boot ROM/ Bootloader:} Load bootloader into RAM, detect external RAM, setup network, memory, etc.
+		\item \textbf{Kernel:} Setup cache, protected memory, scheduling and loads drivers.
+		\item \textbf{Init:} Mounts directories like /sys , /dev or /proc Runs init.rc script
+		\item \textbf{Zygote \& VM:} Enables code sharing across the android VM for quick start of separate VM for different apps preloadClasses(), preloadResources()
+		\item \textbf{System service:} Power manager, activity manager, telephony registry, package manger, context manager, system contact providers, etc.
+	\end{itemize}
+	\vfill\null
+
+	\begin{center}
+	  \includegraphics[scale=0.5]{boot_process.png}
+	\end{center}
+\end{multicols}
+
+\section{Zygote}
+\begin{itemize}
+  \item Initialised process that has all core libraries linked in
+  \item Load all java.*, android.* classes at boot time
+  \item Initially create a single android VM process – Referencing classes loaded above
+  \item When user runs an application:
+  \begin{itemize}
+    \item Creates a copy of itself in a separate address space
+    \item \textbf{Does not} copy memory, instead refers to original memory until modified
+    \item Because each container recieves a map, these resources are shared between applications, eliminating the need for each new fork of the VM to keep its own copy of classes and resource.
+  \end{itemize}
+\end{itemize}
+
+\section{Memory}
+\begin{flushleft}
+In many places, Android shares the same dynamic RAM across processes using explicitly allocated shared memory regions.
+Android uses paging and mmap instead of providing swap space, which means any memory your application touches cannot be paged out unless you release all references.
+\end{flushleft}
+
+\section{Android compilation}
 
 \newpage
 
