@@ -78,7 +78,7 @@
   	\item Android Shared Memory
   	\item A component of the Android operating system that facilitates memory sharing and conservation
   \end{itemize}
-  \item oom – kills processes when memory is low
+  \item LMK – kills processes when memory is low
   \item alarm manager
   \begin{itemize}
   	\item Wakes up the phone when necessary
@@ -153,6 +153,79 @@ Android uses paging and mmap instead of providing swap space, which means any me
 \end{flushleft}
 
 \section{Android compilation}
+
+\begin{multicols}{2}
+  \begin{itemize}
+    \item Applications are written in Java
+    \begin{itemize}
+      \item Run on Google’s own VM — Dalvik/ Android Run Time
+      \item Uses its own bytecode (DEX) format
+    \end{itemize}
+    \item Code compiled using standard Java tools then convert to DEX format
+    \begin{itemize}
+      \item Multiple class files can be put in to a single .dex file.
+    \end{itemize}
+    \item Code, data and resource files packed into a .apk file
+  \end{itemize}
+
+  \vfill\null
+
+  \includegraphics[scale=0.3]{compilation.png}
+\end{multicols}
+
+\subsection{Dalvik}
+
+\begin{itemize}
+  \item Dalvik architecture is \textit{register based} rather than \textit{stack based}, which make's it optimised to use less space
+  \item Execute its own Dalvik byte code rather than Java bytecode
+  \item Dalvik interprets .dex files
+  \begin{itemize}
+    \item Post-processes .class files
+    \item Size reduction
+    \item JIT compilation to native ARM instructions
+  \end{itemize}
+  \item Target slow cpu, no swap, low RAM, battery powered device.
+  \item This approach allows us to execute less instructions, but the instructions are larger
+\end{itemize}
+
+\begin{center}
+  \includegraphics[scale=0.6]{stack_vs_register.png}
+\end{center}
+
+\section{Runtime}
+
+\begin{multicols}{2}
+  \subsection{Darvik runtime}
+  \includegraphics[scale=0.4]{darvik_runtime.png}
+
+  \vfill\null
+  
+  \subsection{ART runtime}
+  \includegraphics[scale=0.4]{art_runtime.png}
+\end{multicols}
+
+\pagebreak
+
+\section{ART}
+
+\begin{itemize}
+  \item \textbf{Pros}
+  \begin{itemize}
+    \item Apps run faster as DEX bytecode translation done during installation
+    \item Reduces start-up time of applications as native code is directly executed
+    \item Improves battery performance as power utilised to interpreted byte codes line by line is saved
+  \end{itemize}
+  \item \textbf{Cons}
+  \begin{itemize}
+    \item App Installation takes more time because of DEX bytecodes conversion into machine code
+    \item More internal storage is required to store the fully converted machine code at installation
+  \end{itemize}
+\end{itemize}
+
+\subsection{Android 7.0}
+\begin{flushleft}
+Android 7.0 adds a JIT compiler with code profiling to ART that constantly improves the performance of Android apps as they run
+\end{flushleft}
 
 \newpage
 

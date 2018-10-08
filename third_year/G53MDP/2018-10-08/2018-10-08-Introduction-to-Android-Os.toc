@@ -7,3 +7,8 @@
 \contentsline {section}{\numberline {3}Zygote}{3}{section.3}
 \contentsline {section}{\numberline {4}Memory}{3}{section.4}
 \contentsline {section}{\numberline {5}Android compilation}{3}{section.5}
+\contentsline {subsection}{\numberline {5.1}Dalvik}{4}{subsection.5.1}
+\contentsline {section}{\numberline {6}Runtime}{4}{section.6}
+\contentsline {subsection}{\numberline {6.1}Darvik runtime}{4}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}ART runtime}{4}{subsection.6.2}
+\contentsline {section}{\numberline {7}ART}{5}{section.7}
