@@ -227,6 +227,57 @@ Android uses paging and mmap instead of providing swap space, which means any me
 Android 7.0 adds a JIT compiler with code profiling to ART that constantly improves the performance of Android apps as they run
 \end{flushleft}
 
+\subsection{Programming Models}
+
+\begin{multicols}{2}
+
+\subsection{Comparison}
+
+\begin{flushleft}
+Traditional OS applications:
+\begin{itemize}
+  \item A single entry point
+  \item Main – OS loads the program into a process and executes it
+\end{itemize}
+Java applications:
+\begin{itemize}
+  \item A Java VM is instantiated
+  \item Loads all classes used by the application
+  \item Executes main
+\end{itemize}
+Component based model
+\begin{itemize}
+  \item Multiple application entry points
+  \item The point through which the system can “enter” the application
+\end{itemize}
+\end{flushleft}
+
+\smallskip
+\subsection{Android components}
+
+Activities
+\begin{itemize}
+  \item Dictate the UI and handle the user interaction to the smart phone screen.
+\end{itemize}
+Services
+\begin{itemize}
+  \item Mechanism for doing something long-running in the
+background
+  \item Handle background processing associated with an application.
+\end{itemize}
+Broadcast Receivers
+\begin{itemize}
+  \item Respond to broadcast messages from the OS / other
+apps
+\end{itemize}
+Content Providers
+\begin{itemize}
+  \item Make data available to / make use of data from other
+apps
+\end{itemize}
+
+\end{multicols}
+
 \newpage
 
 \begin{description}

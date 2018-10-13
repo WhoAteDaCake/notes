@@ -12,3 +12,7 @@
 \contentsline {subsection}{\numberline {6.1}Darvik runtime}{4}{subsection.6.1}
 \contentsline {subsection}{\numberline {6.2}ART runtime}{4}{subsection.6.2}
 \contentsline {section}{\numberline {7}ART}{5}{section.7}
+\contentsline {subsection}{\numberline {7.1}Android 7.0}{5}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}Programming Models}{5}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}Comparison}{5}{subsection.7.3}
+\contentsline {subsection}{\numberline {7.4}Android components}{5}{subsection.7.4}
