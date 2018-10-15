@@ -174,8 +174,9 @@ Process
 \section{Activity	Lifecycle}
 Essentially in one of three states: \textbf{Active, Paused, Stopped}. If paused or stopped, the system can drop the Activity from memory:
 \begin{itemize}
-  \item Stopped activities are suspended in memory. Consume no processing resources
+  \item Stopped activities are suspended in memory. Consume no processing resources.
   \item Inactive activities are destroyed if memory is required. Least recently used
+  \item This is important because android does not have SWAP
 \end{itemize}
 Transitioning	between	events	generates	events: setup ui, save state
 
