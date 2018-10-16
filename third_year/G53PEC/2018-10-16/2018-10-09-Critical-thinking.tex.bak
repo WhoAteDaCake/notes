@@ -1,0 +1,56 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Critical thinking}
+
+\begin{flushleft}
+Ability to think clearly and rationally about what to do or what to believe
+Ability to engage in reflective and independent thinking 
+\end{flushleft}
+\begin{itemize}
+  \item Understand the logical connections between ideas
+  \item Identify, construct and evaluate arguments
+  \item Detect inconsistencies and common mistakes in reasoning
+  \item Solve problems systematically
+  \item Identify the relevance and importance of ideas
+  \item Reflect on the justification of one's own beliefs and values
+  \begin{itemize}
+    \item Not being biased, being able to 
+  \end{itemize}
+\end{itemize}
+
+
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}
