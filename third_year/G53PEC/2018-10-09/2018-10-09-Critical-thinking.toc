@@ -6,3 +6,5 @@
 \contentsline {section}{\numberline {4}Turning propositions into arguments}{3}{section.4}
 \contentsline {section}{\numberline {5}Deductive and Inductive Reasoning}{3}{section.5}
 \contentsline {section}{\numberline {6}Informal and formal logic}{4}{section.6}
+\contentsline {section}{\numberline {7}Valid and invalid argument}{4}{section.7}
+\contentsline {subsection}{\numberline {7.1}Fallacties}{4}{subsection.7.1}

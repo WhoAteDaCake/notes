@@ -28,7 +28,7 @@
 
 \newpage
 
-\section{Critical thinking}
+\section{What is critical thinking}
 
 \begin{flushleft}
 Ability to think clearly and rationally about what to do or what to believe
@@ -40,13 +40,125 @@ Ability to engage in reflective and independent thinking
   \item Detect inconsistencies and common mistakes in reasoning
   \item Solve problems systematically
   \item Identify the relevance and importance of ideas
-  \item Reflect on the justification of one's own beliefs and values
-  \begin{itemize}
-    \item Not being biased, being able to 
-  \end{itemize}
+  \item Reflect on the justification of one's own beliefs and values (Not being biased)
 \end{itemize}
 
+\section{Process of critical thinking}
 
+Analyze
+  \begin{itemize}
+    \item Identify facts, assumptions, conflicts, flaws, relevance, omissions, consistency, preferences, beliefs, biases, inherited opinions, etc. 
+    \item Ask the right questions when analysing: reliable, proven, qualified, quantified, debatable, etc.
+    \item Scrutinize the evidence, reasons, arguments, claims
+  \end{itemize}
+Evaluate
+  \begin{itemize}
+    \item Tolerate and deal with ambiguity
+    \item Stay open-minded to alternatives
+    \item Exert intellectual effort, develop reasons based on evidence
+  \end{itemize}
+Conclude
+  \begin{itemize}
+    \item Formulate arguments to support claims
+    \item Make judgement or suspend it
+    \item Change position/stance based on well-founded arguments
+    \item Actively think (progress intellectually) and communicate effectively.
+  \end{itemize}
+
+\section{Logic and reasoning}
+Logic is concerned with the principles of correct reasoning:
+\begin{itemize}
+  \item How do we make conclusions
+  \item How do we justify decisions
+\end{itemize}
+
+\subsection{Assertions and Arguments}
+\textit{Assertion} is a statement, where \textit{proposition} is informational content of any statement or assertion.
+\begin{flushleft}
+\textit{Argument} offers a series of related statements to support an assertion — to give others good reasons to believe that the assertion is true rather than false.
+\end{flushleft}
+
+\subsection{Which propositions makes sense to argue about}
+A ‘strong’ proposition has five characteristics:
+\begin{itemize}
+  \item It is NOT matters of verifiable fact or matters of taste
+  \begin{itemize}
+    \item If it's a verifiable fact it should be checked rather than argued aboutc
+  \end{itemize}
+  \item It makes and assertion or urges a course of action in a declarative sentence.
+  \begin{itemize}
+    \item Should hotels allow dogs in the rooms? \textbf{Not strong}
+    \item Hotels should allow dogs in the rooms. \textbf{Strong}
+  \end{itemize}
+  \item It should not include words that reflect a position on the proposition, i.e., introduce bias
+  \begin{itemize}
+    \item Example: The inadequate care of parks in the city must be improved
+    \item It is necessary to verify that ‘inadequate’ care exists in order to have a proper debate. If the care is inadequate then there is no debate.
+  \end{itemize}
+  \item It is un-ambiguous, i.e., clear about the idea it states. It should not allow for multiple interpretations.
+  \begin{itemize}
+    \item For example: High-school students are given scholarship to study ‘data science’. All students with B average would qualify. That is put forward for discussion.
+    \item The staff is asking what ‘B average’ means. B average in all subjects or only relevant subjects?
+    \item For example, if a student may have A in French and C in mathematics. Would the student be eligible for a technical scholarship?
+    \item Could be restated: High-school students are given scholarship to study ‘data science’. All students with B average would qualify. That is put forward for discussion.
+  \end{itemize}
+  \item It must be singular. One cannot reasonably argue two ideas at once.
+\end{itemize}
+
+\section{Turning propositions into arguments}
+\begin{flushleft}
+Once an arguable proposition is created, we need to identify the \textbf{minor propositions} to support the argument. A minor premise shows the sense of the major proposition – a reason to support the major proposition. For example:
+\end{flushleft}
+\begin{itemize}
+  \item Major: Capital punishment should be abolished.
+  \item Minor: Capital punishment is not a deterrent to crime. 
+  \item Major: Use of Marijuana by adults in the UK should be legalized.
+  \item Minor: Prohibited use of Marijuana is contributing to the illegal activities. 
+\end{itemize}
+\begin{flushleft}
+The minor premise itself may be debatable, in which case one has to argue it individually. When stating the minor premise, one has to \textbf{link it back} to the major premise. When defending the main proposition, one has to consider the points that the opposing side of the argument is putting forward and refute them
+\end{flushleft}
+
+\section{Deductive and Inductive Reasoning}
+\begin{flushleft}
+Deduction and induction used to be differentiated in terms of argument flow, from general to specific and vice-versa. Deduction was seen as \textbf{flowing from a general towards specific statements}.
+\begin{itemize}
+  \item All men are mortal. PREMISE
+  \item Socrates is a man. PREMISE
+  \item Therefore, Socrates is mortal. CONCLUSION
+\end{itemize}
+In a deductive argument, it is \textbf{impossible} for the premises to be \textbf{true} and the conclusion to be \textbf{false}.\\
+Induction was seen as \textbf{flow from particular facts to general statements}.
+\begin{itemize}
+  \item Socrates was Greek. PREMISE
+  \item Most Greeks eat fish. PREMISE
+  \item Socrates ate fish. CONCLUSION
+\end{itemize}
+In an inductive argument the premises are supposed to support the conclusion so that if the premises are true, it is improbable that the conclusion would be false. (Here it's \textbf{assumed} that Socrates is in group of greeks who eat fish)
+\end{flushleft}
+
+\section{Informal and formal logic}
+\begin{flushleft}
+\textbf{Informal logic} is often used to mean critical thinking. \\
+\textbf{Formal logic} involves systems that are constructed to carry out proofs, where the languages and rules of reasoning are precisely and carefully defined.
+\end{flushleft}
+
+\section{Valid and invalid argument}
+\begin{flushleft}
+The argument is valid if the \textbf{premises entail their conclusion} (It is logically impossible for its premises to be true and the conclusion to be false.)
+\end{flushleft}
+
+\subsection{Fallacties}
+\begin{itemize}
+  \item Ambiguity: Interpret the meaning of some element of an argument differently.
+  \item Circular Arguments: Premises disguise the conclusion. Premises presuppose the truth of the conclusion.
+  \item Unwarranted Assumptions: Assuming that some whole, composed of a set of parts, automatically has a certain property shared by each part
+  \item Missing Evidence: Weak generalizations from experience that is too small or is biased in some way
+  \item Incorrect Causation: Mismatch cause-effect.
+  \item Irrelevant Premises: One or more premises not directly relevant to the asserted conclusion
+  \item Appeal to Emotion, Authority, Beliefs: Seeking justification
+  \item Incorrect Deduction: Argument does not have the structure to be valid
+\end{itemize}
 
 \pagebreak
 \section*{Reference section} \label{sec:reference}
