@@ -1,0 +1,72 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Shift reduce parcing}
+
+\subsection{Concept}
+\begin{flushleft}
+Construct a DFA where each state is labelled by “all possibilities” given the input and reductions thus far. (Similar to how an NFA is turned into a DFA.). Whenever reduction is possible, if there \textbf{is only one} possible reduction, then it is always clear what to do.
+\end{flushleft}
+
+\subsection{LL, LR and LALR parsing}
+LL(k)
+\begin{itemize}
+  \item Input scanned \textbf{L}eft to right
+  \item \textbf{L}eft most derivation
+  \item \textbf{k} symbols of lookahead
+\end{itemize}
+LR(k)
+\begin{itemize}
+  \item Input scanned \textbf{L}eft to right
+  \item \textbf{R}ightmost derivation in reverse
+  \item \textbf{k} symbols of lookahead
+\end{itemize}
+LALR(k)
+\begin{itemize}
+  \item \textbf{L}ook\textbf{A}head \textbf{LR} (simplified LR parsing)
+\end{itemize}
+
+\subsection{Why}
+\begin{flushleft}
+These methods handle a wide class of grammars of practical significance. In particular, handles left- and right-recursive grammars (but left rec. needs less stack). LALR is a good compromise between expressiveness and space cost of implementation. Consequently, many parser generator tools based on LALR.
+\end{flushleft}
+
+\subsection{Terminology}
+\begin{itemize}
+  \item An item for a CFG is a production with a dot anywhere in the RHS.
+\end{itemize}
+
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}
