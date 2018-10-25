@@ -155,7 +155,89 @@ Can expose	functionality	for	other	apps: one	service	\textbf{may	be	used	by	many
 
 \subsection{Creating a Service}
 Services	are	designed	to	support	communication	with
+\begin{itemize}
+  \item Local	Activities	(in	the	same	process). For example: within	VM
+  \item Remote	Activities	(in	a	different	process). For example IPC
+  \item Multiple	components
+  \begin{itemize}
+    \item System services	underpin	much	of	Android	core	OS,	but	wrapped	with	various	APIs
+  \end{itemize}
+\end{itemize}
+Services	are	components,	similar	to	an	Activities
+\begin{itemize}
+  \item Register	the	service	in	the	\textbf{manifest}
+  \item Create	a	subclass	of	android.app.Service
+  \item Handle	the	relevant	\textbf{lifecycle	methods}
+\end{itemize}
 
+\subsection{Service lifecycle}
+There are two ways of spawning a service:\\
+\textbf{Started	(loosely	coupled)}
+\begin{itemize}
+  \item Send an Intent to explicitly start the service with startService()
+  \item c.f. Messages, starting Activities
+  \item Will run / exist in the background indefinitely / until kills itself (Does not “return” results). For example: C.f email checking.
+  \item Explicitly stop the service with stopService()
+  \item User starts and stops it
+\end{itemize}
+\textbf{Bound	(tightly	coupled)}
+\begin{itemize}
+  \item Bind to a service using bindService()
+  \item Will run while any Activities are bound to it
+  \item Actively using it
+  \item Provides an interface (programmatic) for Activities to communicate with the Service
+  \item Operating system starts and stops it
+\end{itemize}
+
+\begin{flushleft}
+In both cases, if the service is not running it \textbf{will be created}. Note both are \textbf{the same service}. Different responsibilities for the lifecycle (If I start it, I have to stop it. If OS starts it, OS stops it when it decides to)
+\end{flushleft}
+
+\begin{center}
+  \includegraphics[scale=0.8]{threads.png}
+\end{center}
+
+By nature, services are singleton objects (there can be only one). Service used by \textbf{many clients}. The Service sub-class object is instantiated if necessary
+\begin{itemize}
+  \item \texttt{onCreate()} is called
+  \item Either \texttt{onStartCommand} or \texttt{onBind} will be called depending on how the service has been "called"
+  \item \texttt{onCreate} / \texttt{onStart} / \texttt{onBind} are called in the context of the main UI thread. It now must spawn a worker thread to do any significant work
+  \item Something calls \texttt{stopService()}, (could be the OS or user again)
+  \item \texttt{onDestroy} can now be used to save work.
+\end{itemize}
+
+\subsection{Implementing a service}
+
+\begin{flushleft}
+Generic	started	service
+\begin{itemize}
+  \item Runs persistently (Or stops itself when all work is done)
+  \item Receives messages asking for more work to be done (Delivered via onStartCommand)
+\end{itemize}
+IntentService
+\begin{itemize}
+  \item A simple, unbound service.
+  \begin{itemize}
+    \item It assumes we don’t have multiple requests that need to be handled concurrently.
+    \item Creates a queue of work to be done.
+    \item HandlerThread, Looper, Handler again. 
+  \end{itemize}
+  \item Handles one intent at a time to onHandleIntent()
+  \begin{itemize}
+    \item Intents delivered via onStartCommand added to a queue
+    \item Stops the service after all start requests have been handled
+    \item I.e. sending emails “fire and forget”
+  \end{itemize}
+\end{itemize}
+\end{flushleft}
+
+\subsection{Terminating services}
+\begin{flushleft}
+A Service runs in the background indefinitely, even if the component that started it is destroyed.
+\begin{itemize}
+  \item 
+\end{itemize}
+\end{flushleft}
 
 \newpage
 
