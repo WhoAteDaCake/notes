@@ -159,9 +159,37 @@ scan l c ('?' : s)  = retTkn QMark l c (c + 1) s
 Next we need to make sure that parser picks up this new syntax by first adding new token:
 \end{flushleft}
 \begin{code}
-
+'?'         { (QMark, $$) }
 \end{code}
+\begin{flushleft}
+Now we can use it to define the expression in the parser
+\end{flushleft}
+\begin{code}
+| expression '?' expression ':' expression
+    { ExpCond {ecCond    = $1,
+               ecLeft    = $3,
+               ecRight   = $5,
+               expSrcPos = srcPos $1} }
+\end{code}
+\begin{flushleft}
+It can now be picked up by the parser. We save first expression as condition, second expression as left evaluation and third epxression as right evaluation.
+\end{flushleft}
 
+\subsection{Pretty print}
+\begin{flushleft}
+Last step is to make sure we can debug by logging out the parsed expression. Add new pattern match for our newly defined \texttt{ExpCond} type
+\end{flushleft}
+\begin{code}
+pExpression n (ExpCond {ecCond = c, ecLeft = l, ecRight = r, expSrcPos = sp}) =
+    indent n . showString "ExpCond" . spc . ppSrcPos sp . nl
+    . ppExpression (n+1) c
+    . ppExpression (n+1) l
+    . ppExpression (n+1) r
+\end{code}
+\begin{flushleft}
+This will print the name and postion of our type as well as on the rest of new lines with further indentation:
+condition on first line, left evaluation on second and the right evaluation on third line.
+\end{flushleft}
 
 \pagebreak
 \section*{Reference section} \label{sec:reference}
