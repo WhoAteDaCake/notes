@@ -115,6 +115,53 @@ ppCommand n (CmdRepeat {crCmd = cmd, crCond = cond, cmdSrcPos = sp}) =
     . ppCommand (n+1) cmd 
     . ppExpression (n+1) cond
 \end{code}
+\begin{flushleft}
+We take our indentation level, the command and output stringified result. Show command name and print out inner command as well as expression at further indentation.
+\end{flushleft}
+
+\section{Task 1}
+
+\subsection{Token}
+\begin{flushleft}
+First step is to add question mark to \texttt{Token} data type in \textit{Token.hs}
+\end{flushleft}
+\begin{code}
+| QMark     -- ^ \"?\"
+\end{code}
+
+\subsection{AST}
+\begin{flushleft}
+Next step is to update AST by adding new expression to \texttt{Expression} data type.
+\end{flushleft}
+\begin{code}
+-- | Conditional expression
+| ExpCond {
+    ecCond      :: Expression,      -- ^ Condition
+    ecLeft      :: Expression,      -- ^ Return value when evaluation is true
+    ecRight     :: Expression,      -- ^ Return value when evaluation is false
+    expSrcPos   :: SrcPos
+  }
+\end{code}
+\begin{flushleft}
+This allows to store our condition, left and right choises in AST
+\end{flushleft}
+
+\subsection{Scanner}
+\begin{flushleft}
+We also need to make sure that question mark (?) is picked up as a proper token. Do this by adding another pattern match for scan function
+\end{flushleft}
+\begin{code}
+scan l c ('?' : s)  = retTkn QMark l c (c + 1) s
+\end{code}
+
+\subsection{Parser}
+\begin{flushleft}
+Next we need to make sure that parser picks up this new syntax by first adding new token:
+\end{flushleft}
+\begin{code}
+
+\end{code}
+
 
 \pagebreak
 \section*{Reference section} \label{sec:reference}
