@@ -266,6 +266,98 @@ Because services run indefinitely, we can use onStartCommand where return value 
 \end{itemize}
 \end{flushleft}
 
+\section{Notifications}
+
+\begin{flushleft}
+We can use notification to let user know about operating service. This solves: orphaned thread problems as well as the fact that the original activity may no longer exist.
+\end{flushleft}
+Status bar notification
+\begin{itemize}
+  \item Maintained by the Service
+  \item Can specify an Activity to launch if the user taps on it. We can return to the Activity that spawned the Service by using \textit{Pending Intent}
+  \item Can	control	the	Service	via	buttons	in	the	notification. Deliver Intents to the service, handle them -> it’s a Singleton
+\end{itemize}
+
+\section{Communicating	with	Services}
+\begin{flushleft}
+Bind to the Service
+\begin{itemize}
+  \item If not explicitly started, will be started by the OS  
+  \begin{itemize}
+    \item  …when something binds to it 
+    \item Then stopped if everything unbinds from it.
+    \item What if it is explicitly started?
+  \end{itemize}
+  \item  Provide an interface for clients (Activities) to interact with a Service
+  \begin{itemize}  
+    \item Provide a programmatic interface for clients
+    \item Fast and stable?  
+  \end{itemize}
+\end{itemize}
+Extending the Binder class
+\begin{itemize}
+  \item Return an interface via the onBind method
+  \item Only for a Service used by the same application. Local services only. make method calls within the same JVM
+\end{itemize}
+Binder object asynchronously provides a reference to the service that we can call methods on
+\end{flushleft}
+
+\section{Remote Services}
+
+\begin{flushleft}
+Making objects appear as if they exist in the local process. For	communicating	across	process	boundaries
+\begin{itemize}
+  \item i.e. using a Service belonging to a different application / process
+  \item Likely to be used by multiple processes at once
+  \item Starting the service
+  \item Declare the service as exported in the Manifest
+  \item Must use implicity intents
+\end{itemize}
+\end{flushleft}
+
+\section{Communicating with services}
+
+\begin{flushleft}
+Messenger
+\begin{itemize}
+  \item An interface for a service. Message based communication between processes. Is asynchronous and uses messages with bundles of data as payload instead of method calls.
+  \item Queues Messages into a single Thread, handled sequentially
+  \begin{itemize}
+    \item C.f. using a Handler to manage communication and concurrency between Threads
+    \item Allows a service to define a Handler. To respond to different types of Message objects
+  \end{itemize}
+  \item Has an IBinder shared with the client. Passed to the client on service connection and used to send messages to the service
+\end{itemize}
+Bi-directional communication
+\begin{itemize}
+  \item The client can have a Messenger too
+  \item Provide a reference to the return Messenger in our Message
+\end{itemize}
+Messages must be Parcelable
+\end{flushleft}
+
+\subsection{Parcelable}
+
+\begin{flushleft}
+Locally (same process) bound Services share the same process memory space. This makes it easy to call methods, transfer objects / references between classes. But how should different processes talk to one another? \\
+java.io.Serializable
+\begin{itemize}
+  \item Short-term persistence
+  \item Write object ID, field via reflection / introspection
+  \item Change the class / variable name, what happens? 
+  \item Slow
+\end{itemize}
+Parcelable
+\begin{itemize}
+  \item Define a simple wire-protocol for writing primitives
+  \item Re-create an object by passing salient data (c.f. deep copy)
+  \item Immune to minor changes to class definitions
+  \item Same interface, different class
+  \item Supported by Android kernel driver
+  \item Fast!
+\end{itemize}
+\end{flushleft}
+
 \newpage
 
 \section*{Reference section} \label{sec:reference}

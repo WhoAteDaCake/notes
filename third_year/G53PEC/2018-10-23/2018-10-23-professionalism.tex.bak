@@ -1,0 +1,150 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\usepackage{etoolbox}
+\AtBeginEnvironment{quote}{\singlespace\vspace{-\topsep}\small}
+\AtEndEnvironment{quote}{\vspace{-\topsep}\endsinglespace}
+
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Characteristics of a profession}
+
+\begin{flushleft}
+Fully developed professions have a well-organized infrastructures to support existing members of the profession and to certify new ones. At the heart over every mature profession is \textbf{certification} and \textbf{licensing}. Certification and licensing enable a profession to determine who will be \textbf{allowed to practice} the profession
+\end{flushleft}
+
+\subsection{Certification vs Licencing}
+\begin{flushleft}
+Professional certification is a \textbf{voluntary process}.
+\begin{itemize}
+  \item A non-governmental professional organization \textbf{grants recognition} to an individual who has met certain qualifications.
+  \item Certificate attests that the individual has \textbf{demonstrated} a certain level of mastery of a specific body of knowledge and skills within the relevant field of practice.
+\end{itemize}
+Licensure is a \textbf{non-voluntary process}
+\begin{itemize}
+  \item A government agency regulates a profession
+  \item License grants permission to an individual to engage in an occupation if the applicant has attained the degree of competency required to ensure the public health, safety, and welfare will be reasonably protected.
+  \item Once a licensing law has been passed it becomes illegal for anyone without a license to engage in that occupation
+\end{itemize}
+\end{flushleft}
+
+\begin{flushleft}
+As of now there is no licencing for software engineers. As stated by ACM (Association for Computing Machinery) council:
+
+\begin{quotation}
+ACM is opposed to the licensing of software
+engineers at this time because ACM believes that it is
+premature and would not be effective in addressing
+the problems of software quality and reliability
+\end{quotation}
+
+\end{flushleft}
+
+\section{Code of ethics}
+
+Code of ethics includes:
+\begin{itemize}
+  \item Principles
+  \item Rules
+  \item Ideals
+  \item Requirements
+  \item Permissions
+  \item Prohibitions
+\end{itemize}
+
+\subsection{Principles}
+\begin{itemize}
+  \item PUBLIC INTEREST: Act consistently with the public interest
+  \item CLIENT AND EMPLOYER: Act in the best interests of the client and employer, consistent with the public interest
+  \item PRODUCT: Ensure that the product meet highest professional standards possible
+  \item JUDGMENT: Maintain integrity and independence in professional judgment
+  \item MANAGEMENT: Subscribe to and promote ethical approach to the management of software development and maintenance
+  \item PROFESSION: Advance integrity and reputation of the profession consistent with the public interest
+  \item COLLEAGUES: Be fair to and supportive of colleagues
+  \item SELF: Participate in lifelong learning regarding the practice and promote an ethical approach to the practice of the profession
+\end{itemize}
+
+\subsection{Issue with applying ethics codes}
+\begin{flushleft}
+Codes of ethics suffer the same fundamental problem as ethical theories—goodness cannot be defined through a legalistic enumeration of do-s and don't-s; it must come from the heart
+\end{flushleft}
+
+\section{Dealing with a moral problem}
+
+\begin{itemize}
+  \item Identify \textbf{fundamental principles} that are \textbf{relevant} to the moral problem
+  \item Identify \textbf{clauses} of the principles which speak most directly to the issue
+  \item Determine whether the \textbf{contemplated} action aligns with or \textbf{contradicts} the statements of the clauses
+  \begin{itemize}
+    \item If the action is in agreement with all the clauses then the action is \textbf{moral}
+    \item If the action is in disagreement with all of the clauses then the action is \textbf{immoral}
+    \item When some clauses support and others oppose then \textbf{use own judgement}; determine which clauses are most important before reaching a conclusion.
+  \end{itemize}
+\end{itemize}
+
+\section{Virtue Ethics}
+
+\begin{flushleft}
+Virtue ethics is \textbf{person rather than action based}: it looks at the virtue or moral character of the person carrying out an action, rather than at ethical duties and rules, or the consequences of particular actions. Virtue ethics not only deals with the rightness or wrongness of individual actions, \textbf{it provides guidance} as to the sort of characteristics and behaviours a good person will seek to achieve.
+\end{flushleft}
+
+\subsection{Strengths of Virtue Ethics}
+
+\begin{flushleft}
+\begin{itemize}
+  \item Motivation for good behaviour and healthy social interactions: Utility and Categorical Imperative by Kant say nothing about motivation
+  \item Provides a solution to the problem of \textbf{impartiality}. Utilitarianism, Kantianism and social contract require complete impartiality and treatment of all humans as equal moral evaluations that are hard to accept
+  \item Some virtues are partial towards certain people and others are impartial and treat everyone equal.
+  \item For example:
+  \begin{itemize}
+    \item Generosity and loyalty: One can be partial to friends and family members
+    \item Civility, honesty, and courteousness: Applied equally to all human beings
+  \end{itemize}
+\end{itemize}
+\end{flushleft}
+
+\section{Analysing scenarios}
+\begin{itemize}
+  \item List people and organizations affected
+  \item List risks, issues problems, consequences
+  \item List benefits and beneficiaries
+  \item List possible actions
+  \item Identify responsibilities of the decision maker
+  \item Identify rights of stakeholders
+  \item Consider impact of potential actions on stakeholders 
+  \item Consider applicability of professional codes
+  \item Categorize potential actions as ethically obligatory, prohibited or acceptable
+  \item If there are several ethically acceptable options consider their merits and choose
+\end{itemize}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}
