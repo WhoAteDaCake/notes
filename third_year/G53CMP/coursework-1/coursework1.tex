@@ -279,9 +279,107 @@ if (cond) {} else { if(cond2) {} }
 \texttt{ifElseBranch} has to be made into a seperate function, else you would be able to do \texttt{elsif (cond) {}} without prior if statement
 \end{flushleft}
 
-\pagebreak
-\section*{Reference section} \label{sec:reference}
-\begin{description}
-	\item[placeholder] \hfill \\
-\end{description}
+\section{Task 4}
+
+\subsection{AST}
+\begin{flushleft}
+We begin by adding a new expression to \texttt{Expression} data type store our character:
+\end{flushleft}
+\begin{code}
+| ExpLitChar {
+      elcVal    :: Char,            -- ^ Char value
+      expSrcPos :: SrcPos
+  }
+\end{code}
+
+\subsection{Token}
+\begin{flushleft}
+Next we have to add new token to \texttt{Token} data type:
+\end{flushleft}
+\begin{code}
+| LitChar {liChar :: Char}          -- ^ Character literals
+\end{code}
+\begin{flushleft}
+This allows us to store the actual character value inside the type
+\end{flushleft}
+
+\subsection{Scanner}
+
+\begin{flushleft}
+We begin by adding some utility functions:
+\end{flushleft}
+\begin{code}
+isGrChr :: Char -> Bool
+isGrChr '\'' = False
+isGrChr '\\' = False
+isGrChr '\n' = False
+isGrChr '\r' = False
+isGrChr '\t' = False
+isGrChr _    = True
+
+canEscape :: Char -> Bool
+canEscape 'n'  = True
+canEscape 'r'  = True
+canEscape 't'  = True
+canEscape '\\' = True
+canEscape '\'' = True
+canEscape _    = False
+\end{code}
+\begin{flushleft}
+\texttt{isGrChr} allows us to check if character is graphical and \texttt{canEscape} allows to validate whether a character should be escaped or not. Next we add another guard to scan command to check whether we are about to scan a character:
+\end{flushleft}
+\begin{code}
+| x == '\'' = scanLitChar l c x s
+\end{code}
+\begin{flushleft}
+In here we call a \texttt{scanLitChar} function, which is defined as:
+\end{flushleft}
+\begin{code}
+scanLitChar l c x s 
+    -- Assume that less than 2 length means missing quote
+    | length s < 2 = failD (SrcPos l c) "Character not closed"
+    -- Single character character have to be graphical
+    | sc == '\'' && isGrChr fc = retTkn (LitChar fc) l c (c + 3) (drop 2 s)
+    | canEscape sc &&
+        length ss >= 1 && -- Sanity check, so we don't throw during runtime
+        head ss == '\'' = retTkn (escape sc) l c (c + 4) (drop 3 s)
+    | otherwise    = failD (SrcPos l c) "Could not parse the character"
+    where
+        (fc:sc:ss) = s
+        escape 'n'  = LitChar '\n'
+        escape 'r'  = LitChar '\r'
+        escape 't'  = LitChar '\t'
+        escape '\\' = LitChar '\\'
+        escape '\'' = LitChar '\''
+        escape c    = LitChar c
+\end{code}
+\begin{flushleft}
+We begin by checking that the string is long enough to form a character literal with \texttt{length s < 2} guard. Then we take first and second character in \texttt{(fc:sc:ss) = s}, this allows to check for the simplest character, which is just a single graphical character. We check that via \texttt{sc == '\''} and \texttt{isGrChr fc} if it is, we say that next character will be 3 steps ahead (we pass our character and second quote). And drop the first two symbols from the string we got. Next we have to check whether we encountered and escape character by checking if our second character can be escaped. If it is, we check whether the closing quote exists by first validating length of rest of the string. This allows us to confirm that it is valid. The last step is to escape the character and pass it as a character literal. If anything goes wrong, we fail with a message "Could not parse the character".
+\end{flushleft}
+
+\subsection{Parser}
+\begin{flushleft}
+Begin with updating our tokens by adding:
+\end{flushleft}
+\begin{code}
+LITCHAR     { (ExpLitChar {}, _) }
+\end{code}
+\begin{flushleft}
+This allows the parser to recognise it. Next we update \texttt{primary\_expressions} function by adding new pattern
+\end{flushleft}
+\begin{code}
+| LITCHAR
+  { ExpLitChar { elcVal = tspLCVal $1, expSrcPos = tspSrcPos $1 } }
+\end{code}
+\begin{flushleft}
+\texttt{tspLCVal} is defined as
+\end{flushleft}
+\begin{code}
+tspLCVal :: (Token,SrcPos) -> Char
+tspLCVal (LitChar {liChar = n}, _) = n
+tspLCVal _ = parserErr "tspLCVal" "Not a LitChar"
+\end{code}
+\begin{flushleft}
+This allows to extract exact character value from the token. That completes the task
+\end{flushleft}
 \end{document}
