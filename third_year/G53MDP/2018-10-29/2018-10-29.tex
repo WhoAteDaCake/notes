@@ -82,6 +82,79 @@ Kernel driver
   \includegraphics[scale=0.5]{binder_implem.png}
 \end{center}
 
+\pagebreak
+
+\subsection{Transactions}
+A transaction between processes: IBinder.transact \verb|->| Binder.onTransact(). Binder maintains a pool of transaction threads in each process
+\begin{itemize}
+  \item To dispatch all IPCs coming from other processes
+  \item If process A calls process B
+  \begin{itemize}
+    \item Calling thread in A blocks in transact()
+    \item Sends the transaction to process B
+    \item Next available thread in B receives the incoming transaction, calls onTransact() on the target object, replies with the resultant Parcel 
+    \item Thread in process A returns, resumes execution
+  \end{itemize}
+  \item Reliant on Service (B) responding in a timely manner
+  \begin{itemize}
+    \item Hence catching remote exceptions, transaction failures
+    \item Developer defined worker threads
+    \item Handling multiple calls from multiple transaction threads
+  \end{itemize}
+\end{itemize}
+
+\begin{center}
+  \includegraphics[scale=0.5]{binder_transaction.png}
+\end{center}
+\begin{center}
+  \includegraphics[scale=0.5]{binder_abstraction.png}
+\end{center}
+
+\pagebreak
+
+\section{Defining Remotely Bound Services}
+
+\begin{flushleft}
+Using the Android Interface Definition Language (AIDL)
+\begin{itemize}
+  \item Specify an interface for the service functionality
+  \item Generates a proxy object
+  \item To be used locally as if the remote service was not remote
+  \item Generates a stub implementation 
+  \item The remote side of the transaction
+  \item Generates a communication protocol
+  \item Parcelling and unparcelling steps
+\end{itemize}
+Similar to Java interface definitions. Has label method parameters for efficiency
+\begin{itemize}
+  \item in: transferred to the remote method
+  \item out: returned to the caller
+  \item inout: both in and out
+  \item oneway: asynchronous
+\end{itemize}
+Permitted types
+\begin{itemize}
+  \item Java primitive types, Lists, Maps
+  \item Other AIDL-generated interfaces
+  \item Classes implementing the Parcelable protocol
+\end{itemize}
+\end{flushleft}
+
+\section{IPC Abstraction}
+
+\begin{flushleft}
+Intent
+\begin{itemize}
+  \item Highest level abstraction
+  \item Asynchronous message passing
+\end{itemize}
+\textbf{Inter-process} method invocation by using AIDL (Android Interface Definition Language). \textbf{Binder}: kernel driver. \textbf{Ashmem}: Shared memory.
+\begin{itemize}
+  \item Passed as file descriptor objects by Binder
+  \item The USB service gives a specific USB device to an app without giving it unrestricted access
+\end{itemize}
+\end{flushleft}
+
 \newpage
 
 \begin{description}

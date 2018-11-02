@@ -119,7 +119,9 @@ ppCommand n (CmdRepeat {crCmd = cmd, crCond = cond, cmdSrcPos = sp}) =
 We take our indentation level, the command and output stringified result. Show command name and print out inner command as well as expression at further indentation.
 \end{flushleft}
 
-\section{Task 1}
+\pagebreak
+
+\section{Task 2}
 
 \subsection{Token}
 \begin{flushleft}
@@ -189,6 +191,92 @@ pExpression n (ExpCond {ecCond = c, ecLeft = l, ecRight = r, expSrcPos = sp}) =
 \begin{flushleft}
 This will print the name and postion of our type as well as on the rest of new lines with further indentation:
 condition on first line, left evaluation on second and the right evaluation on third line.
+\end{flushleft}
+
+\section{Task 3}
+
+\subsection{AST}
+\begin{flushleft}
+First step is to make the else branch optional by modifying the \texttt{ciElse} type signiture to:
+\end{flushleft}
+\begin{code}
+| CmdIf {
+      ciCond    :: Expression,      -- ^ Condition
+      ciThen    :: Command,         -- ^ Then-branch
+      ciElse    :: Maybe Command,   -- ^ Else-branch
+      cmdSrcPos :: SrcPos
+  }
+\end{code}
+\begin{flushleft}
+This also serves additional funcitonality of being to set \texttt{ciElse} to another \texttt{CmdIf} as it's a command. This will be usefull for \textit{elsif} command
+\end{flushleft}
+
+\subsection{PPAST}
+\begin{flushleft}
+Now that the branch is optional it needs to be printed differently. We modify \texttt{ppCommand} pattern match for \textit{CmdIf}:
+\end{flushleft}
+\begin{code}
+ppCommand n (CmdIf {ciCond = e, ciThen = c1, ciElse = c2, cmdSrcPos = sp}) =
+    indent n . showString "CmdIf" . spc . ppSrcPos sp . nl
+    . ppExpression (n+1) e
+    . ppCommand (n+1) c1
+    . ppOpt (n+1) ppCommand c2
+\end{code}
+\begin{flushleft}
+We are now using \texttt{ppOpt (n+1) ppCommand c2} instead of \texttt{. ppCommand (n+1) c2}
+\end{flushleft}
+
+\subsection{Token}
+\begin{flushleft}
+Next step is to modify \texttt{Token} data type for matching \textit{elsif}
+\end{flushleft}
+\begin{code}
+| ElseIf    -- ^ \"elsif\"
+\end{code}
+
+\subsection{Scanner}
+\begin{flushleft}
+Next step is to update the scanner to pick up our new syntax. Can do that by adding extra pattern match to \texttt{mkIdOrKwd} function
+\end{flushleft}
+\begin{code}
+mkIdOrKwd "elsif"  = ElseIf
+\end{code}
+
+\subsection{Parser}
+\begin{flushleft}
+Now we need the parser to be able to recognise our new syntax. Begin by adding new token type
+\end{flushleft}
+\begin{code}
+ELSEIF      { (ElseIf, $$) }
+\end{code}
+\begin{flushleft}
+Next we have to modify current command parsing for if statements, we change it to
+\end{flushleft}
+\begin{code}
+| IF expression THEN command ifElseBranch
+  { CmdIf {ciCond = $2, ciThen = $4, ciElse = $5, cmdSrcPos = $1} }
+\end{code}
+\begin{flushleft}
+Where \texttt{ifElseBranch} is defined as:
+\end{flushleft}
+\begin{code}
+ifElseBranch :: { Maybe Command }
+ifElseBranch
+    : ELSEIF expression THEN command ifElseBranch
+      { Just (CmdIf {ciCond = $2, ciThen = $4, ciElse = $5, cmdSrcPos = $1})   }
+    | ELSE command { Just $2 }
+    | {- empty -} { Nothing }
+\end{code}
+\begin{flushleft}
+We use \texttt{Maybe} data type here in order to allow for optional branching. This uses the idea that any elseif statement is essentially an if statement inside else statement. For example:
+\end{flushleft}
+\begin{code}
+if (cond) {} elsif (cond2) {}
+// Is essentially the same as
+if (cond) {} else { if(cond2) {} }
+\end{code}
+\begin{flushleft}
+\texttt{ifElseBranch} has to be made into a seperate function, else you would be able to do \texttt{elsif (cond) {}} without prior if statement
 \end{flushleft}
 
 \pagebreak

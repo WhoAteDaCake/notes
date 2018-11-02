@@ -119,7 +119,9 @@ ppCommand n (CmdRepeat {crCmd = cmd, crCond = cond, cmdSrcPos = sp}) =
 We take our indentation level, the command and output stringified result. Show command name and print out inner command as well as expression at further indentation.
 \end{flushleft}
 
-\section{Task 1}
+\pagebreak
+
+\section{Task 2}
 
 \subsection{Token}
 \begin{flushleft}
@@ -190,6 +192,56 @@ pExpression n (ExpCond {ecCond = c, ecLeft = l, ecRight = r, expSrcPos = sp}) =
 This will print the name and postion of our type as well as on the rest of new lines with further indentation:
 condition on first line, left evaluation on second and the right evaluation on third line.
 \end{flushleft}
+
+\section{Task 3}
+
+\subsection{AST}
+\begin{flushleft}
+First step is to make the else branch optional by modifying the \texttt{ciElse} type signiture to:
+\end{flushleft}
+\begin{code}
+| CmdIf {
+      ciCond    :: Expression,      -- ^ Condition
+      ciThen    :: Command,         -- ^ Then-branch
+      ciElse    :: Maybe Command,   -- ^ Else-branch
+      cmdSrcPos :: SrcPos
+  }
+\end{code}
+\begin{flushleft}
+This also serves additional funcitonality of being to set \texttt{ciElse} to another \texttt{CmdIf} as it's a command. This will be usefull for \textit{elsif} command
+\end{flushleft}
+
+\subsection{PPAST}
+\begin{flushleft}
+Now that the branch is optional it needs to be printed differently. We modify \texttt{ppCommand} pattern match for \textit{CmdIf}:
+\end{flushleft}
+\begin{code}
+ppCommand n (CmdIf {ciCond = e, ciThen = c1, ciElse = c2, cmdSrcPos = sp}) =
+    indent n . showString "CmdIf" . spc . ppSrcPos sp . nl
+    . ppExpression (n+1) e
+    . ppCommand (n+1) c1
+    . ppOpt (n+1) ppCommand c2
+\end{code}
+\begin{flushleft}
+We are now using \texttt{ppOpt (n+1) ppCommand c2} instead of \texttt{. ppCommand (n+1) c2}
+\end{flushleft}
+
+\subsection{Token}
+\begin{flushleft}
+Next step is to modify \texttt{Token} data type for matching \textit{elsif}
+\end{flushleft}
+\begin{code}
+| ElseIf    -- ^ \"elsif\"
+\end{code}
+
+\subsection{Scanner}
+\begin{flushleft}
+Next step is to update the scanner to pick up our new syntax. Can do that by updating \texttt{mkIdOrKwd} function
+\end{flushleft}
+\begin{code}
+mkIdOrKwd "elsif"  = ElseIf
+\end{code}
+
 
 \pagebreak
 \section*{Reference section} \label{sec:reference}

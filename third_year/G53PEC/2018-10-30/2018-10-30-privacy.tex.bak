@@ -1,0 +1,108 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Harms of privacy}
+\begin{itemize}
+  \item Taking advantage of privacy (no access) to conduct illegal or immoral activities
+  \item Violence in private circles (e.g., families, fraternities, etc.) not perceived from outside
+  \item Unhappiness with too great of a burden for a nuclear family to care for all its members
+  \item Need for engagement is natural and for those who are outcast (disabled, poor, etc.) “privacy” is a disadvantage
+\end{itemize}
+
+\section{Benefits of privacy}
+\begin{itemize}
+  \item Privacy enables us to establish individuality.
+  \item We are responsible for the development of our unique persona, as a separate moral agent.
+  \item Privacy is a recognition of a person’s true freedom.
+  \item It lets us be ourselves and remove our public persona.
+  \item Privacy allows us to shut out the rest of the world and focus on our thoughts, be creative and grow spiritually.
+  \item We form different kinds of social relationship and need to have control over who knows what about us.
+\end{itemize}
+
+\section{Taxonomy of privacy problems}
+
+\begin{flushleft}
+Information collection
+\begin{itemize}
+  \item Surveillance Monitoring continuously, via audio, visual and computing tech.
+  \item Interrogation ”Pressuring individuals to divulge information “
+\end{itemize}
+Information processing
+\begin{itemize}
+  \item Aggregation Collecting and linking data
+  \item Identification Connecting information to individuals
+  \item Insecurity Inadequately safeguarding data
+  \item Secondary use Repurposing data disclosed by individuals
+  \item Exclusion Failing to notify that data has been collected and allowing to correct records/information
+\end{itemize}
+Information dissemination
+\begin{itemize}
+  \item Breach of confidentiality Breaking a contractual duty to keep information private
+  \item Disclosure Publishing private and true information in way it damages reputation
+  \item Exposure Publicly displaying physical and emotional attributes that are private
+  \item Increased accessibility Making records easier to access
+  \item Blackmail Threatening to reveal damaging information
+  \item Appropriation Using someone’s identity
+  \item Distortion Manipulating the way a person is perceived
+\end{itemize}
+Invasion
+\begin{itemize}
+  \item Intrusion Disturbing somebody’s peace
+  \item Decisional interference Controlling what one is allowed to do.
+\end{itemize}
+\end{flushleft}
+
+\section{Privacy respecting principles}
+\begin{itemize}
+  \item Informed consent (opt out vs. opt in)
+  \item No invisible information gathering
+  \item No secondary use
+  \item No covert data mining, matching or profiling
+  \item Only collect as needed
+  \item Accuracy and security
+  \item Policy for responding to data requests
+  \item Constitutional protection and laws
+  \item Right to be forgotten
+  \item Liberty vs. Claim rights
+\end{itemize}
+
+\section{OECD}
+
+\begin{flushleft}
+Organization for Economic Cooperation and Development. Has issued Recommendations of the Council Concerning Guidelines Governing
+the Protection of Privacy and Trans-Border Flows of Personal Data
+\end{flushleft}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}
