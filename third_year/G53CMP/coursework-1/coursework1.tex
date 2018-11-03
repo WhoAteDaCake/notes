@@ -380,6 +380,17 @@ tspLCVal (LitChar {liChar = n}, _) = n
 tspLCVal _ = parserErr "tspLCVal" "Not a LitChar"
 \end{code}
 \begin{flushleft}
-This allows to extract exact character value from the token. That completes the task
+This allows to extract exact character value from the token.
 \end{flushleft}
+
+\subsection{PPAST}
+
+\begin{flushleft}
+To print out the character, we just add extra pattern match to \texttt{ppExpression}
+\end{flushleft}
+\begin{code}
+ppExpression n (ExpLitChar {elcVal = v}) = 
+    indent n . showString "ExpLitChar" . spc . shows v . nl
+\end{code}
+
 \end{document}

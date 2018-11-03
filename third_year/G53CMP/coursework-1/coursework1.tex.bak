@@ -365,9 +365,32 @@ Begin with updating our tokens by adding:
 LITCHAR     { (ExpLitChar {}, _) }
 \end{code}
 \begin{flushleft}
-This allows the parser to recognise it. Next we update \texttt{primar}
+This allows the parser to recognise it. Next we update \texttt{primary\_expressions} function by adding new pattern
+\end{flushleft}
+\begin{code}
+| LITCHAR
+  { ExpLitChar { elcVal = tspLCVal $1, expSrcPos = tspSrcPos $1 } }
+\end{code}
+\begin{flushleft}
+\texttt{tspLCVal} is defined as
+\end{flushleft}
+\begin{code}
+tspLCVal :: (Token,SrcPos) -> Char
+tspLCVal (LitChar {liChar = n}, _) = n
+tspLCVal _ = parserErr "tspLCVal" "Not a LitChar"
+\end{code}
+\begin{flushleft}
+This allows to extract exact character value from the token.
 \end{flushleft}
 
+\subsection{PPAST}
 
+\begin{flushleft}
+To print out the character, we just add extra pattern match to \texttt{ppExpression}
+\end{flushleft}
+\begin{code}
+ppExpression n (ExpLitChar {elcVal = v}) = 
+    indent n . showString "ExpLitChar" . spc . shows v . nl
+\end{code}
 
 \end{document}
