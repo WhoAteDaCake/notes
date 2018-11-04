@@ -383,6 +383,122 @@ Management tasks - The follow up issues:
 \end{itemize}
 \end{flushleft}
 
+\section{Quality control}
+
+\begin{flushleft}
+Checking the software development process to ensure that procedures and standards are being followed. Two approaches to quality control: Quality reviews, Assessment via software metrics
+\end{flushleft}
+
+\subsection{Quality reviews}
+
+\begin{itemize}
+  \item The principal method of validating the quality of a process or of a product
+  \item Group examines part or all of a process or system and its documentation to find potential problems
+  \item There are different types of review with different objectives
+  \begin{itemize}
+    \item Inspections for defect removal (product)
+    \item Reviews for progress assessment(product and process)
+    \item Quality reviews (product and standards)
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Purpose of Reviews}
+
+\begin{itemize}
+  \item Serve as a \textbf{filter} for the software process
+  \item Uncover errors that can then be removed
+  \item Purify the software analysis, design, coding, and testing activities
+  \item Catch large classes of errors that escape the originator more than other practitioners
+  \item Include the formal technical review (also called a walkthrough or inspection)
+  \begin{itemize}
+    \item Acts as the most effective SQA filter
+    \item Conducted by software engineers for software engineers
+    \item Effectively uncovers errors and improves software quality
+    \item Has been shown to be up to 75\% effective in uncovering design flaws (which constitute 50-65\% of all errors in software)
+  \end{itemize}
+  \item Require the software engineers to expend time and effort, and the organization to cover the costs
+\end{itemize}
+
+\section{Formal Technical Review (FTR)}
+
+\begin{itemize}
+  \item \textbf{Objectives:}
+  \begin{itemize}
+    \item Uncover errors in function, logic, or implementation for any representation of the software
+    \item Verify that the software under review meets its requirements
+    \item Ensure that the software has been represented according to predefined standards
+    \item Achieve software that is developed in a uniform manner
+    \item Make projects more manageable
+  \end{itemize}
+  \item Serves as a \textbf{training ground} for junior software engineers to observe different approaches to software analysis, design, and construction 
+  \item \textbf{Promotes backup and continuity} because a number of people become familiar with other parts of the software
+  \item May sometimes be a sample-driven review
+  \begin{itemize}
+    \item Project managers must quantify those work products that are the primary targets for formal technical reviews
+    \item The sample of products that are reviewed must be representative of the products as a whole
+  \end{itemize}
+\end{itemize}
+
+\subsection{The FTR meeting}
+
+\begin{itemize}
+  \item Has the following constraints: From 3-5 people should be involved, advance preparation (i.e., reading) should occur for each participant \textbf{but should require no more than two hours} a piece and involve only a small subset of components, the duration of the meeting should be less than two hours
+  \item Focuses on a specific work product (a software requirements specification, a detailed design, a source code listing)
+\end{itemize}
+
+\subsection{Before the FTR meeting}
+
+\begin{itemize}
+  \item The producer informs the project manager that a work product is complete and ready for review
+  \item The project manager contacts a review leader, who evaluates the product for readiness, generates copies of product materials, and distributes them to the reviewers for advance preparation
+  \item Each reviewer spends one to two hours reviewing the product and making notes before the actual review meeting
+  \item The review leader establishes an agenda for the review meeting and schedules the time and location
+\end{itemize}
+
+\subsection{During the FTR meeting}
+
+\begin{itemize}
+  \item The meeting is attended by the review leader, all reviewers, and the producer
+  \item One of the reviewers also serves as the recorder for all issues and decisions concerning the product
+  \item After a brief introduction by the review leader, the producer proceeds to "walk through" the work product while reviewers ask questions and raise issues
+  \item The recorder notes any valid problems or errors that are discovered; no time or effort is spent in this meeting to solve any of these problems or errors
+\end{itemize}
+
+\subsection{At the conclusion of the FTR meeting}
+
+\begin{itemize}
+  \item All attendees must decide whether to 
+  \begin{itemize}
+    \item \textbf{Accept} the product without further modification
+    \item \textbf{Reject} the product due to severe errors (After these errors are corrected, another review will then occur)
+    \item \textbf{Accept} the product provisionally (Minor errors need to be corrected but no additional review is required)
+  \end{itemize}
+  \item All attendees then complete a sign-off in which they indicate that they took part in the review and that they concur with the findings
+\end{itemize}
+
+\subsection{Following the FTR meeting}
+
+\begin{itemize}
+  \item The \textbf{recorder} produces a list of review issues that: \textbf{Identifies problem areas} within the product, Serves as an action item checklist \textbf{to guide the producer} in making corrections.
+  \item The recorder includes the list in an FTR summary report: This one to two-page report describes \textbf{what} was reviewed, \textbf{who} reviewed it, and \textbf{what} were the findings and conclusions
+  \item The review leader \textbf{follows up} on the findings to ensure that the producer makes the requested corrections
+\end{itemize}
+
+\subsection{FTR Guidelines}
+
+\begin{itemize}
+  \item Review the product, \textbf{not the producer}
+  \item Set an agenda and maintain it
+  \item \textbf{Limit} debate and rebuttal; conduct in-depth discussions off-line
+  \item Enunciate problem areas, but don't attempt to solve the problem noted
+  \item Take written notes; utilize a wall board to capture comments
+  \item Limit the number of participants and insist upon advance preparation
+  \item Develop a checklist for each product in order to structure and focus the review
+  \item Allocate resources and schedule time for FTRs
+  \item Conduct meaningful training for all reviewers
+  \item Review your earlier reviews to improve the overall review process
+\end{itemize}
+
 \pagebreak
 \section*{Reference section} \label{sec:reference}
 \begin{description}
