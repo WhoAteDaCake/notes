@@ -1,0 +1,154 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Intelectual property}
+
+\begin{flushleft}
+Intellectual property is \textbf{any unique product} of the human intellect that \textbf{has commercial value}.
+\end{flushleft}
+
+\subsection{Intellectual property (IP) protection}
+\begin{flushleft}
+The purpose of intellectual property law is to ensure that people profit from ideas after the idea is known to everyone. Mechanisms of IP protection:
+\begin{itemize}
+  \item Copyright
+  \item Patents 
+  \item Trademarks
+  \item Trade Secrets
+  \item Proprietary Designs
+  \item Confidential information
+  \item Databases rights
+\end{itemize}
+\end{flushleft}
+
+\subsection{Factors in deciding about IP protection}
+
+\begin{itemize}
+  \item What type of thing is to be protected?
+  \item What rights are reserved for the creator of the work?
+  \item What rights are reserved for the public?
+  \item How does one obtain the protection for the work?
+  \item How long does the protection last?
+\end{itemize}
+
+\section{Copyright}
+\begin{flushleft}
+\textbf{Copyright} protects “original works of authorship fixed in any tangible medium of expression” in the areas of literature, music, drama, pantomime, graphic art, sculpture, motion pictures, sound recordings, and architecture. Copyright \textbf{cannot cover} ideas, facts or common knowledge, nor creative works until they appear in a tangible fixed form. For example: Dance choreography cannot be protected unless it is recorded.
+\end{flushleft}
+
+\subsection{What rights does it entail}
+\begin{itemize}
+  \item The right to \textbf{reproduce} the copyrighted work
+  \item The right to \textbf{prepare derivative} works based upon the copyrighted work
+  \item The right to \textbf{distribute} copies of the copyrighted work to the public by sale or other transfer of ownership, or by rental, lease, or landing 
+  \item The right to \textbf{perform or display} the copyrighted work publicly.
+\end{itemize}
+\begin{flushleft}
+Copyright is automatically guaranteed to the authors as soon as their work is created in a fixed medium In the USA, copyright lasts for author’s lifetime + 70 years after the author’s death.
+\end{flushleft}
+
+\subsubsection{CopyLeft}
+
+\begin{flushleft}
+Copyleft—software or artistic work may be used, modified, and distributed freely on condition that anything derived from it is bound by the same conditions.
+\end{flushleft}
+
+\subsection{Fair use}
+
+\begin{flushleft}
+Fair use right limits \textbf{the exclusive right} of the copyright owner to reproduce the work. Fair use right allows others to reproduce copyright material without the author’s permission, e.g., by citing short excerpts for the purpose of scholarship, teaching, research, criticism, commentary, and news reporting.
+\end{flushleft}
+
+\subsubsection{Fair use criteria}
+
+\begin{itemize}
+  \item \textbf{The purpose and the character of the use}, including whether such use is of a commercial nature or for non-profit educational purposes
+  \item The \textbf{nature} of the copyrighted work
+  \item The \textbf{amount} and substantiality of the portion used \textbf{in relation to the copyrighted work} as a whole
+  \item The effect of the use upon the potential market of or value of the copyrighted work
+\end{itemize}
+
+\subsection{Doctrine of First Sale}
+
+\begin{flushleft}
+Copyright guarantees that the owner \textbf{has economic gain} from the sales of the work—the owner may receive royalty from sales. Doctrine of First Sale restricts the owner’s right only to the ‘first royalty’, eliminating the right to the ‘second royalty’, i.e., \textbf{revenue from the resale} of the used items.
+\end{flushleft}
+
+\section{Digital Rights Management}
+
+\begin{flushleft}
+Digital Rights Management (DRM) is a collection of technologies that ensure that copyrighted content can be only viewed by the person who purchased it.
+\end{flushleft}
+
+\subsection{Example: Ebooks}
+\begin{flushleft}
+DRM protected e-book \textbf{may not allow copy \& paste action} (from the book into a word processor). The systems make it impossible to exercise your right to resell a book. This would entail giving a copy to another person and immediately deleting your copy. The copyrighted material is encrypted. The key for decryption is obtained from a server that distributes the key per device. Lose access to the content if changing the device or upgrading the OS and the books is gone.
+\end{flushleft}
+
+\section{Digital Millennium Copyright Act}
+\begin{flushleft}
+\textbf{Circumventing DRM}: computer security experts and hackers are able to decrypt the material and make it usable on any device.
+\end{flushleft}
+
+\subsection{DMCA}
+
+\begin{flushleft}
+\textbf{Digital Millennium Copyright Act (DMCA) – US Law} “No person shall circumvent a technological measure that effectively controls access to a work protected under this title.”. It criminalizes production and dissemination of technology, devices, or services \textbf{intended to circumvent measures that control access to copyrighted works} (commonly known as digital rights management or DRM). It also criminalizes the act of circumventing an access control, whether or not there is actual infringement of copyright itself. In addition, the DMCA heightens the penalties for copyright infringement on the Internet.
+\end{flushleft}
+
+\subsection{DMCA and Online Service Providers}
+
+\begin{flushleft}
+No provisions for fair use and unintended circumvention of DRM for legitimate purposes \verb|->| risk for online service providers (OSPs). Online Copyright Infringement Liability Limitation Act (“OCILLA”) - safe harbour for OSPs:
+\begin{itemize}
+  \item Must adhere to and qualify for safe harbour guidelines
+  \item Must promptly block access or remove alleged infringing material when they receive notification of an infringement claim from a copyright holder or the copyright holder's agent.
+  \item Have no liability in case users claim that the material in question is not, in fact, infringing.
+\end{itemize}
+\end{flushleft}
+
+\section{Patents}
+\begin{flushleft}
+The Difference Between Copyright and Patent. Patents refer to an invention, whereas copyrights refer to the expression of an idea, such as an artistic work. 
+\end{flushleft}
+
+\subsection{Protecting inventions}
+
+\begin{flushleft}
+Inventions are protected by patents. United States Patenting and Trademark Office (USPTO) examines patent applications and determine whether they are truly an invention, i.e. \textbf{Novel} – if the invention has not previously been invented by someone else. \textbf{Nonobvious} – if a solution to a problem is not obvious to another specialist in the appropriate area. Nonobviousness is not strictly defined. Many court cases to invalidate patents focus on challenging the obviousness of the invention
+\end{flushleft}
+
+\pagebreak
+
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}

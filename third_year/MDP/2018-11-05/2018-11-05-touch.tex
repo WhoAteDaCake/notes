@@ -1,0 +1,98 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\section{Working Principle of Resistive Touch Screen}
+
+\begin{itemize}
+  \item Two sheets of transparent layer with metallic (resistive) coating facing each other
+  \item Four wires connection
+  \item Excite alternate axes with voltage
+  \item Touch acts as voltage divider for coordinate estimation
+\end{itemize}
+
+\subsection{Properties}
+
+\begin{itemize}
+  \item Used with finger or any pointing device (passive)
+  \item Requires certain amount of pressure.
+  \item Difficult, but can be altered for multi-touch (only two-points touch)
+\end{itemize}
+
+\section{Capacitive Touch Screen}
+
+\begin{itemize}  
+  \item Screen is covered in a capacitive material: Indium-tin-oxide (conductive, optically 90\% transparent)
+  \item Capacitance = ability to store electrical charge (Works through glass)
+  \item Human beings act as small capacitors
+  \item Touching the screen modifies its electrostatic field
+\end{itemize}
+
+\subsection{Surface Capacitance}
+
+\begin{itemize}
+  \item Cover the screen with a uniform conductive material
+  \item Apply a small voltage to generate an electrostatic field. Touching with a finger creates a dynamic capacitor
+  \item Measure effective capacitance at each corner of the screen
+  \begin{itemize}
+    \item The larger the change, the closer to the corner the touch is
+    \item Combine measurements from all corners = location of the touch
+  \end{itemize}
+  \item Will not work with multi-touch as clicking two points would confuse the field
+\end{itemize}
+
+\section{Projected (Mutual) Capacitance}
+
+\begin{itemize}
+  \item Conductive material is etched with rows / columns
+  \item An electronic field is projected through the top layer of glass
+  \item An electrostatic field is created
+  \item Human acts as a conductor
+  \item Decrease of capacitance between electrodes is detected during touch 
+  \item Measure capacitance at each electrode grid point
+\end{itemize}
+
+\subsection{Properties}
+\begin{itemize}
+  \item More accurate / multi-touch
+  \item Sensing requires an “active” touch: Non-conductive materials will not change the electrostatic field: fingers, capacitive glove, capacitive stylus
+  \item State-of-art technique for smart phone, tablets.
+  \item Can be manufactured to the top glass layer (on-cell) or the display layer (in-cell)
+\end{itemize}
+
+
+\section{Touch and UI}
+
+\begin{itemize}
+  \item Touch relies on finger contact with the display. This has to alter the way we design our displays
+  \item Size of the finger sets the properties of the UI, not the size of a display
+\end{itemize}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}

@@ -1,0 +1,63 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Metrics}
+
+\subsection{Product metrics}
+
+\subsection{Types of measures}
+\begin{itemize}
+  \item Direct: Cost, effort, LOC, speed, memory
+  \item Indirect: functionality, quality, efficiency, reliablity, maintainability 
+\end{itemize}
+
+
+\subsection{Size oriented metrics}
+\begin{itemize}
+  \item Size of software produced
+  \item LOC - Lines of Code or KLOC - 1000 Lines of code
+  \item SLOC statement lines of code (no whitespace)
+  \item Number of function points (NFP)
+  \item Open used as part of density CONT
+\end{itemize}
+
+\subsection{Process metrics categories}
+\begin{itemize}
+  \item Software oricess quality metrics: Error density, severity metrics
+  \item Sof
+\end{itemize}
+
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}
