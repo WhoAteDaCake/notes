@@ -28,9 +28,80 @@
 
 \newpage
 
+\section{Why Measure Software?}
+
+\begin{itemize}
+  \item To determine the quality of the current product or process and to make informed comparisons
+  \item To predict qualities of a product/process
+  \item To improve quality of a product/process (often continuously – \worddef{kaizen})
+\end{itemize}
+
 \section{Metrics}
 
+\subsection{Example metrics}
+\begin{itemize}
+  \item Error rates / Defect rates 
+  \item A defect is a failure to do something 
+  \item An error is a wrong result or illegal action 
+  \item Code generation rates. Measured by: per \textbf{person}, per \textbf{team}, per \textbf{project}. Will involve \textbf{aggregation} – see later
+  \item Errors should be categorized by origin, type etc.
+\end{itemize}
+
+\subsection{Main objectives of software quality metrics}
+
+\begin{itemize}
+  \item Facilitate management control, planning and managerial intervention. Based on deviations of actual 
+  \begin{itemize}
+    \item performance from planned.
+    \item timetable and budget performance from planned. 
+  \end{itemize}
+  \item 2. Identify situations for development or maintenance process improvement (preventive or corrective actions). Based on:
+  \begin{itemize}
+    \item Accumulation of metrics information regarding the performance of teams, units, etc.
+  \end{itemize}
+\end{itemize}
+
+\subsection{Software quality metrics — Requirements}
+
+\begin{flushleft}
+General	requirements:
+\begin{itemize}
+  \item Relevant
+  \item Valid
+  \item Reliable
+  \item Comprehensive 
+  \item Mutually exclusive
+\end{itemize}
+Operative requirements:
+\begin{itemize}
+  \item Easy and simple 
+  \item Does not require independent data collection 
+  \item Immune to biased interventions by interested parties
+\end{itemize}
+\end{flushleft}
+
+\subsection{Metrics evaluations}
+
+\begin{flushleft}
+Metrics can be evaluated on:
+\begin{itemize}
+  \item \textbf{Products}: Explicit results of software development activities. Deliverables, documentation, other artifacts produced
+  \item \textbf{Process}: Activities	related	to	production	of	software
+  \item \textbf{Resource}: Inputs into the software development activities, such as hardware, knowledge, people.
+\end{itemize}
+\end{flushleft}
+
+\subsection{Process metrics}
+
+\begin{flushleft}
+Rates of production / productivity, quality of estimates, burn down rate (project velocity), refactoring rate. These can lead to \textbf{long term process improvement} by driving reflection on the process and suggestions for improvement
+\end{flushleft}
+
 \subsection{Product metrics}
+
+\begin{flushleft}
+Error densities, complexity measures, code quality measures, speed and memory measures, code profiles etc, track potential risks, uncover problem areas, Adjust workflow or tasks. They \textbf{evaluate teams ability to control quality}
+\end{flushleft}
 
 \subsection{Types of measures}
 \begin{itemize}
@@ -51,13 +122,27 @@
 \subsection{Process metrics categories}
 \begin{itemize}
   \item Software oricess quality metrics: Error density, severity metrics
-  \item Sof
+  \item Software process timetable, error removal effectiveness and productivity metrics.
 \end{itemize}
+
+\section{Process metrics}
+
+
+\subsection{Definitions}
+
+\begin{flushleft}
+  \item NCE = total detected by code inspections and testing.
+  \item NDE = total errors detected in the development process.
+  \item WCE = weighted NCE
+  \item WDE = weighted NDE
+\end{flushleft}
 
 
 \pagebreak
 \section*{Reference section} \label{sec:reference}
 \begin{description}
-	\item[placeholder] \hfill \\
+	\item[measure] \hfill \\ A quantitative indication of extent, amount, dimension, capacity, or size of some attribute of a product or process. for example: Lines of code (LOC), Number of errors
+	\item[metric] \hfill \\ quantitative measure of degree to which a system, component or process possesses a given attribute. That is to say a “derived measure.” May involve “guesstimates” where human processes are concerned. for example: Error density.
+	\item[kaizen] \hfill \\ An approach to \textbf{continuous} organization improvement with emphasis on continuous measure and understanding of process.
 \end{description}
 \end{document}
