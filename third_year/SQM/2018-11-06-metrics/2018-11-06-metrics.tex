@@ -11,6 +11,7 @@
 \usepackage{graphicx}
 \usepackage{fixltx2e}
 \usepackage{listings}
+\usepackage{amsmath}
 \usepackage{color}
 \usepackage{hyperref}
     \hypersetup{ colorlinks = true, linkcolor = blue }
@@ -135,10 +136,161 @@ Error densities, complexity measures, code quality measures, speed and memory me
   \item NDE = total errors detected in the development process.
   \item WCE = weighted NCE
   \item WDE = weighted NDE
+  \item MSOT = Milestones completed on time.
+  \item MS = Total number of milestones.
+  \item TCDAM = Total Completion Delays (days, weeks, etc.) for all milestones
+  \item NYF = number software failures detected during a year of maintenance service.
+  \item WYF = weighted number of software failures detected during a year of maintenance service.
+  \item DevH = Total working hours invested in the development of the software system.
+  \item ReKLOC = Number of thousands of reused lines of code.
+  \item ReDoc = Number of reused pages of documentation.
+  \item NDoc = Number of pages of documentation
 \end{flushleft}
 
+\subsection{Error density metrics}
+
+\begin{itemize}  
+  \item CED (Code error density) $CED = NCE / KLOC$
+  \item DED (Development error density) $DED = NDE /KLOC $
+  \item WCED (Weighted code error density) $WCDE = WCE / KLOC$
+  \item WDED (Weighted development error density) $WDED = WDE / KLOC$
+  \item WCEF (Weighted code errors per function point) $WCEF = WCE / NFP $
+  \item WDEF (Weighted development errors per function point) $WDEF = WDE / NFP$
+\end{itemize}
+
+\subsection{Error severity metrics}
+
+\begin{itemize}
+  \item ASCE (Average severity of code errors) $ ASCE = WCE / NCE$
+  \item ASDE (Average severity of developmment errors) $ASDE = WDE / NDE$
+\end{itemize}
+
+\subsection{Software process timetable metrics}
+
+\begin{itemize}
+  \item TTO (Time table observance) $ TTO = MSOT / MS $
+  \item ADMC (Average delay of milestone completion) $ADMC = TCDAM / MC$
+\end{itemize}
+
+\subsection{Error removal effectiveness metric}
+
+\begin{itemize}
+  \item DERE (Development errors removal effectiveness) $ DERE = NDE / (NDE + NFY)$
+  \item DWERE (Development weighted erros removal effectiveness) $ DWERE = WDE / (WDE + WYF)$ 
+\end{itemize}
+
+\subsection{Software process productivity metrics}
+
+\begin{itemize}
+  \item DevP (Development productivity) $DevP = DevH / KLOC$
+  \item FDevP (Function point development productivity) $ FDevP = DevH / NFP$
+  \item CRe (Code reuse) $Cre = ReKLOCK / KLOCK$
+  \item DocRe (Documentation reuse) $DocRe = ReDoc / NDoc$
+\end{itemize}
+
+\section{LOC based metrics}
+
+\begin{itemize}
+  \item Easy	to	use	and compute	
+  \item Language \&	programmer	dependent	
+  \item Can	be	counter-productive	if	used	as	a	basis	for	reward! (Program can be written in more lines of code and made overly complex)
+\end{itemize}
+
+\subsection{Complexity Metrics}
+
+\begin{itemize}
+  \item  LOC	-	a	function	of	complexity
+  \item  Language	and	programmer	dependent
+  \item Halstead’s	Software	Science	(entropy	measures)
+  \begin{itemize}
+    \item $n_{1}$	-	number	of	distinct	operators
+    \item  $n_{2}$	-	number	of	distinct	operands	
+    \item  $N_{1}$	-	total	number	of	operators
+    \item  $N_{2}$	-	total	number	of	operands
+  \end{itemize}
+\end{itemize}
+
+\subsection{Halstead’s Metrics}
+
+\begin{itemize}
+  \item Program length: $N = N_{1} + N_{2}$
+  \item Program vacabulary: $n = n_{1} + n_{2}$
+  \item Estimated	length: $N \text{\^{}} \: = \: n_{1} * log_{2}n_{1} + n_{2} * log_{2}n_{2} $ (Close	estimate	of	length	for	well	structured	programs	)
+  \item Purity ratio $PR \: = N \text{\^{}} / N$
+\end{itemize}
+
+\section{Program complexity}
+
+\begin{itemize}
+  \item Volume: $V = N \log_2 n$ (Number	of	bits	to	provide	a	unique	designator	for	each	of	the	n	items	in	the	program	vocabulary
+)
+  \item Difficulty: $D = (n_{1} / 2) * (N_{2} / n_{2})$
+  \item Program effort = $E = D * V$ (good	measure	of	program	understandability)
+\end{itemize}
+
+\section{McCabe’s Complexity Measures}
+
+\begin{itemize}
+  \item McCabe’s	metrics	are	based	on	a	control	flow	representation	of	the	program.	
+  \item  A	program	graph	is	used	to	depict	control	flow.	
+  \item  Nodes	represent	\textbf{processing	tasks}	(one	or	more	code	statements)	
+  \item  Edges	represent	\textbf{control	flow	between	nodes}
+\end{itemize}
+
+\subsection{Flow Graph Notation}
+
+\begin{center}
+  \includegraphics[scale=0.5]{mccabe_flow.png}
+\end{center}
+
+\subsection{Cyclomatic Complexity}
+
+\begin{itemize}
+  \item Set	of	independent	paths	through	the	graph	(basis	set)	
+  \item $V(G) = E - N + 2$
+  \begin{itemize}
+    \item E	is	the	number	of	flow	graph	edges
+    \item N is the number of edges
+  \end{itemize}
+  \item $V(G)	=	P	+	1$
+  \begin{itemize}
+    \item  P	is	the	number	of	predicate	nodes	(branching)	
+  \end{itemize}
+\end{itemize}
+
+\subsection{Meaning}
+
+\begin{itemize}
+  \item V(G)	is	the	number	of	(enclosed)	regions/areas	of	the	planar	graph	
+  \item  Number	of	regions	increases	with	the	number	of	decision	paths	and	loops	
+  \item  This	is	a	quantitative	measure	of	the	number	of	tests	needed		
+  \item  It	correlates	very	well	with	the	rate	of	errors	
+  \item  Experimental	data	shows	value	of	V(G)	should	be	no	more	then	10	-	testing	is	very	difficult	above	this	value
+\end{itemize}
+
+\section{McClure’s Complexity Metric}
+
+\begin{flushleft}
+Complexity =	$C	+	V$
+\begin{itemize}
+  \item  C	is	the	number	of	comparisons	in	a	module
+  \item  V	is	the	number	of	control	variables	referenced	in	the	module
+\end{itemize}
+decisional complexity. Similar to McCabe's but with regard to control variables
+\end{flushleft}
+
+\section{Metrics and Software Quality (FURPS)}
+\begin{itemize}
+  \item Functionality		-	features	of	system	
+  \item  Usability	–	aesthesis,	documentation	
+  \item  Reliability	–	frequency	of	failure,	security	
+  \item  Performance	–	speed,	throughput	
+  \item  Supportability	–	maintainability
+
+\end{itemize}
 
 \pagebreak
+
 \section*{Reference section} \label{sec:reference}
 \begin{description}
 	\item[measure] \hfill \\ A quantitative indication of extent, amount, dimension, capacity, or size of some attribute of a product or process. for example: Lines of code (LOC), Number of errors
