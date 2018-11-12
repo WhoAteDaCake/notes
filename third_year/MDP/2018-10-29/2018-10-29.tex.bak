@@ -155,6 +155,52 @@ Intent
 \end{itemize}
 \end{flushleft}
 
+\section{Binder Objects and Tokens}
+\begin{flushleft}
+Binder	Object
+\begin{itemize}
+  \item An object that can be accessed through the Binder framework
+  \item Implements the IBinder interface 
+  \item A unique identity maintained across processes
+  \begin{itemize}
+    \item Allocated by the Binder driver. Cannot be duplicated. Binder objects maintain a unique ID even when parcelled 
+    \item A 32 bit handle maintained by the kernel
+  \end{itemize}
+\end{itemize}
+Process A creates a binder object \verb|<-| references memory directly
+\begin{itemize}
+  \item Passes it to process B \verb|<-| referenced by handle
+  \item Passes it to process C \verb|<-| referenced by handle
+\end{itemize}
+Capability-based security model
+\begin{itemize}
+  \item Processes are granted access to a particular resource by giving them a capability in the form of the binder object. Binder object as token.
+  \item The possession of a token grants the owning process full access to the Binder object enabling it to perform Binder transactions on the target object 
+  \item The only way to communicate with a Binder object is to be given a reference to it
+\end{itemize}
+\end{flushleft}
+
+\section{ServiceManager}
+
+\begin{flushleft}
+A	single	context	manager that	maintains	references	to	Binder	objects
+\begin{itemize}  
+  \item Implemented as ServiceManager
+  \item Also hosts many system services within its process 
+  \item A Binder instance with a known Binder handle (0) 
+  \item Knows about other remote services 
+  \begin{itemize}
+    \item The first to be registered with Binder 
+    \item Only “trusted” system services allowed to register. System, radio, media
+  \end{itemize}
+\end{itemize}
+Client does not know the token of remote Binder. Only the Binder interface \textbf{knows its own address}. Binder submits a service name and its Binder token to the ServiceManager via IPC. Client retrieves remote service Binder handle with service name and communicates with remote service
+\end{flushleft}
+
+\begin{center}
+  \includegraphics[scale=0.5]{service_manager.png}
+\end{center}
+
 \newpage
 
 \begin{description}
