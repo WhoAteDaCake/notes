@@ -201,7 +201,46 @@ Client does not know the token of remote Binder. Only the Binder interface \text
   \includegraphics[scale=0.5]{service_manager.png}
 \end{center}
 
+\section{Binder}
+
+\subsection{Security}
+
+\begin{flushleft}
+Binder	doesn’t	deal	with	security
+\begin{itemize}
+  \item Enables a trusted execution environment
+  \item Transactions via the kernel 
+  \item Client identity managed by the kernel 
+  \item Binder.getCallingUid(), Binder.getCallingPid() 
+  \item UID / PID included in each transcation
+\end{itemize}
+Access controlled in two ways
+\begin{itemize}
+  \item Limit who can obtain a reference to a Binder object. Has interface reference security. Client cannot guess “address” of a service without going via the Service Manager.
+  \item Check caller identity before performing an action on the Binder object 
+  \item Service asks package manager about UID permissions 
+  \item Check whether it holds a permission we want to enforce via PackageManager.getPackageInfo(...) 
+\end{itemize}
+\end{flushleft}
 \newpage
+
+\subsection{Performance}
+
+\begin{flushleft}
+Explicit limitations
+\begin{itemize}
+  \item Transactional buffer size 1Mb per process for all concurrent transactions in a process 
+  \item Many moderately sized transactions could also exhaust its limit. Arguments and return values are too large 
+  \item Keep transaction data small
+\end{itemize}
+Implicit limitations
+\begin{itemize}
+  \item Data is copied: duplication of memory resources
+  \item Native binary parcelling: better than reflection based serialization, still has overhead of parcel marshalling 
+  \item Not ideal for large data-streams, but good enough for window / activity / surface management -> graphics 
+  \item Pass file descriptors to shared memory regions (ashmem - Android shared memory)
+\end{itemize}
+\end{flushleft}
 
 \begin{description}
 	\item[placeholder] \hfill \\
