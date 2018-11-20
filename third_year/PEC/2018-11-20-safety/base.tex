@@ -1,0 +1,152 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Safety and releaiblity}
+
+\begin{flushleft}
+Computing system errors stem from human errors. Errors are typically traceable but moral and legal responsibility is not always easy to establish
+\end{flushleft}
+
+\section{Causes of Failure in Computing Systems}
+
+\begin{itemize}
+  \item Hardware errors 
+  \item Software errors 
+  \item Solving the wrong problem 
+  \item Misuse of the system 
+  \item Human communication failure 
+  \item Human malice
+\end{itemize}
+
+\section{Dependability}
+
+\begin{flushleft}
+\textbf{Dependability} of a computing system is the ability to deliver service that can justifiably be trusted. Dependability attributes are:
+\begin{itemize}
+  \item Availability: Readiness of correct service 
+  \item Reliability: Continuity of correct service 
+  \item Safety: Absence of catastrophic consequences on the user(s) and the environment 
+  \item Confidentiality: Absence of unauthorized disclosure of information 
+  \item Integrity: Absence of improper system state alterations 
+  \item Maintainability: Ability to undergo repairs and modifications.
+\end{itemize}
+\end{flushleft}
+
+\section{Software Engineering}
+
+\begin{flushleft}
+Discipline focussed on the production of software and development of tools methodologies and theories supporting software production.
+\begin{itemize}
+  \item \textbf{Specification}: Defining the functions to be performed by the software 
+  \item \textbf{Development}: Producing the software that meets the specifications
+  \item \textbf{Validation}: Testing the software
+  \item \textbf{Evolution}: Modifying the software to meet the changing needs of the customer
+\end{itemize}
+\end{flushleft}
+
+\subsection{Specification}
+
+\subsubsection{Process}
+
+\begin{itemize}
+  \item Determine the requirements of the system and constraints under which the software must operate   
+  \item Assess feasibility of the software development within the budget and schedule requirements
+\end{itemize}
+
+\subsubsection{Result}
+
+\begin{itemize}
+  \item High level statement of requirements 
+  \item Mock-ups of the user interface 
+  \item Low-level requirements statement.
+\end{itemize}
+
+\subsection{Development}
+
+\begin{flushleft}
+First design phase—based on high-level, abstract view of the system
+\begin{itemize}
+  \item Reveals ambiguities, omissions, and errors in the specifications
+  \item Mistakes are corrected; that is less expensive at a higher, abstract level
+\end{itemize}
+Subsequent design phases—add levels of details
+\begin{itemize}
+  \item Components of the system become clear
+  \item Interface between each components are spelled out 
+  \item Algorithms are selected and data structure defined.
+\end{itemize}
+\end{flushleft}
+
+\subsection{Validation}
+
+\begin{flushleft}
+Software testing
+\begin{itemize}
+  \item Process to assess the correctness, completeness and quality of developed computer software. Validate that software satisfies the specification and meets user needs.
+\end{itemize}
+Testing can reveal bugs but cannot prove that the program \textbf{will work correctly under all circumstance}.
+\begin{itemize}
+  \item Formally proving that the software meets specifications may be unfeasible and is typically expensive 
+  \item Even if we prove that the program is ‘correct’ and meets specifications that does not mean that specifications are correct.
+\end{itemize}
+\end{flushleft}
+
+\subsubsection{Principles}
+
+\begin{itemize}
+  \item Testing shows presence of defects
+  \item Exhaustive testing is impossible: Aim: Optimal amount of testing based on the risk assessment.
+  \item Defect clustering: The risk is determined based on experience and critical thinking. In practice, a small number of modules contain most of the defects detected.
+  \item Pesticide paradox: If the same tests are repeated they can no longer find new bugs. Tests need to be reviewed, revised, and changed.
+  \item Testing is context dependent
+  \item Absence of errors is fallacy 
+  \item Early testing is critical: Testing for bugs is useless if the system does not meet the user’s requirements. Testing should start as early as possible to ensure that it meets user needs.
+\end{itemize}
+
+\subsection{Evolution}
+
+\begin{itemize}
+  \item Successful software systems evolve over time to meet the changing needs of the users
+  \item Development of new software versions
+  \begin{itemize}
+    \item New needs are compared with the strengths and weaknesses of the system 
+    \item Decision is made about the changes to the system 
+    \item Often the same CASE tools are used to support the development of the new version 
+    \item Previous test suites may be reused and expanded to test the new version of the system.
+    \end{itemize}  
+\end{itemize}
+
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}
