@@ -1,0 +1,184 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Definition}
+
+\begin{flushleft}
+Software testing is a formal process carried out by a specialized testing team in which a software unit, several integrated software units or an entire software package are examined by running the programs on a computer.
+\end{flushleft}
+
+\section{Objectives}
+
+\begin{flushleft}
+Direct objectives
+\begin{itemize}
+  \item To identify and reveal as many errors as possible in the tested software
+  \item To bring the tested software, after correction of the identified errors and retesting, to an acceptable level of quality
+  \item To perform the required tests efficiently and effctively, within the limits budgetary and scheduling limitations
+\end{itemize}
+Indirect objectives
+\begin{itemize}
+  \item To compile a record of software errors for use in error prevention (by corrective and preventive actions)
+\end{itemize}
+\end{flushleft}
+
+\section{Strategic approach to testing}
+
+\subsection{General characteristics}
+\begin{itemize}
+  \item Software team should conduct effective formal technical reviews
+  \item Testing begins at the component level and work outward toward the integration of the whole system
+  \item Testing is conducted by the \textbf{developer} of the software and by \textbf{independent test group}.
+  \item Testing and debugging are different activities, but debugging must be accomodated in any testing strategy.
+\end{itemize}
+
+\subsection{Verification and validation}
+
+\begin{itemize}
+  \item Verification: (Are algorithms coded correctly?). The set of activities that ensure that software corrctly implements specfic function or algorithm.
+  \item Validation (Does it meet user requirements). The set of activities that ensure that the software that has been build is traceable to customer requirements.
+\end{itemize}
+
+\subsection{Organising software testing}
+Testing should aim at breaking the software
+\begin{itemize}
+  \item Independent test group
+  \begin{itemize}
+    \item Removes the inherent problems asociation with letting the builder test the software that has been built
+    \item Removes the conflict of interest that may otherwise be present
+    \item Works closely with the software developer during analysis and design to ensure that throughout testing occues.
+  \end{itemize}
+\end{itemize}
+
+\subsection{Levels of testing}
+
+\begin{itemize}
+  \item Unit testing: Concentratest on each component/function of the software as implemented in source code
+  \begin{itemize}
+    \item Exercises specific paths in a component's control structure to ensure complete coverage and maximum error detection.
+    \item Components are then assembled and integrated
+  \end{itemize}
+  \item Integration testing: Focuses on the design and construction of the software architecture
+  \begin{itemize}
+    \item Focuses on inputs and outputs, and how well components fit and work together
+  \end{itemize}
+  \item Validation testing: Requirements are validataed against each constructed software
+  \begin{itemize}
+    \item Provides final assurance that the software meets all functional, behaviour, and performance requirements
+  \end{itemize}
+  \item System testing: The software and other system elements are tested as a whole
+  \begin{itemize}
+    \item Verifies that all system elements (software, hardware, people, databases) mesh properly and that overall system function and performance is achieved
+  \end{itemize}
+\end{itemize}
+
+\subsection{Testing strategy appliet to Object-Oriented Software}
+
+\begin{itemize}
+  \item Must broaden testing to include detections of errors in analysis and design models
+  \item Unit testing loses some of its meaning and integration testing changes signifcantly
+  \item Use the same philosophy but different approach as in conventional software testing
+  \item Test "in the smal" and the work out to testing "in the large"
+  \begin{itemize}
+    \item Testing in the small involves class attrivutes and operations, main focus in on communication and collaboration within the class
+    \item Testing in the large involves a series of regression tests to uncover errors due to communication and collabolration among classes
+  \end{itemize}
+  \item ADD EXTRA
+\end{itemize}
+
+\section{Ensuring a successful software test strategy}
+
+\begin{itemize}
+  \item Specify product requirements in a quantifiable manner long before testing commences
+  \item State testing objectives explicitly in measurable terms
+  \item Understand the user of the software (through use cases) and develop a profile for each user category
+  \item Develop a testing plan that emphasizes rapid cycle testing to get quick feedback to control quality levels and adjust the test strategy
+  \item Build robust software that is designed to test itself and can diagnose certain kinds of errors
+  \item Use effective formal technical reviews as a filter prior to testing to reduce the amount of testing required
+  \item Conduct formal technical reviews to asses the test strategy and test casess themselves
+  \item Develop a continous improvement approach for the testing process through the gathering of metrics
+\end{itemize}
+
+\section{Defect testing}
+
+\subsection{The testing process}
+\begin{flushleft}
+Component testing
+\begin{itemize}
+  \item Testing of individual program components
+  \item Usually the responsiblity of the component developer (except for critical systems)
+  \item Tests are derived for the developers experience
+\end{itemize}
+Integration testing
+\begin{itemize}
+  \item Testing of groups of components integrated to create a system or a sub-system
+  \item The responsibility of an independent testing team
+  \item Tests are based on a system specification
+\end{itemize}
+\end{flushleft}
+
+\subsection{Defect testing}
+
+\begin{itemize}
+  \item The goal is to discover defects in programs
+  \item A successful defect test is a test which causes a program to behave in an anomalous way
+  \item Tests show the presence no the absence of defects
+\end{itemize}
+
+\subsection{Testing priorities}
+
+\begin{itemize}
+  \item Only exhaustive testing can show a program is free from defects
+  \item Test should exercise a system's capabilities rather than its components
+  \item Testing old capabilities is more important than testing new capabilities. In order for compatability purposes.
+  \item Testing typical situations is more important than boundary value cases.
+\end{itemize}
+
+ADD CHART about defect test process
+
+\section{Black box testing}
+
+\begin{itemize}
+  \item An approach to testing where the program is considered as a black-box
+  \item ADD rest of rows
+\end{itemize}
+
+\section{Equivalence partitioning}
+
+\begin{itemize}
+  \item Input datat and output results 
+\end{itemize}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}

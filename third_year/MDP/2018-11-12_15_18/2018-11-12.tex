@@ -231,6 +231,145 @@ Content Providers manage data for:
   \item UserDictionary: Database for predictive spelling
   \item And other common mobile capabilities
 \end{itemize}
+Good practice even when making data available only within the application
+\begin{itemize}
+  \item Either create a new one (by sub-classing ContentProvider) 
+  \item Or add / query data via an existing / native Content Provider
+\end{itemize}
+Assuming that spawning an Activity via Intent is not sufficient
+\begin{itemize}
+  \item Querying complex data 
+  \item Task flow 
+  \item Requiring close coupling of application to data. c.f. Binding to Services
+\end{itemize}
+\end{flushleft}
+
+\subsection{Data Model}
+
+\begin{flushleft}
+Content Providers implement a specific data model. Very similar to a relational database table:
+\begin{itemize}
+  \item A collection of records 
+  \item Support for reading and writing 
+  \item Support typical database operations: CRUD
+\end{itemize}
+Records are stored in rows, with each column providing different data fields
+\begin{itemize}
+  \item Each record has a numeric id (in the field \verb!_ID!) that uniquely identifies it
+\end{itemize}
+Tables exposed via URI
+\begin{itemize}
+  \item Abstraction again, can be close to or distant from underlying storage 
+  \item Most of the “work” is specifying the abstraction / linkage
+\end{itemize}
+\end{flushleft}
+
+\includegraphics[scale=0.5]{data_model.png}
+
+\subsection{Querying a Content Provider}
+
+\begin{flushleft}
+\textbf{ContentResolver}
+\begin{itemize}
+  \item Manages and supports Content Provider access 
+  \item How to service a request for content (Similar to ServiceManager) 
+  \item Enables Content Providers to be used across multiple applications (Provides additional services such as change notification)
+  \item Can observe a Content Provider to be informed of real-time modifications
+  \begin{itemize}
+    \item A new MP3 has been added to the library 
+    \item ContentObserver
+  \end{itemize}
+\end{itemize}
+\textbf{Content Providers identify data sets through URIs}
+\begin{itemize}
+  \item \textbf{content://authority/path/id} 
+  \item \textbf{content}: Data managed by a Content Provider 
+  \item \textbf{authority}: ID for the Content Provider (i.e. fully qualified class name, com.example.martindata) 
+  \item \textbf{path}: 0 or more segments indicating the subset of data to be requested e.g. table name, or something more readable / abstracted. RESTful resource philosophy 
+  \item \textbf{id}: Specific record (row) being accessed
+\end{itemize}
+\end{flushleft}
+
+\pagebreak
+
+\subsection{Querying a Content Provider}
+  
+\begin{flushleft}
+URI for searching Contacts. \verb|ContactsContract.Contacts.CONTENT_URI = "content://com.android.contacts/contacts/"|
+\verb|ContentResolver.query(...)|:
+\begin{itemize}
+  \item Returns a Cursor instance for accessing results 
+  \item \textit{Cursor} is a pointer to a \textit{CursorWindow} 
+  \item A read-only reference to shared memory allocated by ashmem, retrieved via Binder 
+  \item Has to be closed and max CursorWindow size is 2Mb. (Because it's inside shared memory)
+  \item \verb|Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder)|
+\end{itemize}
+\end{flushleft}
+
+\subsubsection{Accessing content}
+
+\begin{flushleft}
+To access / modify Contacts, requires a Permission
+\begin{itemize}
+  \item \verb|android.permission.READ_CONTACTS| 
+  \item \verb|android.permission.WRITE_CONTACTS|
+\end{itemize}
+Contacts has three components
+\begin{itemize}
+  \item Data: Rows (mime-typed) that can hold personal information
+  \item RawContacts: A contact for a given person from a given system. Gmail contact, Facebook contact etc, associated with Data entries
+  \item Contacts: Aggregated RawContacts, single view of a “person”
+\end{itemize}
+\end{flushleft}
+
+\subsection{Modifying a Content Provider}
+
+\begin{flushleft}
+Done by using \texttt{update} function. We pass \textbf{Uri} and \textbf{ContentValues}, which is key value pairs, where key is name of the column.
+\end{flushleft}
+
+\subsection{Creating a Content Provider}
+
+\begin{flushleft}
+Implement a storage system for the data:
+\begin{itemize}
+  \item Structured data / SQLite (Values, binary blobs up to 64k, database)
+  \item Large binary blobs (Files)
+  \item Photos / media manager
+\end{itemize}
+Implement a ContentProvider
+\begin{itemize}
+  \item \texttt{query, add, update, insert} etc 
+  \item \texttt{onCreate }
+  \item \texttt{getType}. What type of data are we providing? Single item, multiple items, mime types 
+  \item ParcelFileDescripter \texttt{openFile()}
+\end{itemize}
+Tell Android we are a provider. Declare in the AndroidManifest \textbf{android:multiprocess}. Don't use this, it is some old cruft.
+\end{flushleft}
+
+\section{Contract}
+
+\begin{itemize}
+  \item Defines metadata pertaining to the provider
+  \item Constant definitions that are exposed to developers via a compiled .jar file
+  \begin{itemize}
+    \item Authority (Which app is responsible for this data)
+    \item URI schema
+    \item Meta-data types 
+    \item “Column” names 
+    \item Abstraction of database architecture
+  \end{itemize}
+\end{itemize}
+
+\section{URI Matching}
+
+\begin{flushleft}
+All of these methods take a URI as the first parameter
+\begin{itemize}
+  \item (except for onCreate) 
+  \item The object will need to parse it to some extent to know what to return, insert or update
+\end{itemize}
+\verb|android.content.UriMatcher|: Provides mapping between abstraction of contract class to concrete db implementation
 \end{flushleft}
 
 \pagebreak
