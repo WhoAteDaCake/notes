@@ -1,0 +1,89 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Permissions}
+
+\subsection{Old	Permissions}
+
+\begin{flushleft}
+Show permissions required at install time. Not prompted again regarding permissions at run-time.
+\begin{itemize}
+  \item Not yet made a commitment (financial, mental) to the application. Can compare to other applications 
+  \item \textbf{Not per session / at run-time }
+  \item “Seamless” switching between Activities / applications 
+  \item Would slow down the user experience 
+  \item Train users to click “ok” repeatedly without considering the implications
+\end{itemize}
+\end{flushleft}
+
+\subsection{New permissions}
+
+\begin{itemize}
+  \item No access by default. Control access to specific mechanisms
+  \item Applications can offer protected access to resources and data with permissions. Permissions explicitly granted by users / the system
+  \item Permission architecture
+  \begin{itemize}
+    \item Applications statically declare permissions 
+    \item Required of components interacting with them. \textbf{You must} have this permission to interact with me 
+    \item Required by components they interact with. \textbf{I will} need these permissions 
+    \item Android requires user’s consent for specific permissions
+  \end{itemize}
+\end{itemize}
+
+\section{Normal or Dangerous}
+\begin{flushleft}
+Normal
+\begin{itemize}
+  \item Do not directly risk the user’s privacy 
+  \item Network state, Internet, Alarms, Wallpaper… 
+  \item Granted automatically 
+  \item But still must be declared in the manifest
+\end{itemize}
+Dangerous
+\begin{itemize}
+  \item Potentially do risk the user’s privacy 
+  \item The user must explicitly approve the permission request 
+  \item Need to think what to do if permission is denied
+\end{itemize}
+Some permissions:
+\begin{itemize}
+  \item Cost-Sensitive APIs: Telephony, SMS/MMS, In-App Billing, NFC Access
+  \item Personal Information. Contacts, calendar, messages, emails 
+  \item Device Meta-data . System logs, browser history, network identifiers 
+  \item Sensitive Input Devices. Interaction with the surrounding environment: Camera, microphone, GPS
+\end{itemize}
+\end{flushleft}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}

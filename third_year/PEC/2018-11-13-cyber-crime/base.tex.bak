@@ -1,0 +1,171 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\newenvironment{myindentpar}[1]%
+  {\begin{list}{}%
+          {\setlength{\leftmargin}{#1}}%
+          \item[]%
+  }
+  {\end{list}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Cyber-crime}
+
+\begin{itemize}
+  \item Cyber-piracy 
+  \item Cyber-trespass 
+  \item Cyber-vandalism
+\end{itemize}
+\begin{flushleft}
+True Cyber-crime can be carried out \textbf{only through} the use of cyber-technology and it \textbf{can take place only in} the cyberspace.
+\end{flushleft}
+
+\section{Cyber-related Crime}
+
+\begin{itemize}
+  \item Cyber-\worddef{exacerbated}: cyberstalking, cyber-pornography, cyberbullying, etc. 
+  \item Cyber-assisted: cyber tax fraud, physical assault assisted by the use of computing services, property damage, etc.
+\end{itemize}
+
+\subsection{Cyber-crime examples}
+
+\begin{itemize}
+  \item Trojan Horse 
+  \item Virus 
+  \item Worm 
+  \item Logic Bomb 
+  \item Password Sniffer 
+  \item IP Spoofing
+  \item DoS Attack (Denial of Service) 
+  \item Phishing 
+  \item Cyber-fraud 
+  \item Cyber-bullying 
+  \item Cyber-stalking
+\end{itemize}
+
+\subsection{Trojan Horse}
+\begin{flushleft}
+A Trojan Horse or Trojan is any malicious computer program which is used to hack into a computer \textbf{by misleading users} of its true intent. Many act as a backdoor; contact a controller to \textbf{attain unauthorized access} to the affected computer and personal information (banking information, passwords, or personal identity). o It \textbf{does not attempt} to inject themselves into other files or otherwise propagate themselves.
+\end{flushleft}
+
+\subsubsection{Bots and Botnets}
+
+\begin{itemize}
+  \item A bot is a \textbf{backdoor Trojan} that responds to commands sent by a command-and-control program located on an external computer. They are frequently used to support illegal activities.  
+  \item Legitimate bots: Internet Relay Chat channels and multiplayer Internet games 
+  \item Botnet is a collection of bot-infected computers. Person who controls a botnet is called a bot herder. Botnets can range in size from a few thousands computers to over a million computers.
+\end{itemize}
+
+\subsection{Virus}
+
+\begin{flushleft}
+A Virus is a piece of \textbf{self-replicating} code embedded within another program―the host. When the user executes the host program, the virus code executes first, finds another executable program and \textbf{replaces it} with a virus-infected program. After doing this, the virus allows the host program to execute, and if done fast, the user would not notice that virus is present on the computer.
+\end{flushleft}
+
+\subsubsection{Melissa virus}
+
+\begin{flushleft}
+Fast-spreading macro virus distributed as an e-mail attachment that; when opened, disables a number of safeguards in Word 97 or Word 2000. If the user has the Microsoft Outlook e-mail program, the virus is resent to the first 50 people in each of the user's address books.
+\end{flushleft}
+
+\subsection{Worm}
+
+\begin{flushleft}
+A Worm is a \textbf{self-contained} program that spreads through a computer network by exploiting security holes in the computer connected to the network.
+\end{flushleft}
+
+\subsubsection{Love Bug 2000 – “ILOVEYOU” worm}
+
+\begin{flushleft}
+Spread around the world in a few hours: 10 millions of computers and caused \$10B in damage .Infected major corporations: Ford and Siemens, and 80\% of US federal agencies, including State Department, Pentagon, US Congress. Destroyed image and music files, modified OS and Internet browser and collected passwords.
+\end{flushleft}
+
+\subsection{Logic bomb}
+\begin{flushleft}
+A Logic Bomb is a piece of code intentionally inserted into a software system that will set off a malicious function when specified conditions are met.
+\end{flushleft}
+
+\section{Cyber-behavious and the Self-concept}
+\begin{flushleft}
+The \textbf{self-concept} defines perceptions in relation to ourselves, to others and to social systems. Computing technologies, particularly the Internet, are transforming the sense of identity, behaviour, personal relationships, etc. Dissocial Personality Disorder arises more in the cyberspace
+\end{flushleft}
+
+\section{Person vs Persona}
+
+\begin{flushleft}
+Multiple personas are considered \textbf{harmful} from the ethical point of view: may require maintaining two or more mutually incompatible value systems. Risk of becoming a \textbf{hypocrite}, a person who claims to follow a particular moral code but then acts contrary to that code.
+\end{flushleft}
+
+\section{Sociopathic behaviour}
+
+\begin{flushleft}
+Sociopath is a person who suffers from a dissocial personality disorder.
+\begin{myindentpar}{1cm}
+“… \textbf{disregard for social obligations}, and callous \textbf{unconcern} for
+the feelings of others … There is a \textbf{low tolerance to frustration}
+and a low threshold for discharge of aggression, including
+violence; there is a \textbf{tendency to blame others} 
+\end{myindentpar}
+Computer technologies have been considered a contributor to the development of sociopathic tendencies such as cyber bullying and related behaviours.
+\end{flushleft}
+
+\subsection{Types of sociopathic behaviours}
+
+\begin{itemize}
+  \item \textbf{Griefer} – an online version of the spoilsport, a person \textbf{who takes pleasure in hassling others}. Most enjoy making online games unenjoyable for others. \textbf{New trends}: organized griefing, grounded in online message-board communities and thick with in-jokes, code words, taboos, and increasingly articulate sense of purpose.
+  \item \textbf{Troll}: an individual who posts in a public forums or chat room, to subvert the conversation or \textbf{provoke an emotional response.}
+  \item \textbf{Cyberbully or cyberstallker}: an individual who uses the Internet to \textbf{harass a particular target}, using fake identities or public web sites that enable the harassment. Tend to target people who they know from everyday life.
+\end{itemize}
+
+\section{Virtual and online addiction}
+
+\begin{itemize}
+  \item Behavioural addiction refers to addiction \textbf{to certain online behaviour} like gambling, video games, internet surfing, extreme sports, etc. 
+  \item Until recently, addiction linked only to the \textbf{abuse of substances}, like alcohol or drugs. 
+  \item Research have found that gamblers experience symptoms similar to alcoholism or nicotine addiction.
+\end{itemize}
+
+\section{Cybernetics}
+
+\begin{flushleft}
+Cybernetics explores regulatory systems, their structures, constraints, and possibilities—self regulating and self controlling systems. Applicable when a system incorporates a closed signalling loop, a "circular causal" relationship. Generally, \textbf{a feedback loop means} that a system generates/affects a change in its environment and that change is reflected in the system. Applied in learning, cognition, adaptation, social control, emergence, convergence, communication, efficiency, efficacy, and connectivity.
+\end{flushleft}
+
+\subsection{Cybernetic augmentation - vison}
+
+\begin{flushleft}
+Cybernetic augmentation gives the user abilities that normal humans beings do not have. Augmented vision by implanting a chip in the retina to allow a direct interface between the brain and the computer.
+\end{flushleft}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[exacerbate] \hfill \\ make (a problem, bad situation, or negative feeling) worse.
+\end{description}
+\end{document}

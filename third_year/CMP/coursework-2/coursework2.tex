@@ -1,0 +1,396 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\lstset{
+  frame=none,
+  xleftmargin=2pt,
+  stepnumber=1,
+  numbers=left,
+  numbersep=5pt,
+  numberstyle=\ttfamily\tiny\color[gray]{0.3},
+  belowcaptionskip=\bigskipamount,
+  captionpos=b,
+  escapeinside={*'}{'*},
+  language=haskell,
+  tabsize=2,
+  emphstyle={\bf},
+  commentstyle=\it,
+  stringstyle=\mdseries\rmfamily,
+  showspaces=false,
+  keywordstyle=\bfseries\rmfamily,
+  columns=flexible,
+  basicstyle=\small\sffamily,
+  showstringspaces=false,
+  morecomment=[l]\%,
+}
+\usepackage{fancyvrb}
+\DefineVerbatimEnvironment{code}{Verbatim}{fontsize=\small}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Task 1}
+
+\subsection{Extending token}
+\begin{flushleft}
+First step is to extend the \texttt{Token} data type found in \textit{Token.hs} file.
+\end{flushleft}
+\begin{code}
+| Repeat    -- ^ \"repeat\"
+| Until     -- ^ \"until\"
+\end{code}
+
+\subsection{Adding keywords to the scanner}
+\begin{flushleft}
+Second step is to have new keywords be picked up by our scanner, to do this we have to update \texttt{mkIdOrKwd} function in \textit{Scanner.hs} file.
+\end{flushleft}
+\begin{code}
+mkIdOrKwd "repeat" = Repeat
+mkIdOrKwd "until" = Until
+\end{code}
+
+\subsection{Adding new command to AST}
+\begin{flushleft}
+We now have defined the token as well as we are able to recognize it using the scanner. The next step is to be able to represent it in out abstract syntax tree. To do so, we update \texttt{Command} data type inside \texttt{AST.hs}.
+\end{flushleft}
+\begin{code}
+-- repeat until
+| CmdRepeat {
+      crCmd     :: Command,         -- ^ Action
+      crCond    :: Expression,      -- ^ Condition
+      cmdSrcPos :: SrcPos 
+  }
+\end{code}
+
+\subsection{Keyword parser recognision}
+\begin{flushleft}
+The next step is to update our parser to support this new syntax (all modification will be done to \texttt{Parser.y} file). First we modify the \texttt{token} to contain our new defined syntax
+\end{flushleft}
+\begin{code}
+REPEAT      { (Repeat, $$) }
+UNTIL       { (Until, $$) }
+\end{code}
+\begin{flushleft}
+Next step is to add our command definition to the \texttt{command} function:
+\end{flushleft}
+\begin{code}
+| REPEAT command UNTIL expression
+    { CmdRepeat {crCmd = $2, crCond = $4, cmdSrcPos = $1} }
+\end{code}
+\begin{flushleft}
+At this point our command will be picked up by the parser and the relative AST will be generated.
+\end{flushleft}
+
+\subsection{Pretty print}
+\begin{flushleft}
+To allow debugging of the new syntax by printing, we have to add our command defined in \textit{AST.hs} to \textit{PPAST.hs} file. We add one more pattern match to \texttt{ppCommand}
+\end{flushleft}
+\begin{code}
+ppCommand n (CmdRepeat {crCmd = cmd, crCond = cond, cmdSrcPos = sp}) =
+    indent n . showString "CmdRepeat" . spc . ppSrcPos sp . nl
+    . ppCommand (n+1) cmd 
+    . ppExpression (n+1) cond
+\end{code}
+\begin{flushleft}
+We take our indentation level, the command and output stringified result. Show command name and print out inner command as well as expression at further indentation.
+\end{flushleft}
+
+\pagebreak
+
+\section{Task 2}
+
+\subsection{Token}
+\begin{flushleft}
+First step is to add question mark to \texttt{Token} data type in \textit{Token.hs}
+\end{flushleft}
+\begin{code}
+| QMark     -- ^ \"?\"
+\end{code}
+
+\subsection{AST}
+\begin{flushleft}
+Next step is to update AST by adding new expression to \texttt{Expression} data type.
+\end{flushleft}
+\begin{code}
+-- | Conditional expression
+| ExpCond {
+    ecCond      :: Expression,      -- ^ Condition
+    ecLeft      :: Expression,      -- ^ Return value when evaluation is true
+    ecRight     :: Expression,      -- ^ Return value when evaluation is false
+    expSrcPos   :: SrcPos
+  }
+\end{code}
+\begin{flushleft}
+This allows to store our condition, left and right choises in AST
+\end{flushleft}
+
+\subsection{Scanner}
+\begin{flushleft}
+We also need to make sure that question mark (?) is picked up as a proper token. Do this by adding another pattern match for scan function
+\end{flushleft}
+\begin{code}
+scan l c ('?' : s)  = retTkn QMark l c (c + 1) s
+\end{code}
+
+\subsection{Parser}
+\begin{flushleft}
+Next we need to make sure that parser picks up this new syntax by first adding new token:
+\end{flushleft}
+\begin{code}
+'?'         { (QMark, $$) }
+\end{code}
+\begin{flushleft}
+Now we can use it to define the expression in the parser
+\end{flushleft}
+\begin{code}
+| expression '?' expression ':' expression
+    { ExpCond {ecCond    = $1,
+               ecLeft    = $3,
+               ecRight   = $5,
+               expSrcPos = srcPos $1} }
+\end{code}
+\begin{flushleft}
+It can now be picked up by the parser. We save first expression as condition, second expression as left evaluation and third epxression as right evaluation.
+\end{flushleft}
+
+\subsection{Pretty print}
+\begin{flushleft}
+Last step is to make sure we can debug by logging out the parsed expression. Add new pattern match for our newly defined \texttt{ExpCond} type
+\end{flushleft}
+\begin{code}
+pExpression n (ExpCond {ecCond = c, ecLeft = l, ecRight = r, expSrcPos = sp}) =
+    indent n . showString "ExpCond" . spc . ppSrcPos sp . nl
+    . ppExpression (n+1) c
+    . ppExpression (n+1) l
+    . ppExpression (n+1) r
+\end{code}
+\begin{flushleft}
+This will print the name and postion of our type as well as on the rest of new lines with further indentation:
+condition on first line, left evaluation on second and the right evaluation on third line.
+\end{flushleft}
+
+\section{Task 3}
+
+\subsection{AST}
+\begin{flushleft}
+First step is to make the else branch optional by modifying the \texttt{ciElse} type signiture to:
+\end{flushleft}
+\begin{code}
+| CmdIf {
+      ciCond    :: Expression,      -- ^ Condition
+      ciThen    :: Command,         -- ^ Then-branch
+      ciElse    :: Maybe Command,   -- ^ Else-branch
+      cmdSrcPos :: SrcPos
+  }
+\end{code}
+\begin{flushleft}
+This also serves additional funcitonality of being to set \texttt{ciElse} to another \texttt{CmdIf} as it's a command. This will be usefull for \textit{elsif} command
+\end{flushleft}
+
+\subsection{PPAST}
+\begin{flushleft}
+Now that the branch is optional it needs to be printed differently. We modify \texttt{ppCommand} pattern match for \textit{CmdIf}:
+\end{flushleft}
+\begin{code}
+ppCommand n (CmdIf {ciCond = e, ciThen = c1, ciElse = c2, cmdSrcPos = sp}) =
+    indent n . showString "CmdIf" . spc . ppSrcPos sp . nl
+    . ppExpression (n+1) e
+    . ppCommand (n+1) c1
+    . ppOpt (n+1) ppCommand c2
+\end{code}
+\begin{flushleft}
+We are now using \texttt{ppOpt (n+1) ppCommand c2} instead of \texttt{. ppCommand (n+1) c2}
+\end{flushleft}
+
+\subsection{Token}
+\begin{flushleft}
+Next step is to modify \texttt{Token} data type for matching \textit{elsif}
+\end{flushleft}
+\begin{code}
+| ElseIf    -- ^ \"elsif\"
+\end{code}
+
+\subsection{Scanner}
+\begin{flushleft}
+Next step is to update the scanner to pick up our new syntax. Can do that by adding extra pattern match to \texttt{mkIdOrKwd} function
+\end{flushleft}
+\begin{code}
+mkIdOrKwd "elsif"  = ElseIf
+\end{code}
+
+\subsection{Parser}
+\begin{flushleft}
+Now we need the parser to be able to recognise our new syntax. Begin by adding new token type
+\end{flushleft}
+\begin{code}
+ELSEIF      { (ElseIf, $$) }
+\end{code}
+\begin{flushleft}
+Next we have to modify current command parsing for if statements, we change it to
+\end{flushleft}
+\begin{code}
+| IF expression THEN command ifElseBranch
+  { CmdIf {ciCond = $2, ciThen = $4, ciElse = $5, cmdSrcPos = $1} }
+\end{code}
+\begin{flushleft}
+Where \texttt{ifElseBranch} is defined as:
+\end{flushleft}
+\begin{code}
+ifElseBranch :: { Maybe Command }
+ifElseBranch
+    : ELSEIF expression THEN command ifElseBranch
+      { Just (CmdIf {ciCond = $2, ciThen = $4, ciElse = $5, cmdSrcPos = $1})   }
+    | ELSE command { Just $2 }
+    | {- empty -} { Nothing }
+\end{code}
+\begin{flushleft}
+We use \texttt{Maybe} data type here in order to allow for optional branching. This uses the idea that any elseif statement is essentially an if statement inside else statement. For example:
+\end{flushleft}
+\begin{code}
+if (cond) {} elsif (cond2) {}
+// Is essentially the same as
+if (cond) {} else { if(cond2) {} }
+\end{code}
+\begin{flushleft}
+\texttt{ifElseBranch} has to be made into a seperate function, else you would be able to do \texttt{elsif (cond) {}} without prior if statement
+\end{flushleft}
+
+\section{Task 4}
+
+\subsection{AST}
+\begin{flushleft}
+We begin by adding a new expression to \texttt{Expression} data type store our character:
+\end{flushleft}
+\begin{code}
+| ExpLitChar {
+      elcVal    :: Char,            -- ^ Char value
+      expSrcPos :: SrcPos
+  }
+\end{code}
+
+\subsection{Token}
+\begin{flushleft}
+Next we have to add new token to \texttt{Token} data type:
+\end{flushleft}
+\begin{code}
+| LitChar {liChar :: Char}          -- ^ Character literals
+\end{code}
+\begin{flushleft}
+This allows us to store the actual character value inside the type
+\end{flushleft}
+
+\subsection{Scanner}
+
+\begin{flushleft}
+We begin by adding some utility functions:
+\end{flushleft}
+\begin{code}
+isGrChr :: Char -> Bool
+isGrChr '\'' = False
+isGrChr '\\' = False
+isGrChr '\n' = False
+isGrChr '\r' = False
+isGrChr '\t' = False
+isGrChr _    = True
+
+canEscape :: Char -> Bool
+canEscape 'n'  = True
+canEscape 'r'  = True
+canEscape 't'  = True
+canEscape '\\' = True
+canEscape '\'' = True
+canEscape _    = False
+\end{code}
+\begin{flushleft}
+\texttt{isGrChr} allows us to check if character is graphical and \texttt{canEscape} allows to validate whether a character should be escaped or not. Next we add another guard to scan command to check whether we are about to scan a character:
+\end{flushleft}
+\begin{code}
+| x == '\'' = scanLitChar l c x s
+\end{code}
+\begin{flushleft}
+In here we call a \texttt{scanLitChar} function, which is defined as:
+\end{flushleft}
+\begin{code}
+scanLitChar l c x s 
+    -- Assume that less than 2 length means missing quote
+    | length s < 2 = failD (SrcPos l c) "Character not closed"
+    -- Single character character have to be graphical
+    | sc == '\'' && isGrChr fc = retTkn (LitChar fc) l c (c + 3) (drop 2 s)
+    | canEscape sc &&
+        length ss >= 1 && -- Sanity check, so we don't throw during runtime
+        head ss == '\'' = retTkn (escape sc) l c (c + 4) (drop 3 s)
+    | otherwise    = failD (SrcPos l c) "Could not parse the character"
+    where
+        (fc:sc:ss) = s
+        escape 'n'  = LitChar '\n'
+        escape 'r'  = LitChar '\r'
+        escape 't'  = LitChar '\t'
+        escape '\\' = LitChar '\\'
+        escape '\'' = LitChar '\''
+        escape c    = LitChar c
+\end{code}
+\begin{flushleft}
+We begin by checking that the string is long enough to form a character literal with \texttt{length s < 2} guard. Then we take first and second character in \texttt{(fc:sc:ss) = s}, this allows to check for the simplest character, which is just a single graphical character. We check that via \texttt{sc == '\''} and \texttt{isGrChr fc} if it is, we say that next character will be 3 steps ahead (we pass our character and second quote). And drop the first two symbols from the string we got. Next we have to check whether we encountered and escape character by checking if our second character can be escaped. If it is, we check whether the closing quote exists by first validating length of rest of the string. This allows us to confirm that it is valid. The last step is to escape the character and pass it as a character literal. If anything goes wrong, we fail with a message "Could not parse the character".
+\end{flushleft}
+
+\subsection{Parser}
+\begin{flushleft}
+Begin with updating our tokens by adding:
+\end{flushleft}
+\begin{code}
+LITCHAR     { (ExpLitChar {}, _) }
+\end{code}
+\begin{flushleft}
+This allows the parser to recognise it. Next we update \texttt{primary\_expressions} function by adding new pattern
+\end{flushleft}
+\begin{code}
+| LITCHAR
+  { ExpLitChar { elcVal = tspLCVal $1, expSrcPos = tspSrcPos $1 } }
+\end{code}
+\begin{flushleft}
+\texttt{tspLCVal} is defined as
+\end{flushleft}
+\begin{code}
+tspLCVal :: (Token,SrcPos) -> Char
+tspLCVal (LitChar {liChar = n}, _) = n
+tspLCVal _ = parserErr "tspLCVal" "Not a LitChar"
+\end{code}
+\begin{flushleft}
+This allows to extract exact character value from the token.
+\end{flushleft}
+
+\subsection{PPAST}
+
+\begin{flushleft}
+To print out the character, we just add extra pattern match to \texttt{ppExpression}
+\end{flushleft}
+\begin{code}
+ppExpression n (ExpLitChar {elcVal = v}) = 
+    indent n . showString "ExpLitChar" . spc . shows v . nl
+\end{code}
+
+\end{document}
