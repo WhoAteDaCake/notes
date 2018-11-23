@@ -98,8 +98,7 @@ ppCommand n (CmdRepeat {crCond = e, crBody = c, cmdSrcPos = sp}) =
 
 \subsection{Character literal}
 
-\subsubsection{Type}
-
+\subsection{Type}
 \begin{flushleft}
 Firstly we add \texttt{Character} to Type data type
 \end{flushleft}
@@ -112,25 +111,6 @@ Next inside \texttt{instance Eq Type where} we add an equality operator pattern 
 \begin{flushleft}
 Character  == Character  = True
 \end{flushleft}
-\begin{flushleft}
-Finally, we add Character pattern match to \texttt{instance Show Type where}
-\end{flushleft}
-\begin{code}
-showsPrec _ Character  = showString "Character"
-\end{code}
-
-\subsubsection{TypeChecker}
-
-\begin{flushleft}
-We add a \texttt{ExpLitChar} pattern match to \texttt{infTpExp}. The only thing we do here is convert the character value to \texttt{MTChar} and transform $AST \rightarrow MTIR$
-\end{flushleft}
-\begin{code}
--- T-CHAR
-infTpExp env e@(A.ExpLitChr {A.elcVal = c, A.expSrcPos = sp}) = do
-    c' <- toMTChr c sp
-    return (Character,                          -- env |- n : Character
-            ExpLitChr {elcVal = c', expType = Character, expSrcPos = sp})
-\end{code}
 
 
 
