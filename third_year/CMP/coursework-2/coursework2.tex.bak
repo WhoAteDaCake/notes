@@ -76,7 +76,7 @@
 \end{center}
 
 
-\subsection{Conditional}
+\subsection{Conditional expression}
 
 \begin{center}
   \includegraphics[scale=0.1]{conditional_type.jpg}
@@ -160,6 +160,11 @@ infTpExp env e@(A.ExpLitChr {A.elcVal = c, A.expSrcPos = sp}) = do
             ExpLitChr {elcVal = c', expType = Character, expSrcPos = sp})
 \end{code}
 
+\subsubsection{MTStdEnv}
+\begin{flushleft}
+We also need to update our standard environment to contain characters. Do this by
+\end{flushleft}
+
 \subsection{If-else extended}
 
 \subsubsection{MTIR}
@@ -189,7 +194,76 @@ ppCommand n (CmdIf {ciCondThens = ecs, ciMbElse = mc, cmdSrcPos = sp}) =
 
 \subsubsection{TypeChecker}
 \begin{flushleft}
-Next we have to 
+Next we have to update the command type checking. Do this by updating \texttt{chkCmd} function with:
+\end{flushleft}
+\begin{code}
+-- T-IF
+chkCmd env (A.CmdIf {A.ciCondThens = ifs, A.ciMbElse = mbElse,
+                     A.cmdSrcPos=sp}) = do
+    ifs' <- mapM chkThen ifs
+    mbElse' <- case mbElse of
+        Nothing -> return Nothing
+        Just c -> fmap Just $ chkCmd env c 
+    return (CmdIf {ciCondThens = ifs', ciMbElse = mbElse', cmdSrcPos = sp})
+    where
+        chkThen (e, c) = do
+            e' <- chkTpExp env e Boolean
+            c' <- chkCmd env c
+            return (e', c')
+\end{code}
+\begin{flushleft}
+In the first step we have to go trough the list of our if branches checking each one. We use mapM here in order to make sure list is wrapped in a single monad, rather than having a list of monads. Next we check the optional else branch. To do this properly, we need to make sure that it always returns \texttt{D Maybe} type. If no branch, we just use return function to wrap our Maybe type. If there is a command, we run a check and then map inner contents with a \texttt{Just} type
+\end{flushleft}
+
+\subsection{Conditional expression}
+
+\subsubsection{MTIR}
+\begin{flushleft}
+Firstly add a new data type to Expresion.
+\end{flushleft}
+\begin{code}
+-- | Conditional expression
+| ExpCond {
+      ecCond    :: Expression,      -- ^ Condition
+      ecTrue    :: Expression,      -- ^ Value if condition true
+      ecFalse   :: Expression,      -- ^ Value if condition false
+      expType    :: Type,           -- ^ Type
+      expSrcPos :: SrcPos
+  }
+\end{code}
+
+
+\subsubsection{PPMTIR}
+\begin{flushleft}
+Next we add a way to print the expression to the screen
+\end{flushleft}
+\begin{code}
+ppExpression n (ExpCond {ecCond = c, ecTrue = et, ecFalse = ef, expType = t, expSrcPos = sp})=
+    indent n . showString "ExpCond" . spc . ppSrcPos sp . nl
+    . ppExpression (n+1) c
+    . ppExpression (n+1) et
+    . ppExpression (n+1) ef
+    . indent n . showString ": " . shows t . nl
+\end{code}
+
+\subsubsection{TypeChecker}
+\begin{flushleft}
+Now we can add a typechecking pattern to \texttt{infTpExp}
+\end{flushleft}
+\begin{code}
+-- T-COND
+infTpExp env (A.ExpCond { A.ecCond = c, A.ecTrue = l, A.ecFalse = r, A.expSrcPos = sp }) = do
+    c' <- chkTpExp env c Boolean  
+    (tl, l') <- infNonRefTpExp env l
+    (tr, r') <- infNonRefTpExp env r
+    require (tl == tr) sp $ errMsg tl tr
+    -- Make sure both types are same and not reference
+    return (tl, ExpCond { ecCond = c', ecTrue = l', ecFalse = r', expType = tl, expSrcPos = sp })
+    where
+        errMsg tl tr = "Expected: " ++ (show tl) ++ " and " ++ (show tr) ++ " types to match"
+\end{code}
+\begin{flushleft}
+We make sure that both types are the same as well as both non-references. Because both are the same we just assign left expression type as the main expression type.
 \end{flushleft}
 
 \end{document}

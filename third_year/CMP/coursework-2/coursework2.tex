@@ -160,6 +160,42 @@ infTpExp env e@(A.ExpLitChr {A.elcVal = c, A.expSrcPos = sp}) = do
             ExpLitChr {elcVal = c', expType = Character, expSrcPos = sp})
 \end{code}
 
+\subsubsection{MTStdEnv}
+\begin{flushleft}
+We also need to update our standard environment to contain characters. Do this by updating first list argument in \texttt{mtStdEnv} function
+\end{flushleft}
+\begin{code}
+mtStdEnv :: Env
+mtStdEnv =
+    mkTopLvlEnv
+        [("Boolean",   Boolean),
+         ("Integer",   Integer),
+         ("Character", Character)]
+        [("false",   Boolean, ESVBool False),
+         ("true",    Boolean, ESVBool True),
+         ("minint",  Integer, ESVInt (minBound :: MTInt)),
+         ("maxint",  Integer, ESVInt (maxBound :: MTInt)),
+         ("+",       Arr [Integer, Integer] Integer, ESVLbl "add"),
+         ("-",       Arr [Integer, Integer] Integer, ESVLbl "sub"),
+         ("*",       Arr [Integer, Integer] Integer, ESVLbl "mul"),
+         ("/",       Arr [Integer, Integer] Integer, ESVLbl "div"),
+         ("^",       Arr [Integer, Integer] Integer, ESVLbl "pow"),
+         ("neg",     Arr [Integer] Integer,          ESVLbl "neg"),
+         ("<",       Arr [Integer, Integer] Boolean, ESVLbl "lt"),
+         ("<=",      Arr [Integer, Integer] Boolean, ESVLbl "le"),
+         ("==",      Arr [Integer, Integer] Boolean, ESVLbl "eq"),
+         ("!=",      Arr [Integer, Integer] Boolean, ESVLbl "ne"),
+         (">=",      Arr [Integer, Integer] Boolean, ESVLbl "ge"),
+         (">",       Arr [Integer, Integer] Boolean, ESVLbl "gt"),
+         ("&&",      Arr [Boolean, Boolean] Boolean, ESVLbl "and"),
+         ("||",      Arr [Boolean, Boolean] Boolean, ESVLbl "or"),
+         ("!",       Arr [Boolean] Boolean,          ESVLbl "not"),
+         ("getint",  Arr [Snk Integer] Void,         ESVLbl "getint"), 
+         ("putint",  Arr [Integer] Void,             ESVLbl "putint"),
+         ("skip",    Arr [] Void,                    ESVLbl "skip")]
+
+\end{code}
+
 \subsection{If-else extended}
 
 \subsubsection{MTIR}
@@ -212,5 +248,53 @@ In the first step we have to go trough the list of our if branches checking each
 
 \subsection{Conditional expression}
 
+\subsubsection{MTIR}
+\begin{flushleft}
+Firstly add a new data type to Expresion.
+\end{flushleft}
+\begin{code}
+-- | Conditional expression
+| ExpCond {
+      ecCond    :: Expression,      -- ^ Condition
+      ecTrue    :: Expression,      -- ^ Value if condition true
+      ecFalse   :: Expression,      -- ^ Value if condition false
+      expType    :: Type,           -- ^ Type
+      expSrcPos :: SrcPos
+  }
+\end{code}
+
+
+\subsubsection{PPMTIR}
+\begin{flushleft}
+Next we add a way to print the expression to the screen
+\end{flushleft}
+\begin{code}
+ppExpression n (ExpCond {ecCond = c, ecTrue = et, ecFalse = ef, expType = t, expSrcPos = sp})=
+    indent n . showString "ExpCond" . spc . ppSrcPos sp . nl
+    . ppExpression (n+1) c
+    . ppExpression (n+1) et
+    . ppExpression (n+1) ef
+    . indent n . showString ": " . shows t . nl
+\end{code}
+
+\subsubsection{TypeChecker}
+\begin{flushleft}
+Now we can add a typechecking pattern to \texttt{infTpExp}
+\end{flushleft}
+\begin{code}
+-- T-COND
+infTpExp env (A.ExpCond { A.ecCond = c, A.ecTrue = l, A.ecFalse = r, A.expSrcPos = sp }) = do
+    c' <- chkTpExp env c Boolean  
+    (tl, l') <- infNonRefTpExp env l
+    (tr, r') <- infNonRefTpExp env r
+    require (tl == tr) sp $ errMsg tl tr
+    -- Make sure both types are same and not reference
+    return (tl, ExpCond { ecCond = c', ecTrue = l', ecFalse = r', expType = tl, expSrcPos = sp })
+    where
+        errMsg tl tr = "Expected: " ++ (show tl) ++ " and " ++ (show tr) ++ " types to match"
+\end{code}
+\begin{flushleft}
+We make sure that both types are the same as well as both non-references. Because both are the same we just assign left expression type as the main expression type.
+\end{flushleft}
 
 \end{document}
