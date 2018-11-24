@@ -55,6 +55,34 @@
 
 \section{Task 1}
 
+\subsection{Repeat until}
+
+\begin{center}
+  \includegraphics[scale=0.1]{repeat_type.jpg}
+\end{center}
+
+
+\subsection{Character literal}
+
+\begin{center}
+  \includegraphics[scale=0.1]{char_type.jpg}
+\end{center}
+
+
+\subsection{If-else extended}
+
+\begin{center}
+  \includegraphics[scale=0.1]{if-else_type.jpg}
+\end{center}
+
+
+\subsection{Conditional expression}
+
+\begin{center}
+  \includegraphics[scale=0.1]{conditional_type.jpg}
+\end{center}
+
+
 \section{Task 2}
 
 \subsection{Repeat until}
@@ -73,7 +101,7 @@ Update the MiniTriangle Internal Representation inside, so we can stored typed v
       }
 \end{code}
 
-\subsection{TypeChecker}
+\subsubsection{TypeChecker}
 \begin{flushleft}
 Add a pattern match for type checking AST \texttt{CmdRepeat} data type
 \end{flushleft}
@@ -85,7 +113,7 @@ chkCmd env (A.CmdRepeat {A.crCond = e, A.crBody = c, A.cmdSrcPos = sp}) = do
     return (CmdRepeat {crCond = e', crBody = c', cmdSrcPos = sp})
 \end{code}
 
-\subsection{PPMTIR}
+\subsubsection{PPMTIR}
 \begin{flushleft}
 Now need a way to print the typed repeat command. We do this by adding a \texttt{CmdRepeat} pattern match to \texttt{ppCommand}
 \end{flushleft}
@@ -109,9 +137,9 @@ Firstly we add \texttt{Character} to Type data type
 \begin{flushleft}
 Next inside \texttt{instance Eq Type where} we add an equality operator pattern for it.
 \end{flushleft}
-\begin{flushleft}
+\begin{code}
 Character  == Character  = True
-\end{flushleft}
+\end{code}
 \begin{flushleft}
 Finally, we add Character pattern match to \texttt{instance Show Type where}
 \end{flushleft}
@@ -132,7 +160,57 @@ infTpExp env e@(A.ExpLitChr {A.elcVal = c, A.expSrcPos = sp}) = do
             ExpLitChr {elcVal = c', expType = Character, expSrcPos = sp})
 \end{code}
 
+\subsection{If-else extended}
 
+\subsubsection{MTIR}
+\begin{flushleft}
+Firstly, we update the internal representation to allow multiple \textit{elsif} and optional \textit{else} branches. Do this by modifying \texttt{CmdIf} inside \texttt{Command} data type.
+\end{flushleft}
+\begin{code}
+-- | Conditional command
+| CmdIf {
+      ciCondThens :: [(Expression,
+                       Command)],   -- ^ Conditional branches
+      ciMbElse    :: Maybe Command, -- ^ Optional else-branch
+      cmdSrcPos   :: SrcPos
+  }
+\end{code}
+
+\subsubsection{PPMTIR}
+\begin{flushleft}
+Now we need to update the pretty print function, so the new syntax can be seen
+\end{flushleft}
+\begin{code}
+ppCommand n (CmdIf {ciCondThens = ecs, ciMbElse = mc, cmdSrcPos = sp}) =
+    indent n . showString "CmdIf" . spc . ppSrcPos sp . nl
+    . ppSeq (n+1) (\n (e,c) -> ppExpression n e . ppCommand n c) ecs
+    . ppOpt (n+1) ppCommand mc
+\end{code}
+
+\subsubsection{TypeChecker}
+\begin{flushleft}
+Next we have to update the command type checking. Do this by updating \texttt{chkCmd} function with:
+\end{flushleft}
+\begin{code}
+-- T-IF
+chkCmd env (A.CmdIf {A.ciCondThens = ifs, A.ciMbElse = mbElse,
+                     A.cmdSrcPos=sp}) = do
+    ifs' <- mapM chkThen ifs
+    mbElse' <- case mbElse of
+        Nothing -> return Nothing
+        Just c -> fmap Just $ chkCmd env c 
+    return (CmdIf {ciCondThens = ifs', ciMbElse = mbElse', cmdSrcPos = sp})
+    where
+        chkThen (e, c) = do
+            e' <- chkTpExp env e Boolean
+            c' <- chkCmd env c
+            return (e', c')
+\end{code}
+\begin{flushleft}
+In the first step we have to go trough the list of our if branches checking each one. We use mapM here in order to make sure list is wrapped in a single monad, rather than having a list of monads. Next we check the optional else branch. To do this properly, we need to make sure that it always returns \texttt{D Maybe} type. If no branch, we just use return function to wrap our Maybe type. If there is a command, we run a check and then map inner contents with a \texttt{Just} type
+\end{flushleft}
+
+\subsection{Conditional expression}
 
 
 \end{document}
