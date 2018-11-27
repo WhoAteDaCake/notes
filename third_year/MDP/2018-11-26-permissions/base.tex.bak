@@ -81,6 +81,63 @@ Some permissions:
 \end{itemize}
 \end{flushleft}
 
+\newpage
+
+\section{Component Permissions}
+
+\begin{flushleft}
+Activity
+\begin{itemize}
+  \item Restricts which components can start the activity 
+  \item Checked within execution of: \verb|startActivity(), startActivityForResult()|
+\end{itemize}
+Service
+\begin{itemize}
+  \item Restricts which components can start or bind to the associated service 
+  \item Checked within execution of: \verb|Context.startService(), Context.stopService(), Context.bindService()|
+\end{itemize}
+Others
+\begin{itemize}
+  \item ContentProvider: Restricts which components can read or write to a ContentProvider
+  \item BroadcastReceiver: Restricts which components can register to receive a certain Broadcast 
+  \item Throw SecurityException on permissions failure: Usually as we’ve forgotten to ask for permission during installation
+\end{itemize}
+\end{flushleft}
+
+\section{Runtime	Permissions}
+
+\begin{flushleft}
+Each time we want to do something “dangerous”
+\begin{itemize}
+  \item \verb|shouldShowRequestPermissionRationale(…)| True if the user has previously denied the request
+  \item \verb| requestPermissions(…)|
+  \item \verb|onRequestPermissionsResult(…)| Either do the dangerous thing, or gracefully degrade the functionality of the app
+\end{itemize}
+\end{flushleft}
+
+\section{Permissions vs Use}
+
+\begin{itemize}
+  \item Read your text messages: To confirm your phone number via text message (if you’ve added it to your account)
+  \item Read/write contacts: To import and sync your phone’s contacts to Facebook, or vice versa (think updating contact images)
+  \item Add and/or modify calendar events and send emails to guests without your knowledge: To see your Facebook events in your phone’s calendar
+  \item Read calendar events plus confidential information: To check your calendar for you to see if you have something already scheduled for the time of the Facebook event you’re currently viewing 
+  \item Good practice to explain why an application needs a permission, especially if now not having it will prevent it from functioning
+\end{itemize}
+
+\section{Temporary URI Permissions}
+
+\begin{itemize}
+  \item Applications making use of multiple Activities
+\end{itemize}
+\begin{flushleft}
+“Access	to	the	mail	should	be	protected	by	permissions,	
+since	this	is	sensitive	user	data.	However,	if	a	URI	to	an	
+image	attachment	is	given	to	an	image	viewer,	that	image	
+viewer	will	not	have	permission	to	open	the	attachment	
+since	it	has	no	reason	to	hold	a	permission	to	access	all	email
+\end{flushleft}
+
 \pagebreak
 \section*{Reference section} \label{sec:reference}
 \begin{description}

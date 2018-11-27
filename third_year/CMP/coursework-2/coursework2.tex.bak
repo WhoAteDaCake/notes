@@ -162,8 +162,39 @@ infTpExp env e@(A.ExpLitChr {A.elcVal = c, A.expSrcPos = sp}) = do
 
 \subsubsection{MTStdEnv}
 \begin{flushleft}
-We also need to update our standard environment to contain characters. Do this by
+We also need to update our standard environment to contain characters. Do this by updating first list argument in \texttt{mtStdEnv} function
 \end{flushleft}
+\begin{code}
+mtStdEnv :: Env
+mtStdEnv =
+    mkTopLvlEnv
+        [("Boolean",   Boolean),
+         ("Integer",   Integer),
+         ("Character", Character)]
+        [("false",   Boolean, ESVBool False),
+         ("true",    Boolean, ESVBool True),
+         ("minint",  Integer, ESVInt (minBound :: MTInt)),
+         ("maxint",  Integer, ESVInt (maxBound :: MTInt)),
+         ("+",       Arr [Integer, Integer] Integer, ESVLbl "add"),
+         ("-",       Arr [Integer, Integer] Integer, ESVLbl "sub"),
+         ("*",       Arr [Integer, Integer] Integer, ESVLbl "mul"),
+         ("/",       Arr [Integer, Integer] Integer, ESVLbl "div"),
+         ("^",       Arr [Integer, Integer] Integer, ESVLbl "pow"),
+         ("neg",     Arr [Integer] Integer,          ESVLbl "neg"),
+         ("<",       Arr [Integer, Integer] Boolean, ESVLbl "lt"),
+         ("<=",      Arr [Integer, Integer] Boolean, ESVLbl "le"),
+         ("==",      Arr [Integer, Integer] Boolean, ESVLbl "eq"),
+         ("!=",      Arr [Integer, Integer] Boolean, ESVLbl "ne"),
+         (">=",      Arr [Integer, Integer] Boolean, ESVLbl "ge"),
+         (">",       Arr [Integer, Integer] Boolean, ESVLbl "gt"),
+         ("&&",      Arr [Boolean, Boolean] Boolean, ESVLbl "and"),
+         ("||",      Arr [Boolean, Boolean] Boolean, ESVLbl "or"),
+         ("!",       Arr [Boolean] Boolean,          ESVLbl "not"),
+         ("getint",  Arr [Snk Integer] Void,         ESVLbl "getint"), 
+         ("putint",  Arr [Integer] Void,             ESVLbl "putint"),
+         ("skip",    Arr [] Void,                    ESVLbl "skip")]
+
+\end{code}
 
 \subsection{If-else extended}
 
@@ -264,6 +295,189 @@ infTpExp env (A.ExpCond { A.ecCond = c, A.ecTrue = l, A.ecFalse = r, A.expSrcPos
 \end{code}
 \begin{flushleft}
 We make sure that both types are the same as well as both non-references. Because both are the same we just assign left expression type as the main expression type.
+\end{flushleft}
+
+\newpage
+
+\section{Task 3}
+
+\subsection{Section a}
+
+\begin{code}
+        LOADLB      0 2                 
+        LOADL       1                   
+        STORE       [SB + 0]            
+        LOADA       [SB + 1]            
+        CALL        getint              
+        JUMP        #1                  
+#0:
+        LOAD        [SB + 0]            
+        CALL        putint              
+        LOAD        [SB + 0]            
+        LOADL       1                   
+        ADD                             
+        STORE       [SB + 0]            
+#1:
+        LOAD        [SB + 0]            
+        LOAD        [SB + 1]            
+        GTR                             
+        JUMPIFZ     #0                  
+        POP         0 2                 
+        HALT                            
+
+\end{code}
+
+\subsection{Section b}
+
+\begin{code}
+        LOADL       0                   
+        LOADA       [SB + 0]            
+        CALL        getint              
+        LOAD        [SB + 0]            
+        LOADL       1                   
+        CALL        #0_f                
+        CALL        putint              
+        POP         0 1                 
+        HALT                            
+#0_f:
+        LOAD        [LB - 2]            
+        LOADL       0                   
+        GTR                             
+        JUMPIFNZ    #2                  
+        LOAD        [LB - 1]            
+        JUMP        #1                  
+#2:
+        LOAD        [LB - 2]            
+        LOADL       1                   
+        SUB                             
+        LOAD        [LB - 1]            
+        LOAD        [LB - 2]            
+        MUL                             
+        CALL        #0_f                
+#1:
+        RETURN      1 2                 
+\end{code}
+
+\subsection{Section c}
+
+\subsubsection{LibMt}
+\begin{flushleft}
+Add new commands to \texttt{libMt}.
+\end{flushleft}
+\begin{code}
+-- getchar
+    Label "getchar",
+    GETCHR,
+    LOAD (LB (-1)),
+    STOREI 0,
+    RETURN 0 1,
+
+-- putchar
+    Label "putchar",
+    LOAD (LB (-1)),
+    PUTCHR,
+    RETURN 0 1,
+\end{code}
+
+\subsubsection{MTStdEnv}
+\begin{flushleft}
+Add two new entries to \texttt{mtStdEnv}
+\end{flushleft}
+\begin{code}
+("getchar", Arr [Snk Character] Void,       ESVLbl "getchar"), 
+("putchar", Arr [Character] Void,           ESVLbl "putchar"),
+\end{code}
+
+
+\section{Task 4}
+
+\subsection{If-else extended}
+
+\begin{flushleft}
+We import \texttt{import Data.Maybe (isJust)} to use for checking else branch. The main goal is to modify execute command inside \texttt{CodeGenerator.hs}. But before we do that, let's define a helper function for getting a label name of an if branch.
+\end{flushleft}
+\begin{code}
+-- el - else branch label
+-- Used for generating a if/elsif labels
+-- if no more elsif commands left, we jump to else label
+getNextLabel [] el = return el
+getNextLabel _  el = newName
+\end{code}
+\begin{flushleft}
+This function is passed two arguments, where first one is an arary of if branch tupples \texttt{(Expression, Commands)} and the second is the name of else branch label. If we still have any if branches left, we create a new label, otherwise it should jump to else label. Next we update \texttt{execute} command with \texttt{CmdIf} pattern.
+\end{flushleft}
+\begin{code}
+execute majl env n (CmdIf {ciCondThens = ct, ciMbElse = mbE }) = do
+    lblIf <- newName
+    lblOver <- newName
+    -- This make sures that last elsif branch jumps to over label
+    -- if there is no else branch
+    lblElse <- if isJust mbE then newName else return lblOver
+    exec ct lblIf lblElse lblOver
+    case mbE of
+        Nothing -> return ()
+        Just c -> do
+            emit (Label lblElse)
+            execute majl env n c
+    emit (Label lblOver)
+    where
+        -- cl - Current label
+        -- el - Else label
+        -- ol - Over label
+        -- If we have no more elsif, we jump to else label
+        -- After each branch commands jump to over label
+        exec [] cl el ol = return ()
+
+        exec ((e, c):ifs) cl el ol = do
+        nl <- getNextLabel ifs el
+        emit (Label cl)
+        evaluate majl env e
+        emit (JUMPIFZ nl)
+        execute majl env n c
+        emit (JUMP ol)
+        exec ifs nl el ol
+\end{code}
+\begin{flushleft}
+First we generate all needed labels \texttt{lblElse}, \textbf{lblIf}, \textbf{lblOver}, then we use \texttt{exec} function to recursivelly go trough all of the if branches. Once that is do, we check whether else branch has any commands, if not no work is executed.
+\end{flushleft}
+
+\subsection{Repeat-until}
+\begin{flushleft}
+We update \texttt{execute} function with the following pattern match:
+\end{flushleft}
+\begin{code}
+execute majl env n (CmdRepeat {crCond = e, crBody = c}) = do
+    lblLoop <- newName
+    lblCond <- newName
+    emit (Label lblLoop)
+    execute majl env n c
+    emit (Label lblCond)
+    evaluate majl env e
+    emit (JUMPIFNZ lblLoop)
+\end{code}
+\begin{flushleft}
+As can be seen, it's almost identical to the \texttt{CmdWhile} pattern, except, there initial jump to loop condition check.
+\end{flushleft}
+
+\subsection{Conditional expression}
+
+\begin{flushleft}
+We update \texttt{execute} function with the following pattern match:
+\end{flushleft}
+\begin{code}
+evaluate majl env (ExpCond { ecCond = c, ecTrue = t, ecFalse = f }) = do
+    done <- newName
+    fLabel <- newName
+    evaluate majl env c
+    emit (JUMPIFZ fLabel)
+    evaluate majl env t
+    emit (JUMP done)
+    emit (Label fLabel)
+    evaluate majl env f
+    emit (Label done)
+\end{code}
+\begin{flushleft}
+Works by first evaluating the condition, then if it returns 0 (false) we jump to execute the false variant, if not execute the true variant and jump to done label.
 \end{flushleft}
 
 \end{document}
