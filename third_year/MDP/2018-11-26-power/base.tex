@@ -165,7 +165,7 @@ Prioritize apps based on how recently and how frequently the apps are used
 For any timing operations that occur only during the lifetime of your application, it is best to use \textbf{application resources} (i.e. handler class) rather than system resources (e.g. Alarm manager/job Scheduler) to schedule tasks.
 \end{flushleft}
 \begin{itemize}  
-  \item AlarmManager ($ < $ API 21) – Based on time
+  \item AlarmManager ($ < $ API 21) – Based on time. Only use when need to execute for specifc time.
   \item JobScheduler ($ \geq $API 21) – Based on conditions 
   \item Firebase Job Dispatcher ($ > $API 14) – Similar to JobScheduler but can be used for lower APIs and requires GooglePlay service 
   \item Work Manager (New) – Requires GooglePlay service – Automatic use of alarmManager and jobScheduler
