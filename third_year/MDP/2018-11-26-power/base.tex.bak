@@ -159,6 +159,29 @@ Prioritize apps based on how recently and how frequently the apps are used
   \end{itemize}
 \end{itemize}
 
+\section{Schedule Jobs in Android}
+
+\begin{flushleft}
+For any timing operations that occur only during the lifetime of your application, it is best to use \textbf{application resources} (i.e. handler class) rather than system resources (e.g. Alarm manager/job Scheduler) to schedule tasks.
+\end{flushleft}
+\begin{itemize}  
+  \item AlarmManager ($ < $ API 21) – Based on time
+  \item JobScheduler ($ \geq $API 21) – Based on conditions 
+  \item Firebase Job Dispatcher ($ > $API 14) – Similar to JobScheduler but can be used for lower APIs and requires GooglePlay service 
+  \item Work Manager (New) – Requires GooglePlay service – Automatic use of alarmManager and jobScheduler
+\end{itemize}
+
+\subsection{AlarmManager}
+
+\begin{itemize}
+  \item Schedule a task run at a specific time point/ time interval 
+  \item AlarmManager holds a CPU wake lock, when alarm receiver’s onReceive() is executing 
+  \item Alarm delivery is inexact (Android 5.0+); use setWindow and setExact for exact delivery.
+\end{itemize}
+
+\subsubsection{AlarmManager Usage}
+
+
 \pagebreak
 \section*{Reference section} \label{sec:reference}
 \begin{description}

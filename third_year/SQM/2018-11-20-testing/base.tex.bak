@@ -389,6 +389,81 @@ are implemented by these cluster
   \item Consider the scenario in the weather station system where a report is generated
 \end{itemize}
 
+\section{Debugging}
+
+\begin{itemize}
+  \item The debugging process begins with the execution of a test case 
+  \item Results are assessed and the difference between expected and actual performance is encountered 
+  \item This difference is a symptom of an underlying cause that lies hidden
+  \item The debugging process attempts to match symptom with cause, thereby leading to error correction
+\end{itemize}
+
+\subsection{Why is it difficult}
+
+\begin{itemize}
+  \item The symptom and the cause may be geographically remote
+  \item The symptom may disappear (temporarily) when another error is corrected 
+  \item The symptom may actually be caused by nonerrors(e.g., round-off accuracies) 
+  \item The symptom may be caused by human error that is not easily traced
+  \item The symptom and the cause may be geographically remote 
+  \item The symptom may disappear (temporarily) when another error is corrected 
+  \item The symptom may actually be caused by nonerrors(e.g., round-off accuracies) 
+  \item The symptom may be caused by human error that is not easily traced
+\end{itemize}
+
+\subsection{Debugging strategies}
+
+\begin{itemize}
+  \item Objective of debugging is to \textbf{find and correct the cause of a software error}
+  \item Debugging methods and tools are not a substitute for careful evaluation based on a
+complete design model and clear source code.
+\end{itemize}
+
+\subsubsection{Brute forcing}
+
+\begin{itemize}
+  \item Most commonly used and least efficient method 
+  \item Used when all else fails 
+  \item Involves the use of memory dumps, run-time traces, and output statements 
+  \item Leads many times to wasted effort and time
+\end{itemize}
+
+\subsubsection{Backtracing}
+
+\begin{itemize}
+  \item Can be used successfully in small programs 
+  \item The method starts at the location where a symptom has been uncovered 
+  \item The source code is then traced backward (manually) until the location of the cause is found 
+  \item In large programs, the number of potential backward paths may become unmanageably large
+\end{itemize}
+
+\subsubsection{Cause elimination}
+
+\begin{itemize}
+  \item Involves the use of induction or deduction and introduces the concept of binary partitioning
+  \begin{itemize}
+    \item Induction (specific to general): Prove that a specific starting value is true; then prove the general case is true
+    \item Deduction (general to specific): Show that a specific conclusion follows from a set of general premises 
+  \end{itemize}
+  \item Data related to the error occurrence are organized to isolate potential causes 
+  \item A cause hypothesis is devised, and the aforementioned data are used to prove or disprove the hypothesis 
+  \item Alternatively, a list of all possible causes is developed, and tests are conducted to eliminate each cause 
+  \item If initial tests indicate that a particular cause hypothesis shows promise, data are refined in an attempt to isolate the bug
+\end{itemize}
+
+\section{Key points}
+
+\begin{itemize}
+  \item Test parts of a system which are commonly used rather than those which are rarely executed 
+  \item Equivalence partitions are sets of test cases where the program should behave in an equivalent way 
+  \item Black-box testing is based on the system specification 
+  \item Structural testing identifies test cases which cause all paths through the program to be executed
+  \item Test coverage measures ensure that all statements have been executed at least once. 
+  \item Interface defects arise because of specification misreading, misunderstanding, errors or invalid timing assumptions 
+  \item To test object classes, test all operations, attributes and states 
+  \item Integrate object-oriented systems around clusters of objects
+\end{itemize}
+
 \pagebreak
 \section*{Reference section} \label{sec:reference}
 \begin{description}
