@@ -53,16 +53,16 @@
   \item Goal is to prolong battery life 
   \item Based on Linux Power Management (\textbf{not suitable for a mobile device})
   \begin{itemize}
-    \item – G0 (working) 
-    \item – G1 (sleeping)
+    \item G0 (working) 
+    \item G1 (sleeping)
     \begin{itemize}
       \item S1 (CPU stops executing instructions, power to CPU and RAM maintained) 
       \item S2 (CPU powered off, cache is flushed) 
       \item S3 (Standby / sleep / suspend to powered RAM) 
-      \item S4 (Hibernate / suspend to disk, RAM powered off) –
+      \item S4 (Hibernate / suspend to disk, RAM powered off)
     \end{itemize}
-    \item - G2 (S5, soft off) 
-    \item – G3 (mechanical off) 
+    \item G2 (S5, soft off) 
+    \item G3 (mechanical off) 
    \end{itemize}  
   \item Mobile phones have a default “off” behaviour
 \end{itemize}
@@ -205,9 +205,9 @@ For any timing operations that occur only during the lifetime of your applicatio
 
 \begin{itemize}
   \item Many apps perform tasks asynchronously outside the main activity. (e.g download files, sync database to cloud etc.) 
-  \item Job Scheduler collects pending jobs across all apps, and schedule them to \textbf{run at about the same time}-> sleep for longer-> save power 
+  \item Job Scheduler collects pending jobs across all apps, and schedule them to \textbf{run at about the same time} $\rightarrow$ sleep for longer $\rightarrow$ save power 
   \item Specify requirements for network and timing for each job, then the JS robustly optimise the execution time. 
-  \item May defer jobs that comply with Doze & App Standby 
+  \item May defer jobs that comply with Doze \& App Standby 
   \item JobService will run on the main thread. Need to manage any asynchronous tasks yourself (e.g. Threads).
 \end{itemize}
 

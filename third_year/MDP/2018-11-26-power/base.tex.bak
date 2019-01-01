@@ -53,16 +53,16 @@
   \item Goal is to prolong battery life 
   \item Based on Linux Power Management (\textbf{not suitable for a mobile device})
   \begin{itemize}
-    \item – G0 (working) 
-    \item – G1 (sleeping)
+    \item G0 (working) 
+    \item G1 (sleeping)
     \begin{itemize}
       \item S1 (CPU stops executing instructions, power to CPU and RAM maintained) 
       \item S2 (CPU powered off, cache is flushed) 
       \item S3 (Standby / sleep / suspend to powered RAM) 
-      \item S4 (Hibernate / suspend to disk, RAM powered off) –
+      \item S4 (Hibernate / suspend to disk, RAM powered off)
     \end{itemize}
-    \item - G2 (S5, soft off) 
-    \item – G3 (mechanical off) 
+    \item G2 (S5, soft off) 
+    \item G3 (mechanical off) 
    \end{itemize}  
   \item Mobile phones have a default “off” behaviour
 \end{itemize}
@@ -165,7 +165,7 @@ Prioritize apps based on how recently and how frequently the apps are used
 For any timing operations that occur only during the lifetime of your application, it is best to use \textbf{application resources} (i.e. handler class) rather than system resources (e.g. Alarm manager/job Scheduler) to schedule tasks.
 \end{flushleft}
 \begin{itemize}  
-  \item AlarmManager ($ < $ API 21) – Based on time
+  \item AlarmManager ($ < $ API 21) – Based on time. Only use when need to execute for specifc time.
   \item JobScheduler ($ \geq $API 21) – Based on conditions 
   \item Firebase Job Dispatcher ($ > $API 14) – Similar to JobScheduler but can be used for lower APIs and requires GooglePlay service 
   \item Work Manager (New) – Requires GooglePlay service – Automatic use of alarmManager and jobScheduler
@@ -181,6 +181,35 @@ For any timing operations that occur only during the lifetime of your applicatio
 
 \subsubsection{AlarmManager Usage}
 
+\begin{itemize}
+  \item Specify an Intent to be broadcast at some time
+  \begin{itemize}
+    \item setRepeating(int type, long triggerAtMillis, long intervalMillis, PendingIntent operation)
+    \item setExact(int type, long triggerAtMillis, PendingIntent operation)
+  \end{itemize}
+  \item Extend Broadcast Receiver
+  \begin{itemize}
+    \item onReceive method is called when the alarm goes off
+    \item Start a service to actually do the work
+  \end{itemize}
+\end{itemize}
+
+\subsection{Efficient Scheduling}
+
+\begin{itemize}
+  \item Multiple scheduled alarms waking the phone: Suspending and waking the phone takes power 
+  \item More efficient to schedule multiple alarms at the same time
+\end{itemize}
+
+\subsection{JobScheduler}
+
+\begin{itemize}
+  \item Many apps perform tasks asynchronously outside the main activity. (e.g download files, sync database to cloud etc.) 
+  \item Job Scheduler collects pending jobs across all apps, and schedule them to \textbf{run at about the same time} $\rightarrow$ sleep for longer $\rightarrow$ save power 
+  \item Specify requirements for network and timing for each job, then the JS robustly optimise the execution time. 
+  \item May defer jobs that comply with Doze \& App Standby 
+  \item JobService will run on the main thread. Need to manage any asynchronous tasks yourself (e.g. Threads).
+\end{itemize}
 
 \pagebreak
 \section*{Reference section} \label{sec:reference}

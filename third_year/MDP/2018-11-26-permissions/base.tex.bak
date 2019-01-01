@@ -110,7 +110,7 @@ Others
 Each time we want to do something “dangerous”
 \begin{itemize}
   \item \verb|shouldShowRequestPermissionRationale(…)| True if the user has previously denied the request
-  \item \verb| requestPermissions(…)|
+  \item \verb|requestPermissions(…)|
   \item \verb|onRequestPermissionsResult(…)| Either do the dangerous thing, or gracefully degrade the functionality of the app
 \end{itemize}
 \end{flushleft}
@@ -127,16 +127,19 @@ Each time we want to do something “dangerous”
 
 \section{Temporary URI Permissions}
 
-\begin{itemize}
-  \item Applications making use of multiple Activities
-\end{itemize}
 \begin{flushleft}
+\textbf{Applications making use of multiple Activities}.
 “Access	to	the	mail	should	be	protected	by	permissions,	
 since	this	is	sensitive	user	data.	However,	if	a	URI	to	an	
 image	attachment	is	given	to	an	image	viewer,	that	image	
 viewer	will	not	have	permission	to	open	the	attachment	
-since	it	has	no	reason	to	hold	a	permission	to	access	all	email
+since	it	has	no	reason	to	hold	a	permission	to	access	all	email.
+\textbf{Allow access to specific URIs, not the whole provider}.\\
 \end{flushleft}
+\begin{flushleft}
+Temporary URI permissions last while the stack of the receiving Activity is active
+\end{flushleft}
+
 
 \pagebreak
 \section*{Reference section} \label{sec:reference}
