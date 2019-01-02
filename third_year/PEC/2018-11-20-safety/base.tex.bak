@@ -31,7 +31,7 @@
 \section{Safety and releaiblity}
 
 \begin{flushleft}
-Computing system errors stem from human errors. Errors are typically traceable but moral and legal responsibility is not always easy to establish
+Computing system errors stem from human errors. Errors are typically \textbf{traceable}, but moral and legal responsibility is \textbf{not always easy to establish}
 \end{flushleft}
 
 \section{Causes of Failure in Computing Systems}
@@ -91,12 +91,12 @@ Discipline focussed on the production of software and development of tools metho
 \subsection{Development}
 
 \begin{flushleft}
-First design phase—based on high-level, abstract view of the system
+First design phase based on high-level, abstract view of the system
 \begin{itemize}
   \item Reveals ambiguities, omissions, and errors in the specifications
   \item Mistakes are corrected; that is less expensive at a higher, abstract level
 \end{itemize}
-Subsequent design phases—add levels of details
+Subsequent design phases add levels of details
 \begin{itemize}
   \item Components of the system become clear
   \item Interface between each components are spelled out 
@@ -122,7 +122,7 @@ Testing can reveal bugs but cannot prove that the program \textbf{will work corr
 
 \begin{itemize}
   \item Testing shows presence of defects
-  \item Exhaustive testing is impossible: Aim: Optimal amount of testing based on the risk assessment.
+  \item Exhaustive testing is impossible, aim for optimal amount of testing based on the risk assessment.
   \item Defect clustering: The risk is determined based on experience and critical thinking. In practice, a small number of modules contain most of the defects detected.
   \item Pesticide paradox: If the same tests are repeated they can no longer find new bugs. Tests need to be reviewed, revised, and changed.
   \item Testing is context dependent
@@ -143,6 +143,17 @@ Testing can reveal bugs but cannot prove that the program \textbf{will work corr
     \end{itemize}  
 \end{itemize}
 
+\section{Simulations}
+
+\subsection{Computer simulations}
+\begin{flushleft}
+Simulate physical experiments which may not be possible to run in real setting. Design of nuclear weapons, oil drills, fuel-efficient cars, etc. Types of simulations
+\begin{itemize}  
+  \item of past events: Astrophysicists derive theories about the evolution of the universe
+  \item to explore and understand world around us. Drilling oil—simulations made the process much more predictable
+  \item to predict the future  Weather predictions
+\end{itemize}
+\end{flushleft}
 
 \pagebreak
 \section*{Reference section} \label{sec:reference}

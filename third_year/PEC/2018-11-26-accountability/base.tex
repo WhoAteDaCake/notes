@@ -1,0 +1,153 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Accountability}
+\begin{quotation}
+Accountability is answerability, i.e., a state of being compelled to or called to account for one’s action
+\end{quotation}
+
+\subsection{Importance of accountability}
+\begin{flushleft}
+We have improved standards of reliability for computer systems but \textbf{neglected accountability} for the impact of computing, specifically for the harms and risk of fault and malfunctioning systems. \\
+Accountability is needed
+\begin{itemize} 
+  \item Even if things go drastically wrong for the users at least they are \textbf{assured of answerability}
+  \item For developing a sense of responsibility, \textbf{as a virtue}
+  \item For \textbf{motivating better practices} and reliable and trustworthy systems
+\end{itemize}
+In terms of \textbf{social welfare}, a culture of accountability
+\begin{itemize}
+  \item Motivates actions to \textbf{prevent or minimize} harms and risks
+  \item Provides a \textbf{reasonable starting point} for assigning punishment and compensation for victims of harm through failure.
+\end{itemize}
+\end{flushleft}
+
+\section{Accountability vs Liability vs Responsability}
+
+\subsection{Accountability}
+\begin{quote}
+Accountability applies to all those involved in a specific action.
+\end{quote}
+\begin{flushleft}
+Accountability is assessed from the \textbf{nature of action} and the \textbf{relationship of the agent} to the \textbf{actions outcome}. In many instances, accountability is mediated through conditions of \textbf{blameworthiness} by considering \textbf{casual and fault} conditions.
+\end{flushleft}
+
+\subsection{Liability}
+\begin{quote}
+Liability is focussed on a person \textbf{who is to blame} and needs to \textbf{compensate victims} for damages suffered after the event.
+\end{quote}
+\begin{flushleft}
+Liability is rooted in the suffering of victims. The starting point for assessing liability is the victim's condition
+\end{flushleft}
+
+\subsubsection{Strict liability}
+\begin{flushleft}
+To be strictly liable for a harm is to be liable to compensate for it, even though one did not cause it thorugh faulty action.
+\end{flushleft}
+
+\subsection{Responsibility}
+
+\begin{flushleft}
+A person or a group of people is \textbf{morally responsible} when their \textbf{voluntary actions} have morally significant outcomes that would make it appropriate to blame or praise them. In order to appropriately \worddef{ascribe} moral responsability, three conditions should be followed.
+\end{flushleft}
+\begin{itemize}
+  \item There should be a \textbf{casual connection} between the person and the outcome of actions
+  \item Subject has to \textbf{have knowledge} of and be able to \textbf{consider the possible consequences} of it's actions
+  \item The subject has to be able to \textbf{freely choose to act} in a certain way.
+\end{itemize}
+
+\subsubsection{Possitive responsibility}
+\begin{flushleft}
+Positive responsibility emphasizes the virtue of \textbf{having (or being obliged to have) regard} for the consequences that actions have on others. Strive to minimize \textbf{foreseeable undesirable} events. Computer practitioners have a moral responsibility to avoid harm and to deliver a properly working product, regardless of whether they will be held accountable if things turn out differently.
+\end{flushleft}
+
+\section{Lack of accountability}
+
+\begin{flushleft}
+Factors that influence adoption of accountability.
+\begin{itemize}
+  \item \textbf{Many hands}: Computing systems are built by big teams, they are complex and multi-layered making it difficult to assign responsability.
+  \item \textbf{Bugs}: The view that bugs are inevitable implies that, they cannot be helped, and it would be unreasonable to keep programmers responsible
+  \item \textbf{Computer as Scapegoat}: People point at the complexity of the computer to argue, that it was computers fault
+  \item \textbf{Ownership without liability}: Commercial companies protect computing innovation and take advantage of exclusive use, without responsibility to protect from harm.
+\end{itemize}
+\end{flushleft}
+
+\section{Ethics and computing agents}
+\begin{itemize}
+  \item \textbf{Implicit ethical agent}: A computer that has the ethics of its developers \textbf{inscribed in their design}. Adhere to the norms and values of the contexts in which they are developed or will be used
+  \item \textbf{Explicit ethical agent}: A computer that can \textit{\textbf{do ethics}}, i.e., on the basis of an ethical model, determines what would be the right thing to do, given certain inputs. For example, implementation of Kantian or utilitarian ethics rules
+  \item \textbf{Ful ethical agent}: Entities that can make ethical judgments and can justify them, much like humans beings can  There are no computer technologies today that can be called fully ethical.
+\end{itemize}
+
+\section{Moral responsibility for the computing artefacts}
+\begin{flushleft}
+We aim to provide a normative guide for people who design, develop, deploy, evaluate or use computing artefacts
+\end{flushleft}
+\begin{itemize}
+  \item \textbf{Computing artefact} for any artefact that includes an executing computer program. 
+  \item \textbf{Moral responsibility for computing artefacts} indicates that people are answerable for their behaviour when they produce or use computing artefacts 
+  \item \textbf{Moral responsibility} includes an obligation to adhere to \textbf{reasonable standards of behaviour}, and to respect others who could be affected by the behaviour. 
+  \item Each computing artefact should be considered within the context of a \textbf{sociotechnical systems} comprising people, artefacts, physical surroundings, customs, relationships, assumptions, procedures and protocols.
+\end{itemize}
+
+\subsection{Rules}
+
+\subsubsection{Rule 1}
+\begin{flushleft}
+The people who design, develop, or deploy a computing artefact are \textbf{morally responsible} for that artefact, and foreseeable effects of that artefact.
+\end{flushleft}
+
+\subsubsection{Rule 2}
+\begin{flushleft}
+The shared responsibility of computing artefacts is not a zero-sum game. The \textbf{responsibility is not reduced} because more people become involved.
+\end{flushleft}
+
+\subsubsection{Rule 3}
+\begin{flushleft}
+People who knowingly use a computing artefact are morally responsible for that use
+\end{flushleft}
+
+\subsubsection{Rule 4}
+\begin{flushleft}
+People who knowingly design, develop, deploy, or use a computing artefact can do so responsibly only when \textbf{they make a reasonable effort} to take into account the \worddef{sociotechnical} systems in which the artefact is embedded
+\end{flushleft}
+
+\subsubsection{Rule 5}
+\begin{flushleft}
+People who design, develop, deploy, promote, or evaluate a computing artefact should not \textbf{explicitly or implicitly deceive users} about the artefact or its foreseeable effects, or about the sociotechnical systems in which the artefact is embedded
+\end{flushleft}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[sociotechnical] \hfill \\ Sociotechnical systems (STS) is an approach to complex organizational work design that recognizes the \textbf{interaction between people and technology in workplaces}. 
+\end{description}
+\end{document}
