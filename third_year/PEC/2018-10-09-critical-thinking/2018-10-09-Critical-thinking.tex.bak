@@ -31,8 +31,7 @@
 \section{What is critical thinking}
 
 \begin{flushleft}
-Ability to think clearly and rationally about what to do or what to believe
-Ability to engage in reflective and independent thinking 
+Ability to think clearly and rationally about what to do or what to believe, being able to engage in reflective and independent thinking 
 \end{flushleft}
 \begin{itemize}
   \item Understand the logical connections between ideas
@@ -49,7 +48,7 @@ Analyze
   \begin{itemize}
     \item Identify facts, assumptions, conflicts, flaws, relevance, omissions, consistency, preferences, beliefs, biases, inherited opinions, etc. 
     \item Ask the right questions when analysing: reliable, proven, qualified, quantified, debatable, etc.
-    \item Scrutinize the evidence, reasons, arguments, claims
+    \item \worddef{Scrutinize} the evidence, reasons, arguments, claims
   \end{itemize}
 Evaluate
   \begin{itemize}
@@ -83,9 +82,9 @@ A ‘strong’ proposition has five characteristics:
 \begin{itemize}
   \item It is NOT matters of verifiable fact or matters of taste
   \begin{itemize}
-    \item If it's a verifiable fact it should be checked rather than argued aboutc
+    \item If it's a verifiable fact it should be checked rather than argued about
   \end{itemize}
-  \item It makes and assertion or urges a course of action in a declarative sentence.
+  \item It makes an assertion or urges a course of action in a declarative sentence.
   \begin{itemize}
     \item Should hotels allow dogs in the rooms? \textbf{Not strong}
     \item Hotels should allow dogs in the rooms. \textbf{Strong}
@@ -163,6 +162,6 @@ The argument is valid if the \textbf{premises entail their conclusion} (It is lo
 \pagebreak
 \section*{Reference section} \label{sec:reference}
 \begin{description}
-	\item[placeholder] \hfill \\
+	\item[Scrutinize] \hfill \\ examine or inspect closely and thoroughly.
 \end{description}
 \end{document}

@@ -64,6 +64,7 @@ The purpose of intellectual property law is to ensure that people profit from id
 \end{flushleft}
 
 \subsection{What rights does it entail}
+Copyright provides four exclusive rights to the \textbf{authors}
 \begin{itemize}
   \item The right to \textbf{reproduce} the copyrighted work
   \item The right to \textbf{prepare derivative} works based upon the copyrighted work
@@ -77,7 +78,7 @@ Copyright is automatically guaranteed to the authors as soon as their work is cr
 \subsubsection{CopyLeft}
 
 \begin{flushleft}
-Copyleft—software or artistic work may be used, modified, and distributed freely on condition that anything derived from it is bound by the same conditions.
+Copyleft-software or artistic work may be used, modified, and distributed freely on condition that anything derived from it is bound by the same conditions.
 \end{flushleft}
 
 \subsection{Fair use}
@@ -142,8 +143,28 @@ The Difference Between Copyright and Patent. Patents refer to an invention, wher
 \subsection{Protecting inventions}
 
 \begin{flushleft}
-Inventions are protected by patents. United States Patenting and Trademark Office (USPTO) examines patent applications and determine whether they are truly an invention, i.e. \textbf{Novel} – if the invention has not previously been invented by someone else. \textbf{Nonobvious} – if a solution to a problem is not obvious to another specialist in the appropriate area. Nonobviousness is not strictly defined. Many court cases to invalidate patents focus on challenging the obviousness of the invention
+Inventions are protected by patents. United States Patenting and Trademark Office (USPTO) examines patent applications and determine whether they are truly an invention, i.e. \textbf{Novel} – if the invention has not previously been invented by someone else. \textbf{Nonobvious} – if a solution to a problem is not obvious \textbf{to another specialist} in the appropriate area. Nonobviousness is not strictly defined. Many court cases to invalidate patents focus on challenging the obviousness of the invention
 \end{flushleft}
+
+\section{Trade secrects}
+\begin{flushleft}
+Trade secret is a confidential piece of intellectual property that provide a company with a \textbf{competitive advantage}.
+\begin{itemize}
+  \item Formulas, process, proprietary designs, strategic plans, customers lists, and collection of information
+  \item Companies have \textbf{right to protect} their trade secrets 
+  \item A company must take active measures to keep it from being discovered. 
+  \item Trade secrets \textbf{do not expire}. 
+  \item It is illegal to steal a trade-secret. However, it is \textbf{legal to reverse engineer IP}.
+\end{itemize}
+\end{flushleft}
+
+\section{Trademarks}
+\begin{itemize}
+  \item Trademark is a word, symbol, picture, sound or colour used by a business to \textbf{identify goods}. A service mark identifies a service 
+  \item By granting a trademark or service mark, a government gives a company the right to use it and the right to prevent other companies from using it. 
+  \item If a product name becomes a common noun, used to describe similar products, the company \textbf{may lose its right} to exclusive use of the band name. 
+  \item Trademarks can be renewed \textbf{indefinitely}.
+\end{itemize}
 
 \pagebreak
 

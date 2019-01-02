@@ -1,0 +1,141 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Reliance and trust in computers}
+Computers in
+\begin{itemize}
+  \item health services
+  \item training and assessment
+  \item control of engines and machinery
+  \item operational and financial scenarios
+  \item genetics
+\end{itemize}
+In all of these cases computer is making decisions and we humans trust it to make the right one.
+
+\subsection{Expectations of autonomous systems}
+
+``So, rather than verifying the agent never choses a course of action it \textbf{believes will lead to a bad situation}, we would like to verify the agent never chooses a course of action that \textbf{it believes is more likely to reach a bad situation} than its other options''
+
+\section{Why professional ethics}
+
+\begin{flushleft}
+In everyday practices we face issues and make decisions. We may be dealing with ethical issues but:
+\end{flushleft}
+\begin{itemize}
+  \item We might not recognise them
+  \item We may automatically do the “easy” thing
+  \item We may do things we subsequently regret
+  \item We may get ourselves and our employer into trouble
+  \item We may miss opportunities.
+\end{itemize}
+
+\section{Ethics and morality}
+\begin{flushleft}
+\textbf{Ethics} is a set of \textbf{morally permissible} standards of a group that each member of the group, at his/her rational best, wants every other member to follow, even if their doing so would mean that he/she MUST do the same.
+
+\bigskip
+
+\textbf{Morality} is the set of standards that everyone (every rational person at his/her rational best) wants everyone else to follow, even if their following them means having to do the same.
+\end{flushleft}
+
+\subsection{Rational best in ethics reasoning}
+\begin{itemize}
+  \item Rational best:
+  \begin{itemize}
+    \item Refers to the mental state of the person who wants the (ethical/moral) rules to be followed.
+    \item The person is assumed to be a rational persona whose capacity for reasoning is
+not diminished through some form of injury, disease, dugs, grief, fear, etc. 
+  \end{itemize}
+  \item Practical reasoning
+  \begin{itemize}
+    \item Used to make decisions.
+    \item Often starts with the \worddef{code of conduct} and then takes into account mitigating circumstances.
+    \item There is not a set of common axioms/premises and the inference may be disputable.  
+  \end{itemize}
+\end{itemize}
+
+\subsection{Ethics vs morality}
+
+\begin{flushleft}
+Ethical rules are not always moral rules. They can be morally \textbf{neutral}.
+\begin{itemize}
+  \item If an IT professional delays installing a security patch and a person loses data, moral rules may not have much to say.
+\end{itemize}
+Breaking ethical rules may not mean breaking moral rules
+\begin{itemize}
+  \item Publishing salaries of doctors in the USA may be unethical but not immoral
+\end{itemize}
+\textbf{Ethics} refer to rules provided by an external source, e.g., codes of conduct in workplaces or principles in religions.\\ \textbf{Morals} refer to an individual’s own principles regarding right and wrong.
+
+\end{flushleft}
+
+\section{Properties of moral theories}
+
+\begin{flushleft}
+Moral theory defines morality. Our definition of morality may not be acceptable to everybody.
+Morality answers to questions: \textbf{How do I know that X is good. Why is X good}
+\end{flushleft}
+
+\subsection{Virtue theory}
+Virtue ethics are normative ethical theories which emphasize \worddef{virtues} of mind and character. Virtue ethicists discuss the nature and definition of virtues and other related problems.
+
+\subsection{Focusing on the actions and implications}
+\begin{itemize}
+  \item \textbf{Consequentialism:} Consequences of an action, not the motivation behind the action, makes the action good or bad.
+  \item \textbf{Utilitarianism:} Right decision is the one that causes the most happiness*.
+  \begin{itemize}
+    \item Act utilitarianism: Determine whether or not the action taken maximizes happiness, compared to the other options
+    \item Rule utilitarianism: Determine whether or not the action taken complies with the set rules
+  \end{itemize}
+  \item \textbf{Deontological} ethical theory: Some rules must be followed, even if they result in a bad end.
+  \begin{itemize}
+    \item \textbf{Kant}: The only good is good will. 
+    \item Unlike consequentialism, which judges actions by their results, deontology doesn’t require weighing the costs and benefits of a situation. This avoids subjectivity and uncertainty because you only have to follow set rules.
+  \end{itemize}
+\end{itemize}
+
+\section{Properties of ethics theories}
+
+\begin{flushleft}
+All social contract theories of ethics must be fair. We are in search of ethical theorises that have two key qualities:\\
+\textbf{Impartiality} Every person is treated equally and no one is given preferential
+treatment in the theory.\\
+\textbf{Universality} A decision based on the theory should be correct for everyone that has a similar decision to make. 
+\end{flushleft}
+
+
+\pagebreak
+
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[code of conduct] \hfill \\ The code of conduct for a group or organization is an agreement on rules of behaviour for the members of that group or organization.
+  \item[virtues] \hfill \\ Behaviour showing high moral standards. Good moral quality in a person, or the general quality of being morally good:
+\end{description}
+\end{document}

@@ -100,6 +100,17 @@ Organization for Economic Cooperation and Development. Has issued Recommendation
 the Protection of Privacy and Trans-Border Flows of Personal Data
 \end{flushleft}
 
+\subsection{Guidelines}
+\begin{itemize}
+  \item Notice: data subjects should be given notice when their data is being collected
+  \item Purpose: data should only be used for the purpose stated and not for any other purposes
+  \item Consent: data should not be disclosed without the data subject’s consent
+  \item Security: collected data should be kept secure from any potential abuses
+  \item Disclosure: data subjects should be informed as to who is collecting their data
+  \item Access: data subjects should be allowed to access their data and make corrections to any inaccurate data
+  \item Accountability: data subjects should have a method available to them to hold data collectors accountable for not following the above principles
+\end{itemize}
+
 \pagebreak
 \section*{Reference section} \label{sec:reference}
 \begin{description}
