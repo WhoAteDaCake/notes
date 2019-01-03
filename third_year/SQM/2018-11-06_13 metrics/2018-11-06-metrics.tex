@@ -32,18 +32,16 @@
 \section{Why Measure Software?}
 
 \begin{itemize}
-  \item To determine the quality of the current product or process and to make informed comparisons
-  \item To predict qualities of a product/process
-  \item To improve quality of a product/process (often continuously – \worddef{kaizen})
+  \item To \textbf{determine the quality} of the current product or process and to \textbf{make informed comparisons}
+  \item To \textbf{predict} qualities of a product/process
+  \item To \textbf{improve} quality of a product/process (often continuously – \worddef{kaizen})
 \end{itemize}
 
 \section{Metrics}
 
 \subsection{Example metrics}
 \begin{itemize}
-  \item Error rates / Defect rates 
-  \item A defect is a failure to do something 
-  \item An error is a wrong result or illegal action 
+  \item Error rates (wrong result or illegal action) / Defect rates (failure to do something) 
   \item Code generation rates. Measured by: per \textbf{person}, per \textbf{team}, per \textbf{project}. Will involve \textbf{aggregation} – see later
   \item Errors should be categorized by origin, type etc.
 \end{itemize}
@@ -51,18 +49,18 @@
 \subsection{Main objectives of software quality metrics}
 
 \begin{itemize}
-  \item Facilitate management control, planning and managerial intervention. Based on deviations of actual 
+  \item \worddef{Facilitate} management control, planning and managerial intervention. Based on deviations of actual 
   \begin{itemize}
     \item performance from planned.
     \item timetable and budget performance from planned. 
   \end{itemize}
-  \item 2. Identify situations for development or maintenance process improvement (preventive or corrective actions). Based on:
+  \item Identify situations for development or maintenance process \textbf{improvement} (preventive or corrective actions). Based on:
   \begin{itemize}
     \item Accumulation of metrics information regarding the performance of teams, units, etc.
   \end{itemize}
 \end{itemize}
 
-\subsection{Software quality metrics — Requirements}
+\subsection{Software quality metrics - Requirements}
 
 \begin{flushleft}
 General	requirements:
@@ -104,14 +102,14 @@ Rates of production / productivity, quality of estimates, burn down rate (projec
 Error densities, complexity measures, code quality measures, speed and memory measures, code profiles etc, track potential risks, uncover problem areas, Adjust workflow or tasks. They \textbf{evaluate teams ability to control quality}
 \end{flushleft}
 
-\subsection{Types of measures}
+\subsubsection{Types of measures}
 \begin{itemize}
   \item Direct: Cost, effort, LOC, speed, memory
   \item Indirect: functionality, quality, efficiency, reliablity, maintainability 
 \end{itemize}
 
 
-\subsection{Size oriented metrics}
+\subsubsection{Size oriented metrics}
 \begin{itemize}
   \item Size of software produced
   \item LOC - Lines of Code or KLOC - 1000 Lines of code
@@ -131,7 +129,7 @@ Error densities, complexity measures, code quality measures, speed and memory me
 
 \subsection{Definitions}
 
-\begin{flushleft}
+\begin{itemize}
   \item NCE = total detected by code inspections and testing.
   \item NDE = total errors detected in the development process.
   \item WCE = weighted NCE
@@ -145,7 +143,7 @@ Error densities, complexity measures, code quality measures, speed and memory me
   \item ReKLOC = Number of thousands of reused lines of code.
   \item ReDoc = Number of reused pages of documentation.
   \item NDoc = Number of pages of documentation
-\end{flushleft}
+\end{itemize}
 
 \subsection{Error density metrics}
 
@@ -297,6 +295,16 @@ decisional complexity. Similar to McCabe's but with regard to control variables
   \item Usability	–	easiness	to	use
 \end{itemize}
 
+\section{Conclusions}
+\begin{itemize}
+  \item Software metrics can give much useful information about the \textbf{quality of code}
+  \item They \textbf{allow comparisons} between projects, developers and teams and over time 
+  \item They suggest \textbf{areas for improvement} and give \textbf{early warnings} of problems (as in manufacturing process metrics) 
+  \item Management need to know what quality problems exist but 
+  \item Developer should know what needs corrected 
+  \item Metrics tools can be very useful for code analysis 
+\end{itemize}
+
 \pagebreak
 
 \section*{Reference section} \label{sec:reference}
@@ -304,5 +312,6 @@ decisional complexity. Similar to McCabe's but with regard to control variables
 	\item[measure] \hfill \\ A quantitative indication of extent, amount, dimension, capacity, or size of some attribute of a product or process. for example: Lines of code (LOC), Number of errors
 	\item[metric] \hfill \\ quantitative measure of degree to which a system, component or process possesses a given attribute. That is to say a “derived measure.” May involve “guesstimates” where human processes are concerned. for example: Error density.
 	\item[kaizen] \hfill \\ An approach to \textbf{continuous} organization improvement with emphasis on continuous measure and understanding of process.
+	\item[facilitate] \hfill \\ make (an action or process) easy or easier.
 \end{description}
 \end{document}
