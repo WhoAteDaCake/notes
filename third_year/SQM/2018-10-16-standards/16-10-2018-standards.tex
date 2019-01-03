@@ -535,6 +535,61 @@ A quality metric should be a \textbf{predictor} of product quality. Classes of p
 
 \section{Statistical software quality assurance}
 
+\subsection{A Sample of possible causes for defects}
+
+\begin{itemize}
+  \item Incomplete or erroneous specifications
+  \item Misinterpretation of customer communication 
+  \item Intentional deviation from specifications 
+  \item Violation of programming standards 
+  \item Errors in data representation
+\end{itemize}
+
+\subsection{Six Sigma}
+
+\begin{flushleft}
+Is the most widely used strategy, uses statistical analysis. Identifies and eliminates defects in manufacturing and service-related processes. \textbf{Three} core steps
+\end{flushleft}
+\begin{itemize}
+  \item \textbf{Define} customer requirements, deliverables, and project goals.
+  \item \textbf{Measure} the existing process and its output to determine current quality performance (collect defect metrics)
+  \item \textbf{Analyze} defect metrics and determine the vital few causes
+\end{itemize}
+\begin{flushleft}
+Two additional steps are added for existing processes (and can be done in parallel)
+\end{flushleft}
+\begin{itemize}
+  \item \textbf{Control} the process to ensure that future work does not \textbf{reintroduce} the causes of defects
+  \item \textbf{Improve} the process by eliminating the \textbf{root} causes of defects
+\end{itemize}
+
+
+\section{Software Reliability, Availability, and Safety}
+\begin{itemize}
+  \item Mean time to failure (\textbf{MTTF}): The time that a system is not failed, or is available. Often referred to as uptime - the length of time that a system is online between outages or failures. Can be thought of as the time to failure for that system
+  \item Mean time to repair (\textbf{MTTR}): The amount of time required to repair a system and bring it back online is the time to repair.
+  \item Mean time between failures (\textbf{MTBF}): refers to the amount of time that \textbf{elapses between one failure and the next}. (Sum of MTTF and MTTR)
+\end{itemize}
+
+\section{Software Safety}
+\begin{flushleft}
+Focuses on \textbf{identification and assessment} of potential hazards to software operation. \textit{Software reliability} uses statistical analysis to determine the likelihood that a software failure will occur; however, the failure may not necessarily result in a hazard or mishap – \textit{Software safety} examines the ways in which failures result in conditions that can lead to a hazard or mishap; it identifies faults that may lead to failures
+\end{flushleft}
+
+\section{SQA plan Purpose and layout}
+\begin{flushleft}
+Provides a road map for instituting software quality assurance in an organization. Developed by the SQA group to serve as a template for SQA activities that are instituted for each software project in an organization.
+\end{flushleft}
+\begin{itemize}
+  \item The purpose and scope of the plan
+  \item A description of all software engineering work products that fall within the purview of SQA
+  \item All applicable standards and practices that are applied during the software process
+  \item SQA actions and tasks (including reviews and audits) and their placement throughout the software process 
+  \item The tools and methods that support SQA actions and tasks
+  \item Methods for assembling, safeguarding, and maintaining all SQA-related records
+  \item Organizational roles and responsibilities relative to product quality
+\end{itemize}
+
 \pagebreak
 \section*{Reference section} \label{sec:reference}
 \begin{description}
