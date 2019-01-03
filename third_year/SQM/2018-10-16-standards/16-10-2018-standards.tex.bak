@@ -31,25 +31,24 @@
 \section{Quality assurance and standards}
 \begin{itemize}
   \item Standards may be international, national, organizational or project based
-  \item Product standards define characteristics that all components should exhibit e.g. a common programming style and how the software process should be enacted
+  \item Product standards define characteristics that \textbf{all components should exhibit} e.g. a common programming style and how the software process should be enacted
 \end{itemize}
 
 \subsection{Importance of standards}
 \begin{itemize}
-  \item Encapsulation of best practice – \textbf{avoids repetition} of past mistakes
-  \item Framework for quality assurance process – it involves \textbf{checking standard compliance}
-  \item \textbf{Provide continuity} – new staff can understand the organisation by understand the standards applied
+  \item Encapsulation of best practice: \textbf{avoids repetition} of past mistakes
+  \item Framework for quality assurance process: it involves \textbf{checking standard compliance}
+  \item \textbf{Provide continuity}: new staff can understand the organisation by understand the standards applied
 \end{itemize}
 
 \subsection{The benefits of using standards}
 \begin{itemize}
   \item The ability to \textbf{apply methodologies and procedures} of the highest professional level.
-  \item Better \textbf{mutual understanding} and coordination among development teams but especially between development and maintenance teams.
-  \item \textbf{Greater cooperation} between the software developer and external participants in the project.
-  \item Better understanding and cooperation between suppliers and customers, based on the adoption of standards as part of the contract
+  \item Better \textbf{mutual understanding} and coordination amongst teams.
+  \item \textbf{Greater cooperation} between the software developer and external participants in the project. Suppliers and customers, based on the adoption of standards \textbf{as part of the contract}.
 \end{itemize}
 
-\section{SQM classes}
+\section{SQA classes}
 
 \begin{center}
   \includegraphics[scale=0.8]{sqa_classes.png}
@@ -59,7 +58,6 @@
 \begin{itemize}
   \item Enable a software development organization to demonstrate \textbf{consistent ability} to assure acceptable quality of its software products or maintenance services. Certification is granted by an \textbf{external body}
   \item Serve as an agreed-upon basis for customer and \textbf{supplier evaluation} of the supplier’s quality management system. Accomplished by performance of a quality audit by the customer.
-  \item Support the organization's efforts to improve its quality management system through compliance with the standard’s requirements.
 \end{itemize}
 
 \subsection{Assessment standards}
@@ -68,7 +66,6 @@
   \item Serve organizations as a \textbf{tool for self-assessment} of their ability to carry out software development projects.
   \item Serve for \textbf{improvement of development} and maintenance processes by application of the standard directions
   \item Help purchasing organizations \textbf{to determine the capabilities} of potential suppliers.
-  \item Guide training of assessor by \textbf{delineating qualifications and training program curricula}. its quality management system through compliance with the standard’s requirements.
 \end{itemize}
 
 \section{ISO 9000}
@@ -150,25 +147,14 @@ Quality standards and procedures should be documented in an organisational quali
   \end{itemize}
 \end{itemize}
 
-\subsection{ISO 9001 – Requirements classification}
-\begin{center}
-  \includegraphics[scale=0.5]{requirements_classification.png}
-\end{center}
-
-\subsection{Certification Process}
-
-\begin{center}
-  \includegraphics[scale=0.5]{certification_process.png}
-\end{center}
-
 \section{Capability Maturity Model (CMM)}
 \begin{flushleft}
 The Capability Maturity Model (CMM) is a methodology used to develop and refine an organization's software development process.
 \end{flushleft}
 \begin{itemize}
-  \item Quantitative management methods increases the organization's capability to control the quality and improve the productivity.
+  \item \worddef{Quantitative} management methods increases the organization's capability to control the quality and improve the productivity.
   \item Application of the five-level capability maturity model that enables to evaluate the achievements and determine the efforts needed to reach the next capability.
-  \item Generic process areas that define the “what” — not “how” enables the model's applicability to a wide range of implementation organizations:
+  \item Generic process areas that define the what, \textbf{not how} enables the model's applicability to a wide range of implementation organizations:
   \begin{itemize}
     \item Allows use of any life cycle model.
     \item Allows use of any design methodology, development tool and programming language.
@@ -206,18 +192,14 @@ The Capability Maturity Model (CMM) is a methodology used to develop and refine 
 \end{itemize}
 
 \section{Process and product quality}
-
-\begin{itemize}
-  \item The quality of a developed product is influenced by the \textbf{quality of the production process}
-  \item Form (product) follows function (process)
-  \item Particularly important in software development as some product quality attributes are hard to assess
-  \item However, there is a very complex and poorly understood relationship between software processes and product quality
-\end{itemize}
+\begin{quote}
+The quality of a developed product is influenced by the \textbf{quality of the production process}
+\end{quote}
 
 \subsection{Process-based quality}
 
 \begin{itemize}
-  \item Straightforward link between process and product in manufactured goods, but way more complex for software because:
+  \item It's complex to link process to product because:
   \begin{itemize}
     \item The application of individual skills and experience is particularly
 important in software development
@@ -239,12 +221,15 @@ configuration management, etc.
 \section{Quality planning}
 
 \begin{itemize}
-  \item A quality plan sets out the \textbf{desired product qualities} and how these are \textbf{assessed} and define the most \textbf{significant assessed}
+  \item A quality plan sets out the \textbf{desired product qualities} and how these are \textbf{assessed} and define the most \textbf{significant quality attributes}
   \item It should define the quality assessment process
   \item It should set out which organisational standards should be applied and, if necessary, define new standards.
 \end{itemize}
 
-\subsection{structure}
+\subsection{Structure}
+\begin{quote}
+Quality plans should be short, succinct documents – If they are too long, \textbf{no-one will read them}
+\end{quote}
 
 \begin{itemize}
   \item Product introduction
@@ -252,7 +237,6 @@ configuration management, etc.
   \item Process descriptions
   \item Quality goals
   \item Risks and risk management
-  \item Quality plans should be short, succinct documents – If they are too long, \textbf{no-one will read them}
 \end{itemize}
 
 \section{Management and its role in software quality assurance}
@@ -553,6 +537,6 @@ A quality metric should be a \textbf{predictor} of product quality. Classes of p
 \pagebreak
 \section*{Reference section} \label{sec:reference}
 \begin{description}
-	\item[placeholder] \hfill \\
+	\item[quantative] \hfill \\ relating to, measuring, or measured by the quantity of something rather than its quality.
 \end{description}
 \end{document}
