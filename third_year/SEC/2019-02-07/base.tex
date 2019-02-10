@@ -101,6 +101,51 @@ It is an impractical method because:
   \item We must include another mechanism
 \end{itemize}
 
+\section{Hash functions}
+\begin{itemize}
+  \item A hash function is any function that can be used to map data of arbitrary size to data of a \textbf{fixed size}
+  \item Hash functions are used everywhere. Message authentication, integrity, passwords etc
+  \item Usually hash functions iteratively jumble blocks of a message after another 
+  \item Once all the message is gone, we read the current hash. 
+  \item The initial hash is usually defined in the spec
+\end{itemize}
+
+\subsection{Strong Hash Functions}
+\begin{itemize}
+  \item The output must be indistinguishable from random noise 
+  \item Bit changes must diffused through the entire output. A small change to a message should change the hash value so extensively that the new hash value appears uncorrelated with the old hash value
+  \item For a hash function to be useful, we need it to have some important properties:
+  \begin{itemize}
+    \item One-way: Given h(M), we can’t calculate M easily
+    \item Weak collision resistance: Given M and h(M), we cannot find some M’ s.t. h(M) = h(M’)
+    \item Strong collision resistance: We can’t find some message pair M ≠ M’ s.t. h(M) = h(M’)
+  \end{itemize}
+\end{itemize}
+
+\subsection{The Birthday Attack}
+\begin{itemize}
+  \item \textbf{The Birthday Paradox}: concerns the probability that, in a set of n randomly chosen people, some pair of them will have the same birthday
+  \item The output of the hash must be long enough to avoid a birthday attack.
+  \item Given a hash function outputs n bit hashes, You will find a collision after about $ 2^{n/2}$ random attempts
+\end{itemize}
+\begin{center}
+  \includegraphics{hash_examples.png}
+\end{center}
+
+\section{Message Authentication Codes}
+\begin{itemize}
+  \item Provide integrity and authenticity, not confidentiality: protecting system files, ensuring messages haven’t been altered 
+  \item Calculate a \textbf{keyed hash} of the message, then append this to the end of the message
+\end{itemize}
+
+\subsection{HMAC}
+\begin{flushleft}
+Double hashing in HMAC handles some weaknesses with traditional MACs.
+\end{flushleft}
+\begin{center}
+  \includegraphics{hmac.png}
+\end{center}
+
 \pagebreak
 \section*{Reference section} \label{sec:reference}
 \begin{description}
