@@ -94,7 +94,7 @@ The previous SP-network didn’t use a key, we can add one using XOR:
 \subsection{Electronic Code Book (ECB)}
 \begin{itemize}
   \item Just encrypt each block one after another 
-  \item Weak to redundant data divulging patterns
+  \item Weak to redundant data \textbf{divulging patterns}
 \end{itemize}
 \begin{center}
   \includegraphics[scale=0.5]{ecb.png}
@@ -102,6 +102,7 @@ The previous SP-network didn’t use a key, we can add one using XOR:
 
 \subsection{Cipher Block Chaining (CBC)}
 \begin{itemize}
+  \item Need to parse all previous content to get a bit in the middle.
   \item XOR the output of each cipher block with the next input 
   \item Not totally immune to the insertion of malicious blocks
 \end{itemize}
@@ -113,6 +114,7 @@ The previous SP-network didn’t use a key, we can add one using XOR:
 \begin{itemize}
   \item Encrypting a counter 
   \item Can be parallelized! 22 to produce a stream cipher
+  \item Howerver if person intercepts and modify a message, it could cause issues
 \end{itemize}
 \begin{center}
   \includegraphics[scale=0.5]{ctr.png}
