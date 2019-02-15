@@ -1,0 +1,129 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{amsmath}
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Integer Factorisation}
+\begin{flushleft}
+Any integer can be expressed as the multiplication of a list of prime numbers. The longer the value, the harder (and slower) this gets. \textit{Semi-primes} (product of two \textbf{primes}) are the hardest numbers to factor
+\end{flushleft}
+
+\section{RSA}
+\begin{itemize}
+  \item RSA is the most common method for general public key cryptography 
+  \item It provides both encryption and/or authentication 
+  \item RSA provides us with two keys:
+  \begin{itemize}
+    \item Public (e, n). e is usually a small number, d is a much larger number n is a \textbf{very large semi-prime number}
+    \item Private d
+  \end{itemize}
+  \item The values e and d are mathematically linked such that:
+  \begin{gather}
+   M^e = C \kern-0.3cm \pmod{n} \\
+   C^d = M \kern-0.3cm \pmod{n}
+  \end{gather}
+  \item They are inverses of one another, when used as exponents $ \kern-0.2cm \mod{n}$
+\end{itemize}
+
+\subsection{Euler Totient Function}
+\begin{itemize}
+  \item Integers a and b are \textit{relatively prime} if they \textbf{do not share a divisor} (except 1) 
+  \item The Euler totient $\phi$ is the integers from 1 to n-1 that are relatively prime with n
+  \item The \textbf{totient value} of a prime p is simply p-1 
+  \item For two primes multiplied together it’s (p-1)(q-1)
+\end{itemize}
+
+\subsection{RSA key generator}
+\begin{itemize}
+  \item Choose two large primes, p and q, then calculate n = pq
+  \item Select a value e that is relatively prime with the totient of n
+  \begin{gather}
+    p = 17, q = 11 \\
+    n = p * q = 187 \\
+    \phi(n) = (p - 1)*(q - 1) = 160 \\
+    e =  one \; of \; 3, 6, 7, 11 = 7
+  \end{gather}
+  \item p, q, $\phi(n)$ - Private
+  \item e, n - Public
+  \item Calculate a multiplicative inverse to e: d, where
+    \[ (e * d) \kern-0.3cm \mod{\phi(n)} = 1 \]
+  \item This is easily achieved if we know $\phi(n)$ , but not otherwise
+  \item Now we have a public key e,n and a private key d
+\end{itemize}
+
+\subsection{Why is RSA secure}
+\begin{itemize}
+  \item We need to know $\phi(n)$ to find d
+  \item Finding this is extremely hard, for example we could factor n into p and q
+\end{itemize}
+
+\subsection{Using RSA}
+\begin{itemize}
+  \item The keys (e, n) and (d) are reversible – either can be used for encryption, and the other used for decryption
+  \item Everyone knows the public key, only the owner knows the private key 
+  \item This leads us to two very useful use cases for RSA:
+  \begin{itemize}
+    \item Encryption only the owner can read  
+    \item Signing that must have been performed by the owner
+  \end{itemize}
+\end{itemize}
+
+\section{Digital Signatures}
+\begin{itemize}
+  \item Authentication codes provide integrity, \textbf{but don’t guarantee the sender }
+  \item Public-key encryption allows us to \textbf{sign documents}
+  \item We can use a trusted third party in order to \textbf{verify the ownership of a public key} 
+  \item Bob then knows he has Alice’s genuine key, not an imposter 
+  \item Can also be ‘self signed’ 
+  \item An important part of Transport Layer security (TLS)
+\end{itemize}
+
+\subsection{X.509 v3}
+\begin{itemize}
+  \item Organised by Public Key Infrastructure (PKI) 
+  \item The standard for digital certificates holds information on the type, subject and issuer 
+  \item The issuer will usually be a \textbf{trusted third party}, like Verisign or Globalsign
+\end{itemize}
+
+\subsection{Certificate issuance}
+\begin{itemize}
+  \item Server (server.com) has a certificate containing their public key, which they want people to trust
+  \item They go to a certificate authority (CA), who after doing ID checks, sign the certificate with their private key
+  \item The server can supply digital signatures using the public key, backed by the certificate when requested, e.g. during a TLS handshake
+  \item To verify the trust in the Server.com certificate, we need to examine the signing certificate
+  \item In many cases, the chain involves multiple certificates 
+  \item Chains always end in a root certificate, \textbf{located on your machine}
+\end{itemize}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}

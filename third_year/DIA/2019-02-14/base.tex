@@ -1,0 +1,148 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Problems of deliberative architectures}
+\begin{itemize}
+  \item deliberation requires \textbf{accurate world models} 
+  \item hard to offer real-time guarantees on performance:
+  \item solving any given problem takes longer than an \textbf{equivalent reactive implementation} 
+  \item solving different problems takes different amounts of time
+\end{itemize}
+
+\subsection{Deliberation is inherently serial}
+\begin{itemize}
+  \item generation of each alternative is \textbf{inherently serial}, since each step relies on the state \textbf{produced by the previous step} 
+  \item the number of courses of action grows exponentially with the length of the solution, rather than linearly in the number of percept-action pairs 
+  \item the number of alternatives an agent can pursue in parallel is bounded by the number of \textbf{processing units available }
+  \item consideration of some alternatives \textbf{must be deferred}, i.e., processed serially
+\end{itemize}
+
+\subsection{Deliberation takes more time}
+\begin{itemize}
+  \item in a reactive architecture, if we know which action(s) to perform in a given situation we can perform them \textbf{immediately} 
+  \item all other things being equal, \textbf{deliberation will take more steps} than simply reacting, since we have to (serially) generate and compare alternatives 
+  \item if the agent doesn’t learn, it \textbf{must re-solve a problem each time} it encounters it, and will always be slower than a reactive agent 
+  \item in a dynamic environment a deliberative agent may take \textbf{too long to select an action}, e.g., if the situation changes before deliberation is complete
+\end{itemize}
+
+\subsection{Deliberation takes unpredictable time}
+\begin{itemize}
+  \item there is no one best problem-solving method (“No Free Lunch Theorem”)
+  \item different problems are more or less difficult \textbf{for different techniques}
+  \item it is difficult to tell how hard a problem is \textbf{just by looking at it}: we have to try and solve it
+  \item we don’t know how long it will take to find a solution to a problem \textbf{in advance}
+  \item time required by a deliberative agent \textbf{will vary} from problem instance to problem instance
+\end{itemize}
+
+\subsubsection{Approaches to deliberation time}
+\begin{itemize}
+  \item \textbf{ignore it} and hope for the best, e.g., classical planning 
+  \item make deliberation run faster, e.g., by using non-optimal algorithms which \textbf{sacrifice solution quality for speed} 
+  \item try to \textbf{predict} how long deliberation will take to solve the current problem, e.g, empirical AI 
+  \item \textbf{adapt} the amount of deliberation performed \textbf{to the time available}, e.g., anytime algorithms 
+  \item accept that deliberation may occasionally \textbf{be too slow} for some environments or some problems, e.g., monitor the environment and replan if the environment changes
+\end{itemize}
+
+
+\section{Accurate world models}
+\begin{flushleft}
+Agent must be able to:
+\begin{itemize}
+  \item \textbf{update its model} of the current environment based on its percepts
+  \item generate the \textbf{counterfactual part of the model} by correctly predicting how the world will change, e.g., as a result of its actions
+\end{itemize}
+if the world model is incorrect, ‘correct’ deliberation may \textbf{select the wrong course of action}
+\end{flushleft}
+
+\subsection{Representing the real part}
+\begin{flushleft}
+it is difficult to create and maintain the veridical model of the current state of the world required for deliberation:
+\begin{itemize}
+  \item the information available to the agent may be \textbf{incomplete}, e.g., if the environment is only partially observable
+  \item the information available to the agent may be \textbf{inaccurate}, e.g., if the environment has changed since the representation was last updated or the agent’s sensors give incorrect information
+\end{itemize}
+\end{flushleft}
+
+\subsection{Representing the counterfactual part}
+\begin{flushleft}
+To generate hypothetical future states which are useful, the agent must be able to accurately predict how the world will change.
+\begin{itemize}
+  \item as a result of the \textbf{agent’s actions}: agent’s actions are often assumed to be infallible;
+  \item as a result of \textbf{exogenous changes}: actions of other agents or environmental changes are assumed to be predictable
+\end{itemize}
+\end{flushleft}
+
+\subsection{Approaches to errors in representation}
+\begin{itemize}
+  \item \textbf{ignore them} and hope for the best, e.g., classical planning 
+  \item try harder to make the representation \textbf{fit reality}, e.g., by using more and better sensors, or by trying to ensure that actions really are infallible, e.g., by implementing them as robust reactive behaviours 
+  \item explicitly \textbf{represent and reason about uncertainty}, e.g., probabilistic representations, decision theoretic approaches 
+  \item \textbf{interleave planning and acting}: plan only a little way ahead and keep checking that things are going according to plan; if not, replan.
+\end{itemize}
+
+\section{Empirical AI}
+\begin{itemize}
+  \item difficult to tell how hard a problem is for a given problem-solving technique \textbf{without trying to solve it} 
+  \item empirical AI tries to characterise which problems are hard or easy for a given technique 
+  \item most of this work has been in the areas of optimisation, planning and constraint satisfaction problems 
+  \item concerned with which problems are soluble at all
+\end{itemize}
+
+\section{Anytime algorithms}
+\begin{itemize}
+  \item interruptible algorithm which produces a sequence of solutions of monotonically increasing quality 
+  \item anytime algorithms can be used in two ways:
+  \begin{itemize}
+    \item to compute the optimum amount of time to spend deliberating to \textbf{maximise the utility of the outcome}, e.g., decision theoretic approaches
+    \item – \textbf{deliberate for as long as possible} before acting, on the assumption that deliberating for longer will produce a better solution
+  \end{itemize}
+\end{itemize}
+
+\section{Planning in dynamic environments}
+\begin{itemize}
+  \item if the situation changes while the agent is planning or executing its plan, the agent \textbf{should replan} if the changed situation \textbf{invalidates the plan}
+  \item it is difficult to make all the assumptions underlying the plan explicit– the ‘qualification problem’: so most deliberative agents either:
+  \begin{itemize}
+    \item replan if there is any change–in case the change is significant
+    \item ignore all changes until one of the steps in the plan fails and triggers replanning 
+  \end{itemize}
+  \item commitment strategy determines \textbf{when} an agent will reconsider its current intentions
+\end{itemize}
+
+\section{Options and intentions}
+
+
+\pagebreak
+
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}
