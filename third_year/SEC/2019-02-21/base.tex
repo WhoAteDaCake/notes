@@ -1,0 +1,136 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Usernames and Passwords}
+\begin{itemize}
+  \item Identification – Who you are 
+  \item Authentication – Verify that identity 
+  \item Authentication should expire. “Remember my credentials” turns this into something you have 
+  \item Time of check to time of use – TOCTTOU 
+  \begin{itemize}
+    \item Repeated authentication 
+    \item At the start and during a session
+  \end{itemize}
+\end{itemize}
+
+\subsection{Problems With Passwords}
+\begin{itemize}
+  \item People forget them 
+  \item They can be guessed
+  \item Spoofing and Phishing (pretend to be a different website)
+  \item Compromised password files 
+  \item Keylogging 
+  \item Many of these are made many times worse by weak passwords
+\end{itemize}
+
+\subsection{Problems with password policies}
+\begin{itemize}
+  \item This is not a great solution 
+  \item People attempt to make their life easier by re-using passwords 
+  \item When they’re forced to change to unique passwords, they’ll simply increment a counter
+\end{itemize}
+
+\subsection{Password shadow files}
+\begin{itemize}
+  \item Operating systems have taken steps to stop people reading hashes for offline attacks 
+  \item These files are now \textbf{read protected }
+  \item Administrators or people booting another OS will often find a way in
+\end{itemize}
+
+\section{Cracking passwords}
+\begin{itemize}
+  \item Cracking a password isn’t always illegal, though obviously it sometimes is! 
+  \item Password cracking falls into two basic types: 
+  \item Offline: You have a copy of the password hash locally 
+  \item Online: You do not have the hash, and are instead attempting to gain access to an actual login terminal 
+  \item Online is usually attempted with phishing
+  \item Offline password cracking quite simply a case of trying possible passwords, and seeing if we have a hash collision with a password list 
+  \item Might be a \textbf{brute force approach}
+\end{itemize}
+
+\subsection{Dictionary Attacks}
+\begin{itemize}
+  \item Most password cracking is now achieved using dictionary attacks rather than brute force 
+  \item Using a dictionary of common words and passwords 
+  \item Apply small variations to this list, trying them all 
+  \item Combine words from two different lists
+\end{itemize}
+
+\section{Password Salting}
+\begin{itemize}
+  \item We can improve security by prepending a random “salt” to a password before hashing 
+  \item The salt is stored unencrypted with the hash
+  \item If we use a different random salt for each user, we get the following security benefits:
+  \begin{itemize}
+    \item Cracking multiple passwords is slower – a hit is for a single user, not all users with that password
+    \item Prevents rainbow table attacks – we can’t pre-compute that many password combinations 
+  \end{itemize}
+  \item Salting has no effect on the speed of cracking a single password – so make your passwords good!
+\end{itemize}
+
+\section{Hashing Speed}
+\begin{itemize}
+  \item When password cracking, the most important factor is hashing speed 
+  \item Newer algorithms take longer: partly because they’re more complex, but some have been specifically designed to take a while 
+  \item Iterate to increase complexity - PBKDF2 
+  \item bcrypt can’t be used on easily GPUs
+\end{itemize}
+
+\section{Pretexting}
+\begin{itemize}
+  \item Obtaining private details by offering some “pretext” as a reason for needing them 
+  \item We continue to rely on email addresses, DOB and Mother’s maiden names as our “last line of defense” for security.
+  \item What are alternatives?
+\end{itemize}
+
+\section{Multi-factor authentication}  
+\begin{itemize}
+  \item Combines something you know with something you have 
+  \item Common examples: 
+  \item Text codes to mobiles 
+  \item One time passwords, Google Authenticator, Microsoft Authenticator etc. 
+  \item USB devices e.g. Yubico 
+  \item New devices and TOCTTOU are a common uses for two-factor authentication
+\end{itemize}
+
+\section{Biometrics}
+\begin{itemize}
+  \item Measurements of the human body, something you are 
+  \item Various forms, fingerprint recognition, iris / retina recognition, voice, gait, typing rhythm 
+  \item A password you always have with you, but you can’t change 
+  \item Usually a trade off between false positives and negatives
+\end{itemize}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}
