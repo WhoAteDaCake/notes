@@ -1,0 +1,148 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Role of the OS}
+\begin{itemize}
+  \item Compactly combine: 
+  \begin{itemize}
+    \item Identification 
+    \item Authentication 
+    \item Access control 
+    \item Auditing
+  \end{itemize} 
+  \item User accounts to store permissions 
+  \item Installation and configuration
+\end{itemize}
+
+\section{Authentication & Authorisation}
+\begin{itemize}
+  \item Principal
+  \item Operation
+  \item Reference Monitor
+  \item Object
+\end{itemize}
+
+\subsection{Principle vs subject}
+\begin{flushleft}
+Principle: An entity that can be \textbf{granted access to objects} or can make statements affecting access control decisions. E.g user identity in an OS, used when discussing security policies
+\end{flushleft}
+\begin{flushleft}
+Subject An active entity within an IT system. E.g. \textbf{process running under a user identity}, used when discussing operational systems enforcing policies.
+\end{flushleft}
+
+\subsection{Objects}
+\begin{itemize}
+  \item Object – Files or resources 
+  \item E.g. Memory, printers, directories 
+  \item Two options for focusing control: 
+  \begin{itemize}
+    \item What a subject is allowed to do. E.g. Word is allowed to write to a file
+    \item What may be done to an object. E.g. An object cannot be deleted, but can be executed.
+  \end{itemize}
+  \item The access control is usually a compromise beween these two.
+  \item In Unix, \textbf{everything is a file} 
+  \item Files really represent resources 
+  \item Organised in a tree structure, with alterations depending on the file system 
+  \item Inodes store permission information 
+  \item Every resource has an owner and a group
+  \item Every resource has permission bits - held in the inode metadata 
+  \item Permissions for the user / group / others
+\end{itemize}
+
+\subsubsection{inodes}
+\begin{itemize}
+  \item Inodes in Unix and Linux store the metadata for files 
+  \item Each file name links to an inode, which stores security information
+  \item Directory permissions are slightly different to files: 
+  \item r – List files within the directory 
+  \item w – add or remove files 
+  \item x – traverse directory, open files in the directory
+\end{itemize}
+
+\section{General model}
+\begin{itemize}
+  \item We’ll settle on some common access on files: 
+  \item Read – Simply viewing (Confidentiality) 
+  \item Write – Includes changing, appending, deleting (Integrity) 
+  \item Execute – Can run a file without knowing its contents
+\end{itemize}
+
+\section{Ownership}
+\begin{itemize}
+  \item \textbf{Discretionary}: Owner can be defined \textbf{for each resource}. Owner controls who gets access.
+  \item \textbf{Mandatory}: There could be a system-wide policy 
+  \item Most OS’s support the concept of ownership
+  \item Even owner can't pass out a entity, if the receiver doesn't have permission for the file.
+\end{itemize}
+
+\section{Unix}
+\begin{itemize}
+  \item Unix simplifies access control by considering only the user, group and others 
+  \item User is the current owner 
+  \item Group is a named group entity 
+  \item Everyone else 
+  \item Unix offers Read, Write and Execute access controls
+\end{itemize}
+
+\subsection{Groups}
+\begin{itemize}
+  \item Users with similar access rights can be collected into groups 
+  \item Groups are given permissions to access objects
+\end{itemize}
+
+\subsection{UID/GID}
+\begin{itemize}
+  \item Usernames in Unix / Linux are soft aliases, your UID is what determines permissions 
+  \item User identities: UID 
+  \item Group identities: GID 
+  \item Your IDs are stored in /etc/passwd 
+  \item Root has a special UID: 0
+\end{itemize}
+
+\section{The Shadow File}
+\begin{itemize}
+  \item In an attempt to improve password security, we can store password hashes in a shadow file 
+  \item Readable only by root users 
+  \item /etc/shadow stores the hashed passwords needed to authenticate users
+\end{itemize}
+
+\section{SUID}
+\begin{itemize}
+  \item Set UID: set the effective user to be the file owner when executed 
+  \item Necessary to allow non-privileged access to privileged actions e.g. passwords 
+  \item Dangerous, but allows specific files to execute as sudo, without requiring it.
+\end{itemize}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}
