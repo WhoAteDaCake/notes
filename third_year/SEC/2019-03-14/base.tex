@@ -1,0 +1,62 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{IP security}
+
+IP is connectionless and stateless
+\begin{itemize}
+	\item Best effort service 
+	\item No delivery guarantee 
+	\item No order guarantee 
+	\item IPv4 No guaranteed security support 
+	\item IPv6 security support is guaranteed - IPSec.
+\end{itemize}
+
+\subsection{IPSec}
+\begin{itemize}
+	\item Optional in IPv4, mandatory support in IPv6 
+	\item Two major security mechanisms 
+	\item IP Authentication Header (AH). (Not really used, because it's not to useful)
+	\item IP Encapsulation Security Payload (EPS). We both encrypt and authenticate data
+	\item Does not contain any mechanisms to prevent traffic analysis.
+\end{itemize}
+
+\subsection{Encapsulation Security Payload (ESP)}
+\begin{flushleft}
+Includes an additional header within the IP packet that describes what encryption and authentication is in use
+\end{flushleft}
+
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}
