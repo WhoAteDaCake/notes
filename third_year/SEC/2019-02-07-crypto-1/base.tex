@@ -63,7 +63,7 @@ It is an impractical method because:
 \begin{itemize}
   \item A 1GB file would need a 1GB key! 
   \item How are we transporting these keys? Or storing them? 
-  \item If you ever reuse a key, the entire cipher is broken
+  \item If you ever \textbf{reuse a key}, the entire cipher is broken
 \end{itemize}
 
 \section{Modern Stream Ciphers}
@@ -89,8 +89,7 @@ It is an impractical method because:
 
 \subsection{Advantages of Stream Ciphers}
 \begin{itemize}
-  \item Encrypting long continuous streams, possibly of unknown length 
-  \item E.g. GSM mobile communications 
+  \item Encrypting long continuous streams, possibly of unknown length. E.g. GSM mobile communications 
   \item Extremely \textbf{fast with a low memory footprint}, ideal for low-power devices 
   \item If designed well, can seek to any location in the steam. E.g. Streaming video with DRM
 \end{itemize}
@@ -134,8 +133,8 @@ It is an impractical method because:
 
 \section{Message Authentication Codes}
 \begin{itemize}
-  \item Provide integrity and authenticity, not confidentiality: protecting system files, ensuring messages haven’t been altered 
-  \item Calculate a \textbf{keyed hash} of the message, then append this to the end of the message
+  \item Provide \textit{integrity} and \textit{authenticity}, not confidentiality: protecting system files, ensuring messages haven’t been altered 
+  \item Calculate a \textbf{keyed hash} of the message, then \textbf{append this to the end} of the message
 \end{itemize}
 
 \subsection{HMAC}

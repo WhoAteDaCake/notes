@@ -1,0 +1,162 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Reference Monitor}
+\begin{flushleft}
+An access control concept that refers to an abstract machine that
+\textbf{mediates all access} to objects by subjects
+\end{flushleft}
+\begin{itemize}
+  \item Must be tamper proof / resistant 
+  \item Must \textbf{always be invoked} when access to an object is required 
+  \item Must be small enough to be verifiable / subject to analysis to ensure correctness
+\end{itemize}
+
+\section{Placement}
+
+\begin{flushleft}
+Can be placed anywhere within the system, a variety of locations relative to the program being run
+\begin{itemize}
+  \item Hardware – Dedicated registers for defining privileges 
+  \item Operating system kernel – E.g. Virtual Machine Hypervisor 
+  \item Operating system – Windows security reference monitor 
+  \item Services Layer – JVM, .NET 
+  \item Application Layer – Firewalls
+\end{itemize}
+\end{flushleft}
+
+\subsection{Lower Is Better}
+\begin{flushleft}
+Using a reference monitor or other security features at a \textbf{lower level} means:
+\begin{itemize}
+  \item We can assure a higher degree of security 
+  \item Usually simple structures to implement 
+  \item Reduced performance overheads 
+  \item Fewer layer below attack possibilities
+\end{itemize}
+However: \textbf{access control decisions} are far removed from applications
+\end{flushleft}
+
+\section{OS Integrity}
+\begin{flushleft}
+The operating system: arbitrates access requests, is itself an resource that must be accessed. This is a \textbf{conflict}, we want to \textbf{use} the OS but \textbf{not mess with it}.
+\end{flushleft}
+
+\subsection{Modes of operation}
+\begin{flushleft}
+Defines which actions are permitted in which mode, e.g. system calls, machine instructions, I/O. Distinguish between computations done on behalf of: \textbf{the OS and the user}. A \textit{status flag} within the CPU allows the OS to operate in different modes
+\end{flushleft}
+
+\subsection{Controlled Invocation}
+\begin{flushleft}
+Many functions are held at kernel level, but are quite reasonably called from within user level code 
+\begin{itemize}
+  \item Network and File IO 
+  \item Memory allocation 
+  \item Halting the CPU (at shutdown only!) 
+\end{itemize}
+We need a mechanism to transfer between kernel mode (ring 0 - root) and user mode (ring 3 - user)
+\end{flushleft}
+
+\subsubsection{Controlled Invocation: Interrupts}
+\begin{flushleft}
+Also known as exceptions / traps. In many ways is the \textbf{hardware equivalent} to a \textbf{software exception} – not always bad. Handled by an \textit{interrupt handler} which resolves the issue and returns to the original code. Given an interrupt, the CPU will \textbf{switch execution} to the location given in an \textit{interrupt descriptor table}
+\end{flushleft}
+
+\section{Descriptors and Selectors}
+\begin{itemize}
+  \item Descriptors hold information on crucial system objects like \textbf{kernel structure locations} 
+  \item Descriptors are held in \textit{descriptor tables} 
+  \item Contain a Descriptor Privilege Level (DPL) 
+  \item Descriptors are indexed by selectors 
+  \item Loaded when required, e.g. on jump calls 
+  \item The CPU protects the kernel by \textbf{checking} the Current Privilege Level (CPL) when a Selector is loaded
+\end{itemize}
+
+\subsection{Interrupt-gates}
+\begin{itemize}
+  \item The code segment (CS) register in x86 CPUs has 2 bits reserved for the Current Privilege Level (CPL) 
+  \item Descriptors that have a privilege level \textbf{higher than where they point are called} gates 
+  \item Since these descriptors are \textbf{created by the kernel}, they offer a \textbf{secure means of entry into ring 0}
+\end{itemize}
+
+\subsection{Patching the kernel}
+\begin{flushleft}
+If you can run custom PL 0 code (compromised driver?), you can insert your own handler – \textit{Rootkit}
+\end{flushleft}
+
+\section{Processes and Threads}
+\begin{itemize}
+  \item A process is a program being executed. Important unit of control: 
+  \begin{itemize}
+    \item Exists in its own address space 
+    \item Communicates with other processes via the OS 
+    \item Separation for security 
+  \end{itemize}
+  \item A Thread is a strand of execution within a process. Shares a common address space
+\end{itemize}
+
+\section{Memory Protection}
+\begin{flushleft}
+Segmentation – divides data into logical units
+\begin{itemize}
+  \item Good for security 
+  \item Challenging memory management 
+  \item Not used much in modern OSs
+\end{itemize}
+Paging – divides memory into pages of equal size
+\begin{itemize}
+  \item Efficient memory management 
+  \item Worse for access control 
+  \item Extremely common in modern OSs
+\end{itemize}
+\end{flushleft}
+
+\section{Side channel exploits}
+\begin{flushleft}
+In most operating systems, the entire kernel is stored in the \textbf{upper address space}. Pages in this area are flagged as supervisor, and cannot be accessed in ring 0. In Intel (and some other) CPUs, it’s common to \textbf{speculatively evaluate} code prior to reaching it. If the branch isn't taken, changes are rolled back, however cache isn't.
+\end{flushleft}
+
+\subsection{Meltdown}
+\begin{flushleft}
+Meltdown breaks the mechanism that keeps applications from accessing arbitrary system memory. Consequently, applications can access system memor
+\end{flushleft}
+
+\subsection{Spectre}
+\begin{flushleft}  
+Spectre tricks other applications into accessing arbitrary locations in their memory
+\end{flushleft}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}

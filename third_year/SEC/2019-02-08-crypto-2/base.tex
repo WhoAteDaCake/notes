@@ -30,13 +30,12 @@
 
 \section{Block Ciphers}
 \begin{itemize}
-  \item Block ciphers use a key to encrypt a fixed-size block of plaintext into a fixed-size block of ciphertext 
+  \item Block ciphers use a key to encrypt a \textbf{fixed-size} block of plaintext into a \textbf{fixed-size} block of ciphertext 
   \item If you’re careful, you can convert between block and stream ciphers using modes of operation
 \end{itemize}
 
 \section{SP-Networks}
-\begin{itemize}
-  \item Claude Shannon suggested that all that was required for a strong cipher was repeated \textbf{substitution and permutation} 
+\begin{itemize} 
   \item SP-Networks combine a substitution process with a permutation into a single round 
   \item Rounds are then repeated enough times to ensure the algorithm is secure
   \item \textbf{Substitution Boxes} – Add confusion by replacing values with other values using a lookup table
@@ -133,12 +132,12 @@ The previous SP-network didn’t use a key, we can add one using XOR:
 Attack models weakest to strongest
 \end{flushleft}
 \begin{itemize}
-  \item Brute-force 
-  \item Ciphertext-only 
-  \item Known-plaintext 
-  \item Chosen-plaintext 
-  \item Chosen-ciphertext 
-  \item Related-key attack
+  \item Brute-force - Go in blind, keep trying new keys, untill one matches.
+  \item Ciphertext-only - Manually try to break the algorithm from investigatin cyphertext.
+  \item Known-plaintext - We know the original message and cyphertext
+  \item Chosen-plaintext - We choose the text and have it be encrypted. This way we have control of what's encrypted in order to help decrypt cyphertext
+  \item Chosen-ciphertext - Also assumes that Chosen-plaintext is available.
+  \item Related-key attack - Choose messages to be ecrypted and decrypted. By modifying keys around using mathematical properties, it possible to find out the process that's being done to encrypt the messages.
 \end{itemize}
 
 \pagebreak

@@ -32,7 +32,7 @@
 \begin{itemize}
   \item Identification – Who you are 
   \item Authentication – Verify that identity 
-  \item Authentication should expire. “Remember my credentials” turns this into something you have 
+  \item Authentication \textbf{should expire}. “Remember my credentials” turns this into something you have 
   \item Time of check to time of use – TOCTTOU 
   \begin{itemize}
     \item Repeated authentication 
@@ -52,7 +52,6 @@
 
 \subsection{Problems with password policies}
 \begin{itemize}
-  \item This is not a great solution 
   \item People attempt to make their life easier by re-using passwords 
   \item When they’re forced to change to unique passwords, they’ll simply increment a counter
 \end{itemize}
@@ -66,13 +65,13 @@
 
 \section{Cracking passwords}
 \begin{itemize}
-  \item Cracking a password isn’t always illegal, though obviously it sometimes is! 
   \item Password cracking falls into two basic types: 
-  \item Offline: You have a copy of the password hash locally 
-  \item Online: You do not have the hash, and are instead attempting to gain access to an actual login terminal 
+    \begin{itemize}
+      \item Offline: You have a copy of the password hash locally 
+      \item Online: You do not have the hash, and are instead attempting to gain access to an actual login terminal 
+    \end{itemize}
   \item Online is usually attempted with phishing
-  \item Offline password cracking quite simply a case of trying possible passwords, and seeing if we have a hash collision with a password list 
-  \item Might be a \textbf{brute force approach}
+  \item Offline password cracking quite simply a case of trying possible passwords, and seeing if we have a hash collision with a password list. Might be a \textbf{brute force approach}
 \end{itemize}
 
 \subsection{Dictionary Attacks}
@@ -112,7 +111,7 @@
 
 \section{Multi-factor authentication}  
 \begin{itemize}
-  \item Combines something you know with something you have 
+  \item Combines something you \textbf{know} with something you \textbf{have} 
   \item Common examples: 
   \item Text codes to mobiles 
   \item One time passwords, Google Authenticator, Microsoft Authenticator etc. 
