@@ -1,0 +1,197 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Windows access control}
+\begin{itemize}
+  \item Windows predominantly uses Access Control Lists. Extends the usual read, write and execute with: 
+  \begin{itemize}
+    \item Take ownership 
+    \item Change permissions 
+    \item Delete 
+  \end{itemize}
+  \item 32-bit access masks (cf. Unix 9-bit). A higher degree of control, with the associated complexity increase!
+\end{itemize}
+
+\subsection{Access Control Matrix}
+\begin{flushleft}
+Access rights are defined \textbf{individually} for each combination of \textbf{subject and object}. Quite an abstract concept, but would allow for very fine grained control. Not practical, think of the \textbf{memory required} in scaling it up!
+\end{flushleft}
+
+\subsection{Access Control List}
+\begin{flushleft}
+Stored with an object itself, corresponding to a column of an ACM. Only need data of relevent subjects. E.g. \textbf{budget.xlsx} Alice: r,w,e Bob: r Claire: r
+\end{flushleft}
+
+\subsection{Access Control}
+\begin{itemize}
+  \item Access control in windows treats more than just files, also:
+  \begin{itemize}
+    \item Registry keys 
+    \item Active directory objects 
+    \item Groups
+  \end{itemize}
+  \item Inheritance is implemented: File can inherit ACLs from parent directories. This allows to set defaults nicely
+\end{itemize}
+
+\section{Principals}
+\begin{flushleft}
+Principals more broadly defined as well: 
+\begin{itemize}
+\item Local users 
+\item Domain users 
+\item Groups 
+\item Machines (no longer runs on behalf of the user)
+\end{itemize}
+ Each principal has a human-readable name and security ID (SID)
+\end{flushleft}
+
+\subsection{Local / Domain Principals}
+\begin{itemize}
+\item LSA creates local principals. principal = MACHINE\textbackslash principal 
+\item Domain principals administered on DC by domain admins. principal@domain = DOMAIN\textbackslash principal.
+\item net user /domain, net group /domain, net localgroup /domain
+\end{itemize}
+
+\subsection{Groups}
+\begin{itemize}
+  \item Groups are collections of SIDs (object-orientated) 
+  \item Group can itself be an SID 
+  \item Groups can thus be nested 
+  \item Groups are not nest-able on local machines 
+  \item Managed by a \textbf{domain controller} within Active Directory
+\end{itemize}
+
+\section{Objects}
+\begin{itemize}
+  \item Objects are passive entities in access operations. In Windows: 
+  \begin{itemize}
+    \item Executive objects (processes, threads, etc.) 
+    \item Private objects (files, directories) 
+  \end{itemize}
+  \item Securable objects have a security descriptor 
+  \begin{itemize}
+    \item Owner SID
+    \item Primary group
+    \item DACL - Anyone that has different access rights to the object
+    \item SACL - for auding purposes.
+  \end{itemize}
+  \item Built-in securable objects managed by the OS 
+  \item Private objects managed by application software
+\end{itemize}
+
+\section{Access Tokens}
+\begin{itemize}
+  \item Security credentials for a login session stored in access token 
+  \item Identifies the user, the user’s groups, and the user’s privileges
+  \item Structure:
+  \begin{itemize}
+    \item User SID
+    \item Groups and Alias SID
+    \item Privileges
+    \item Defaults for New Objects
+    \item Miscellaneous
+  \end{itemize}
+  \item Token is generated during login, meaning if access is revoked, user will still be able to utilise it untill logout.
+\end{itemize}
+
+\section{Subjects}
+\begin{itemize}
+  \item Windows subjects: Processes and threads 
+  \item New processes get a copy of the parent access token, possibly modified 
+  \item Individual access tokens are immutable, and can live beyond policy changes (TOCTTOU issue)
+\end{itemize}
+
+\section{User Account Control}
+\begin{itemize}
+  \item After Vista, administrator users do not use an administrative access token by default 
+  \item Users \textbf{have two tokens}, one heavily restricted and used by default 
+  \item A prompt allows a user to spawn a process \textbf{with the other token}, or switch a process’ token
+\end{itemize}
+
+\section{Domains}  
+\begin{itemize}
+  \item Single sign-on for network resources 
+  \item Centralised security administration 
+  \item Domain Controller (DC): handles user accounts and access control, is a trusted 3rd party for authentication 
+  \item Multiple DCs allow for decentralisation by design
+\end{itemize}
+
+\subsection{Interactive Logon}
+\begin{itemize}
+  \item The windows interactive logon allows a user to authenticate 
+  \item Windows logon begins with the Secure Attention Sequence: Ctrl + Alt + Delete. Can prevent spoofing - is tied directly to winlogon
+\end{itemize}
+
+\subsubsection{Logon process}
+\begin{itemize}
+  \item Winlogon – the process responsible for authenticating users 
+  \item Graphical Identification and Authentication (GINA) 
+  \item The Local Security Authority (LSA) 
+  \item An authentication package (NTLM and Kerberos) 
+  \item Security Account Manager (SAM) 
+  \item Since Vista, additional Credential Providers are allowed (2Factor auth, usb auth, etc.)
+\end{itemize}
+
+\subsubsection{Domain logon}
+\begin{itemize}
+  \item Replaces NTLM with Kerberos 
+  \item Replaces SAM with an Active Directory Domain Controller 
+  \item Checks of a user are now performed on \textbf{the remote LSA}
+\end{itemize}
+
+\subsection{Kerberos}
+\begin{itemize}
+  \item The default authentication for network logon in Windows 
+  \item Uses symmetric encryption
+  \item Requires a trusted third party
+\end{itemize}
+
+\subsubsection{Process}
+\begin{itemize}
+  \item Contains 2 core services: Authentication server and Ticket granting server
+  \item Everyone will have a long term key
+  \item When machines want to talk between each other, they obtain a key from a key granting server
+  \item look lesson: \href{https://echo360.org.uk/lesson/db83e544-8e6f-4cbe-93d7-c7b6fc92d131/classroom#sortDirection=desc}{here}
+\end{itemize}
+
+\subsubsection{Important features}
+\begin{itemize}
+  \item Including nonces / timestamps prevents replay attacks. But, clocks must be synchronised between principals 
+  \item Windows Kerberos buries domain group IDs inside tickets, for access checks 
+  \item The ticket granting ticket usually exists until log-off, or rotates daily 
+  \item A problem if user rights have been changed - TOCTTOU
+\end{itemize}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}
