@@ -1,0 +1,147 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Cookies}
+\begin{itemize}
+	\item HTTP is a stateless protocol, but most of what we do online is stateful 
+	\item Cookies are small text files used to provide persistence
+	\item Servers can provide cookies during HTTP responses, using Set-Cookie 
+	\item Browsers will return any cookies for a given domain in GET and POST requests
+\end{itemize}
+
+\subsection{Types of Cookie}
+\begin{itemize}
+	\item Session – \textbf{Deleted when the browser exits}, contain no expiration date 
+	\item Persistent – Expire at a given time 
+	\item Secure – Can only be used over HTTPS 
+	\item HTTPOnly – Inaccessible from JS
+\end{itemize}
+
+\subsection{Third Party Cookies}
+\begin{itemize}
+	\item Cookies are associated with the domains that produced them. Amazon.com cookies don’t go to google.co.uk 
+	\item Some websites include request to other domains, such as 3rd party advertisers. These serve cookies – a lot
+\end{itemize}
+
+\subsection{Cookie Vulnerabilities}
+\begin{itemize}
+	\item How a website uses a cookie is up to the server 
+	\item Many create an SID to authenticate users, for example to “keep me logged on” 
+	\item Obtaining this cookie – Cookie Stealing – lets you hijack their session 
+	\begin{itemize}
+		\item HTTP Cookies can be stolen simply by monitoring 
+		\item HTTPS will require Cross-site scripting attacks or DNS poisoning
+	\end{itemize}
+\end{itemize}
+
+\section{SSL/TLS}
+\begin{itemize}
+	\item There are dangers associated with sending plain text cookies, passwords etc. 
+	\item SSL, and the newer TLS provide authenticated and encrypted sessions 
+	\item Secure Socket Layer (SSL) came first, then after v3.0 it became Transport Layer Security (TLS), currently v1.2 / v1.3
+\end{itemize}
+
+\subsection{TLS}
+Transport Layer Security has two layers:
+\begin{itemize}
+	\item The Record Layer: using established symmetric keys and other session info, will encrypt application packets, very like IPSec 
+	\item The Handshake Layer: used to establish session keys, as well as authenticate either party – usually the server using a public-key certificate
+\end{itemize}
+
+\subsection{TLS handshake}
+\begin{flushleft}
+Look at \href{https://moodle.nottingham.ac.uk/pluginfile.php/5124101/mod_resource/content/0/L15%20-%20Internet%20Security%202pp.pdf}{notes}
+\end{flushleft}
+
+\subsection{TLS Vulnerabilities}
+\begin{itemize}
+	\item The man-in-the-middle vulnerabilities are usually countered using public-key authentication 
+	\item The majority of TLS problems are implementation: Heartbleed 
+	\item Protocol downgrade attacks are still a concern – many servers still allow weak cipher suites. FREAK and Logjam force the use of 512-bit keys
+\end{itemize}
+
+\section{Cross-site Scripting (XSS)}
+\begin{itemize}
+	\item A type of injection attack, similar in many ways to an SQL Injection 
+	\item HTML is read by a browser, and is a combination of content (text) and structure (html tags) 
+	\item If we can inject html structures into the content of a website, the browser will simply execute these – e.g. <script> tags
+\end{itemize}
+
+\subsection{Reflected XSS}
+\begin{flushleft}
+A malicious URL that inserts an exploit directly into the page returned by a server
+\end{flushleft}
+
+\subsection{Persistent XSS}
+\begin{itemize}
+	\item Even worse, no need to trick people into clicking links 
+	\item Any website that doesn’t properly sanitise html tags from user input is vulnerable 
+	\item Blog posts with comment sections are obvious targets, but there are many more 
+	\item Forums, web comments, shopping reviews, etc
+\end{itemize}
+
+\subsection{Preventing XSS}
+\begin{itemize}
+	\item Websites must aggressively escape HTML characters from any user input / output 
+	\item You also need to find all of the bizarre obfuscated versions of XSS 
+	\item When you consider all of the things people input on interactive websites, this can be a real problem
+\end{itemize}
+
+\subsection{Cross-site request forgery}
+\begin{itemize}
+	\item When a user puts in an HTTP request, they will also send any relevant session cookies. E.g. an SID from having logged in 
+	\item If the user has already authenticated, a malicious URL can then perform some action on their account
+\end{itemize}
+
+\subsection{Cross-site Request Forgery (XSRF)}
+\begin{itemize}
+	\item When a user puts in an HTTP request, they will also send any relevant session cookies. E.g. an SID from having logged in 
+	\item If the user has already authenticated, a malicious URL can then perform some action on their account
+\end{itemize}
+
+\subsection{XSRF in POST}
+\begin{itemize}
+	\item Most websites use POST, this is little defence 
+	\item The phishing email just points to a convincing website with a malicious form on it
+\end{itemize}
+
+\subsection{Preventing XSRF}
+\begin{itemize}
+	\item XSS vulnerabilities make XSRF a lot easier! Fix these! 
+	\item Use synchroniser tokens 
+	\item Each website form has a one-time token that the server validates when the form is submitted
+\end{itemize}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}
