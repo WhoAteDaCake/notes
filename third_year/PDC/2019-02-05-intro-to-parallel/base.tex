@@ -1,0 +1,136 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Data Parallelism}
+\begin{flushleft}
+A data parallel computation performs the\textbf{ same operation(s) to different items} of data at the same time
+\end{flushleft}
+
+\section{Task Parallelism}
+\begin{itemize}
+  \item A task parallel computation performs \textbf{distinct computations} (tasks) at the same time
+  \item Set of tasks is \textbf{fixed} and so parallelism is not scalable
+  \item One common example of task parallelism is pipelining, where a series of tasks \textbf{are solved in sequence}
+\end{itemize}
+
+\section{Speedup}
+\begin{flushleft}
+Speedup is the execution time of a sequential program (TS) divided by the execution time of a parallel program (TP) that computes the same result
+\end{flushleft}
+
+\subsection{Superlinear Speedup}
+\begin{itemize}
+  \item Sometimes (rarely) a parallel program on P processors may have a speedup greater than P. The speedup graph goes above P, hence \textbf{superlinear}
+  \item The parallel version may be able to use cache memory more effectively (one per processor), reducing main memory access
+\end{itemize}
+
+\subsection{Efficiency}
+\begin{flushleft}
+Efficiency is normalised speedup, and indicates how efficiently each processor is used
+\[ Efficiency = Speedup / P \]
+\end{flushleft}
+
+\subsection{Concerns with Speedup}
+\begin{itemize}
+  \item New generations of hardware have generally increased processor performance more than communication latency
+  \item Specific choice of $T_S$ (sequential execution time) for comparison may be unfair
+  \item Comparison may be with $T_P$ for 1 processor (generally slower than $T_S$), termed relative speedup
+\end{itemize}
+
+\subsection{Scaled Speedup vs Fixed-Size Speedup}
+\begin{itemize}
+  \item Speedup is most intuitive when comparing the same problem on different machines, i.e. \textbf{fixed size speedup} 
+  \item \textbf{A small problem} may not scale well to a \textbf{large machine}, but a \textbf{large problem} may not be executable on \textbf{a small machine}
+  \item Scaled speedup tries to increase the size of the problem to \textbf{match the size of the machine} – But in practice this can be hard or impossible, for example parts of the algorithm or memory requirements may be \textit{non-linear}
+\end{itemize}
+
+\section{Sources of Performance Loss}
+
+\subsection{Overhead}
+\begin{flushleft}
+Overhead is any cost incurred in the parallel solution but not in the serial solution:
+\begin{itemize}
+  \item Time required to set up and tear down threads and processes
+  \item Communication among threads and processes
+  \item Synchronization, i.e. coordinating work with other threads or processes (acquiring, releasing locks etc.)
+  \item Additional Computation, i.e. extra work such as calculating \textbf{what part of the problem} this thread should tackle
+  \item Additional memory may be required by the parallel version, which may limit its use
+\end{itemize}
+\end{flushleft}
+
+\subsection{Contention for resources}
+\begin{itemize}
+  \item Contention is degradation of system performance caused by \textbf{competition for a shared resource}
+  \item Can cause parallel programs to become slower as more processors are added
+\end{itemize}
+
+\subsection{Idle processors}
+\begin{flushleft}
+Ideally all processors will be working all of the time, but a thread or process may not be able to proceed because of
+\end{flushleft}
+\begin{itemize}
+  \item A lack of work to do (\textit{load imbalance}, some threads have more work to do than others)
+  \item Waiting for some external event
+  \begin{itemize}
+    \item typically the arrival of new data to work on 
+    \item Time to \textbf{load data from disk storage} may be a limiting factor, especially when working with large data sets 
+    \item For a memory-bound computation the speed at which data can be fetched from main memory is the key limiting factor
+  \end{itemize}
+\end{itemize}
+
+\subsection{Non-parallelisable computation}
+\begin{flushleft}
+If a computation is inherently sequential then more processors will not help. The sequential operation is essential and fundamental to the algorithm
+\end{flushleft}
+
+\section{Amdahl’s Law}
+\begin{flushleft}
+If $1/S$ of a computation is inherently sequential the maximum possible speedup is $S$
+\[ T_P = 1/S * T_S + (1 - 1/S) * T_S / P \]
+Where $1/S$ is the percentage of sequential code and $P$ is the number of processors
+\end{flushleft}
+
+\subsection{Notes on Amdahl’s Law}
+\begin{itemize}
+  \item Bad news: the parallelisable part probably \textbf{won’t be perfectly parallelisable}. So maximum speedup won’t be achieved
+  \item Good news: Amdahl’s law applies to scaling a specific instance of a problem
+  \begin{itemize}
+    \item If instead we try a problem that is (say) twice as big, then the \textbf{inherently sequential component may not be twice as big}
+    \item So S will often be \textbf{bigger for bigger problems}
+    \item So a larger parallel machine may allow us to \textbf{tackle larger problems in the same time}, even if it doesn’t perform much faster for smaller problems than a smaller machine
+  \end{itemize}
+\end{itemize}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}

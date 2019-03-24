@@ -1,0 +1,58 @@
+\documentclass{article}
+
+\usepackage[%
+    left=0.5in,%
+    right=0.5in,%
+    top=0.5in,%
+    bottom=0.5in,%
+]{geometry}%
+\usepackage{minitoc}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{hyperref}
+    \hypersetup{ colorlinks = true, linkcolor = blue }
+\usepackage{blindtext}
+\definecolor{lightgray}{gray}{0.9}
+\graphicspath{ {./} }
+
+\newcommand{\inlinecode}[2]{\colorbox{lightgray}{\lstinline
+[language=#1]$#2$}}
+\newcommand{\worddef}[1]{\hyperref[sec:reference]{\textit{#1}}}
+
+\begin{document}
+
+\tableofcontents
+
+\newpage
+
+\section{Introduction to Threads}
+\begin{itemize}
+  \item A thread is a software abstraction of a single processor
+  \item Some threads (“system” threads) are \textbf{supported by the operating system}, which schedules those threads over the \textbf{physical processors}
+  \item Other types of threads (“user space” or “green” threads) use only cooperative multithreading and all share (at most) a \textbf{single physical processor}. Typically more efficient, but not parallel.
+  \item There can be \textbf{more threads than physical processors}. Threads are \textbf{allocated chunks of time} (time-slicing) on the physical processor(s), and with system threads are pre-empted if they run for longer to allow another thread to run
+\end{itemize}
+
+\section{The Locality Rule}
+\begin{flushleft}
+\textbf{Locality Rule}: fast programs tend to maximize the number of local memory references and minimize the number of non-local memory references
+\end{flushleft}
+
+\section{Limits to Performance Gain}
+
+\subsection{Contention}
+\begin{itemize}
+  \item The main memory bus has limited bandwidth 
+  \item It is a shared resource \textbf{used by all cores}, which compete to transfer data (one at a time) 
+  \item At some point getting values from (and/or to) main memory will becomes \textbf{the limiting factor}, at least for data-intensive applications
+\end{itemize}
+
+\pagebreak
+\section*{Reference section} \label{sec:reference}
+\begin{description}
+	\item[placeholder] \hfill \\
+\end{description}
+\end{document}
